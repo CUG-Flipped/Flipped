@@ -1,0 +1,12 @@
+source 'https://mirrors.tuna.tsinghua.edu.cn/git/CocoaPods/Specs.git'
+platform :ios, '8.0'
+
+target "Tinder" do
+
+     pod 'AFNetworking'
+     pod 'SDAutoLayout'
+     pod 'Masonry'
+     pod 'SDWebImage'
+     pod 'SVProgressHUD'
+
+end

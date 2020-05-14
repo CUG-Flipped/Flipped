@@ -1,0 +1,59 @@
+//
+//  PrefixHeader.pch
+//  Tinder
+//
+//  Created by Layer on 2020/5/8.
+//  Copyright © 2020 Layer. All rights reserved.
+//
+
+#ifndef PrefixHeader_pch
+#define PrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+// keyWindow
+#define KeyWindow [UIApplication sharedApplication].keyWindow
+//屏幕大小
+#define SCREEN_WIDTH [UIScreen mainScreen].bounds.size.width
+#define SCREEN_HEIGHT [UIScreen mainScreen].bounds.size.height
+
+//#define rectOfStatusbar     [[UIApplication sharedApplication] statusBarFrame]   // 获取状态栏的frame
+#define rectOfNavigationbar self.navigationController.navigationBar.frame        // 获取导航的frame
+//#define navCurentHeight     rectOfStatusbar.size.height+rectOfNavigationbar.size.height   // 获取页面头部到导航底部的高度
+
+#define Font(x)           [UIFont systemFontOfSize:x]
+#define FontCustom(x, y)  [UIFont systemFontOfSize:x weight:y]
+#define BoldFont(x)      [UIFont fontWithName:@"Arial-BoldMT" size:x];
+
+#import <UIKit/UIKit.h>
+#import <CoreData/CoreData.h>
+#import <Foundation/Foundation.h>
+
+#import "ViewController.h"
+#import "HomeView.h"
+
+#import "LoginViewController.h"
+#import "LoginView.h"
+
+#import "HomeViewController.h"
+#import "HomeTopView.h"
+#import "HomeBottomView.h"
+#import "CardView.h"
+
+#import "InfoViewController.h"
+
+#import "UserDefaults.h"
+#import "RequestDatas.h"
+#import "HttpData.h"
+#import "Regular.h"
+
+#import "SDAutoLayout.h"
+#import "AFNetworking.h"
+#import "SVProgressHUD.h"
+#import "SDWebImage.h"
+
+
+static NSString* const baseUrl = @"http://101.132.114.122:8099";
+
+#endif /* PrefixHeader_pch */
