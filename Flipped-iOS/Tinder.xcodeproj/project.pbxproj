@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		7811F0D1246D3D4600C21D93 /* InfoImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811F0D0246D3D4600C21D93 /* InfoImageView.m */; };
+		7811F0D4246D4A4700C21D93 /* PageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811F0D3246D4A4700C21D93 /* PageControl.m */; };
+		7811F0D7246D8DBB00C21D93 /* InfoBottonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811F0D6246D8DBB00C21D93 /* InfoBottonView.m */; };
 		788B593B24618C70002D6BCA /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788B593A24618C70002D6BCA /* LoginView.m */; };
 		78923C6D2451C6DE000E3A37 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 78923C6C2451C6DE000E3A37 /* AppDelegate.m */; };
 		78923C732451C6DE000E3A37 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78923C722451C6DE000E3A37 /* ViewController.m */; };
@@ -50,6 +53,12 @@
 
 /* Begin PBXFileReference section */
 		2EBE1919B921260AD0F89F71 /* Pods-Tinder.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Tinder.release.xcconfig"; path = "Target Support Files/Pods-Tinder/Pods-Tinder.release.xcconfig"; sourceTree = "<group>"; };
+		7811F0CF246D3D4600C21D93 /* InfoImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoImageView.h; sourceTree = "<group>"; };
+		7811F0D0246D3D4600C21D93 /* InfoImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoImageView.m; sourceTree = "<group>"; };
+		7811F0D2246D4A4700C21D93 /* PageControl.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PageControl.h; sourceTree = "<group>"; };
+		7811F0D3246D4A4700C21D93 /* PageControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PageControl.m; sourceTree = "<group>"; };
+		7811F0D5246D8DBB00C21D93 /* InfoBottonView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoBottonView.h; sourceTree = "<group>"; };
+		7811F0D6246D8DBB00C21D93 /* InfoBottonView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoBottonView.m; sourceTree = "<group>"; };
 		788B593924618C70002D6BCA /* LoginView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
 		788B593A24618C70002D6BCA /* LoginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
 		78923C682451C6DE000E3A37 /* Tinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -234,6 +243,12 @@
 			children = (
 				78C1D87E24684448009DF083 /* InfoViewController.h */,
 				78C1D87F24684448009DF083 /* InfoViewController.m */,
+				7811F0CF246D3D4600C21D93 /* InfoImageView.h */,
+				7811F0D0246D3D4600C21D93 /* InfoImageView.m */,
+				7811F0D2246D4A4700C21D93 /* PageControl.h */,
+				7811F0D3246D4A4700C21D93 /* PageControl.m */,
+				7811F0D5246D8DBB00C21D93 /* InfoBottonView.h */,
+				7811F0D6246D8DBB00C21D93 /* InfoBottonView.m */,
 			);
 			path = Info;
 			sourceTree = "<group>";
@@ -451,11 +466,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7811F0D4246D4A4700C21D93 /* PageControl.m in Sources */,
 				78C1D8792465A455009DF083 /* HomeBottomView.m in Sources */,
 				78F4D1A0245D9E2500176D13 /* LoginViewController.m in Sources */,
 				78923C812451C6E1000E3A37 /* main.m in Sources */,
 				78C1D87624658802009DF083 /* HomeTopView.m in Sources */,
 				788B593B24618C70002D6BCA /* LoginView.m in Sources */,
+				7811F0D1246D3D4600C21D93 /* InfoImageView.m in Sources */,
 				78923C732451C6DE000E3A37 /* ViewController.m in Sources */,
 				78C1D86D24630860009DF083 /* UserDefaults.m in Sources */,
 				78923C792451C6DE000E3A37 /* Tinder.xcdatamodeld in Sources */,
@@ -465,6 +482,7 @@
 				78923C6D2451C6DE000E3A37 /* AppDelegate.m in Sources */,
 				78C1D8662462939E009DF083 /* RequestDatas.m in Sources */,
 				78C1D87C24668F51009DF083 /* CardView.m in Sources */,
+				7811F0D7246D8DBB00C21D93 /* InfoBottonView.m in Sources */,
 				78C1D8692462AC47009DF083 /* HttpData.m in Sources */,
 				78C1D87324654BD5009DF083 /* HomeViewController.m in Sources */,
 			);

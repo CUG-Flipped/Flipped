@@ -36,7 +36,7 @@
         ViewController* vivRoot = [[ViewController alloc] init];
         nav = [[UINavigationController alloc] initWithRootViewController:vivRoot];
     }
-//
+
 //    ViewController* vivRoot = [[ViewController alloc] init];
 //    nav = [[UINavigationController alloc] initWithRootViewController:vivRoot];
     

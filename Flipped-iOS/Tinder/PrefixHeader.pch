@@ -42,6 +42,9 @@
 #import "CardView.h"
 
 #import "InfoViewController.h"
+#import "InfoImageView.h"
+#import "PageControl.h"
+#import "InfoBottonView.h"
 
 #import "UserDefaults.h"
 #import "RequestDatas.h"

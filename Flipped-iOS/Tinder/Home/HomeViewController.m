@@ -315,8 +315,12 @@
     }];
 }
 
+#pragma mark -- 详细信息
 - (void) clickInfoBtn:(UIButton*)btn {
-    NSLog(@"123");
+    InfoViewController *infoCV = [[InfoViewController alloc] init];
+//    UINavigationController *nv = [[UINavigationController alloc] initWithRootViewController:infoCV];
+//    [self presentViewController:nv animated:YES completion:nil];
+    [self presentViewController:infoCV animated:YES completion:nil];
 }
 
 @end
