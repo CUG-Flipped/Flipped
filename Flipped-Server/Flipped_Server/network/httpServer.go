@@ -21,18 +21,27 @@ func (server *HttpServer) Run() {
 }
 
 func (server *HttpServer) bindRouteAndHandler() {
-	server.HttpServerApp.Handle("GET", "/register", server.registerHandler)
-	server.HttpServerApp.Handle("GET", "/login", server.loginHandler)
+	server.HttpServerApp.Handle("POST", "/register", server.registerHandler)
+	server.HttpServerApp.Handle("POST", "/login", server.loginHandler)
 }
 
 func (server *HttpServer)registerHandler(context iris.Context) {
-	fmt.Println(context.Path())
-	context.GzipResponseWriter().WriteString("You're going to Register")
+
+	userType := context.URLParam("user_type")
+	name := context.URLParam("name")
+	email := context.URLParam("email")
+	photo := context.URLParam("photo")
+	password := context.URLParam("password")
+
+	fmt.Printf("type: %s, name: %s, email: %s, photo: %s, password: %s", userType, name,email, photo, password)
+
+
+	_, _ = context.GzipResponseWriter().WriteString("You're going to Register")
 }
 
 func (server *HttpServer)loginHandler(context iris.Context) {
-	fmt.Println(context.Path())
-	context.GzipResponseWriter().WriteString("You're going to login")
+
+	_, _ = context.GzipResponseWriter().WriteString("You're going to login")
 }
 
 
