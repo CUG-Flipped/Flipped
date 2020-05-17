@@ -51,12 +51,12 @@
         }
         else {
             for (int i = 0; i < _dataArr.count; i++) {
-//                UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(_width, 0, _width, _height)];
-//                [imageV sd_setImageWithURL:[NSURL URLWithString: _dataArr[i]] placeholderImage:nil];
-//                [_scrollView addSubview: imageV];
-                UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(_width * i, 0, _width, _height)];
-                imageV.image = [UIImage imageNamed:_dataArr[i]];
+                UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(_width, 0, _width, _height)];
+                [imageV sd_setImageWithURL:[NSURL URLWithString: _dataArr[i]] placeholderImage:nil];
                 [_scrollView addSubview: imageV];
+//                UIImageView *imageV = [[UIImageView alloc] initWithFrame:CGRectMake(_width * i, 0, _width, _height)];
+//                imageV.image = [UIImage imageNamed:_dataArr[i]];
+//                [_scrollView addSubview: imageV];
             }
         }
     }

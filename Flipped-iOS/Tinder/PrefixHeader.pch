@@ -26,6 +26,8 @@
 #define FontCustom(x, y)  [UIFont systemFontOfSize:x weight:y]
 #define BoldFont(x)      [UIFont fontWithName:@"Arial-BoldMT" size:x];
 
+#define kWeakSelf(type)   __weak typeof(type) weak##type = type; // 弱引用
+
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
 #import <Foundation/Foundation.h>
@@ -50,6 +52,10 @@
 #import "RequestDatas.h"
 #import "HttpData.h"
 #import "Regular.h"
+
+#import "PersonalInfoViewController.h"
+#import "PersonalInfoTopView.h"
+#import "SettingImageView.h"
 
 #import "SDAutoLayout.h"
 #import "AFNetworking.h"

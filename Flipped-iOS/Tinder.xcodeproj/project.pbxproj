@@ -10,6 +10,9 @@
 		7811F0D1246D3D4600C21D93 /* InfoImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811F0D0246D3D4600C21D93 /* InfoImageView.m */; };
 		7811F0D4246D4A4700C21D93 /* PageControl.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811F0D3246D4A4700C21D93 /* PageControl.m */; };
 		7811F0D7246D8DBB00C21D93 /* InfoBottonView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811F0D6246D8DBB00C21D93 /* InfoBottonView.m */; };
+		7811F0DB246FC76A00C21D93 /* PersonalInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811F0DA246FC76A00C21D93 /* PersonalInfoViewController.m */; };
+		7811F0DE246FCB8500C21D93 /* PersonalInfoTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811F0DD246FCB8500C21D93 /* PersonalInfoTopView.m */; };
+		7811F0E1246FE56000C21D93 /* SettingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811F0E0246FE56000C21D93 /* SettingImageView.m */; };
 		788B593B24618C70002D6BCA /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788B593A24618C70002D6BCA /* LoginView.m */; };
 		78923C6D2451C6DE000E3A37 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 78923C6C2451C6DE000E3A37 /* AppDelegate.m */; };
 		78923C732451C6DE000E3A37 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78923C722451C6DE000E3A37 /* ViewController.m */; };
@@ -59,6 +62,12 @@
 		7811F0D3246D4A4700C21D93 /* PageControl.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PageControl.m; sourceTree = "<group>"; };
 		7811F0D5246D8DBB00C21D93 /* InfoBottonView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoBottonView.h; sourceTree = "<group>"; };
 		7811F0D6246D8DBB00C21D93 /* InfoBottonView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoBottonView.m; sourceTree = "<group>"; };
+		7811F0D9246FC76A00C21D93 /* PersonalInfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonalInfoViewController.h; sourceTree = "<group>"; };
+		7811F0DA246FC76A00C21D93 /* PersonalInfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonalInfoViewController.m; sourceTree = "<group>"; };
+		7811F0DC246FCB8500C21D93 /* PersonalInfoTopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PersonalInfoTopView.h; sourceTree = "<group>"; };
+		7811F0DD246FCB8500C21D93 /* PersonalInfoTopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonalInfoTopView.m; sourceTree = "<group>"; };
+		7811F0DF246FE56000C21D93 /* SettingImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingImageView.h; sourceTree = "<group>"; };
+		7811F0E0246FE56000C21D93 /* SettingImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingImageView.m; sourceTree = "<group>"; };
 		788B593924618C70002D6BCA /* LoginView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
 		788B593A24618C70002D6BCA /* LoginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
 		78923C682451C6DE000E3A37 /* Tinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -140,6 +149,19 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		7811F0D8246FC73000C21D93 /* PersonalInfo */ = {
+			isa = PBXGroup;
+			children = (
+				7811F0D9246FC76A00C21D93 /* PersonalInfoViewController.h */,
+				7811F0DA246FC76A00C21D93 /* PersonalInfoViewController.m */,
+				7811F0DC246FCB8500C21D93 /* PersonalInfoTopView.h */,
+				7811F0DD246FCB8500C21D93 /* PersonalInfoTopView.m */,
+				7811F0DF246FE56000C21D93 /* SettingImageView.h */,
+				7811F0E0246FE56000C21D93 /* SettingImageView.m */,
+			);
+			path = PersonalInfo;
+			sourceTree = "<group>";
+		};
 		78923C5F2451C6DE000E3A37 = {
 			isa = PBXGroup;
 			children = (
@@ -172,6 +194,7 @@
 				78F4D19D245D9DCC00176D13 /* Login */,
 				78C1D87024654B66009DF083 /* Home */,
 				78C1D87D24684418009DF083 /* Info */,
+				7811F0D8246FC73000C21D93 /* PersonalInfo */,
 				78C1D86A246307FB009DF083 /* UserDefaults */,
 				78C1D86E2463FD85009DF083 /* NetWork */,
 				78F4D19C245D9D6700176D13 /* Others */,
@@ -479,11 +502,14 @@
 				78923CA52451D189000E3A37 /* HomeView.m in Sources */,
 				78F4D19A245D681500176D13 /* Regular.m in Sources */,
 				78C1D88024684448009DF083 /* InfoViewController.m in Sources */,
+				7811F0E1246FE56000C21D93 /* SettingImageView.m in Sources */,
 				78923C6D2451C6DE000E3A37 /* AppDelegate.m in Sources */,
 				78C1D8662462939E009DF083 /* RequestDatas.m in Sources */,
 				78C1D87C24668F51009DF083 /* CardView.m in Sources */,
 				7811F0D7246D8DBB00C21D93 /* InfoBottonView.m in Sources */,
 				78C1D8692462AC47009DF083 /* HttpData.m in Sources */,
+				7811F0DB246FC76A00C21D93 /* PersonalInfoViewController.m in Sources */,
+				7811F0DE246FCB8500C21D93 /* PersonalInfoTopView.m in Sources */,
 				78C1D87324654BD5009DF083 /* HomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -10,12 +10,13 @@
 
 @implementation InfoBottonView
 
+#pragma mark -- 初始化
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         [self addSubview:self.nameLabel];
-        [self addSubview:self.ageLabel];
+//        [self addSubview:self.ageLabel];
         [self addSubview:self.jobLabel];
         [self addSubview:self.infoLabel];
         [self addSubview:self.disLikeBtn];
@@ -25,14 +26,16 @@
     return self;
 }
 
+#pragma mark -- 位置
 - (void)layoutSubviews {
     [super layoutSubviews];
     _nameLabel.sd_layout.leftSpaceToView(self, 20).topSpaceToView(self, 20).rightSpaceToView(self, 50).heightIs(40);
-    _ageLabel.sd_layout.leftSpaceToView(_nameLabel, 0).topSpaceToView(self, 20).rightSpaceToView(self, 20).heightIs(40);
+//    _ageLabel.sd_layout.leftSpaceToView(_nameLabel, 0).topSpaceToView(self, 20).rightSpaceToView(self, 20).heightIs(40);
     _jobLabel.sd_layout.leftSpaceToView(self, 20).topSpaceToView(_nameLabel, 5).rightSpaceToView(self, 110).heightIs(40);
     _infoLabel.sd_layout.leftSpaceToView(self, 20).topSpaceToView(_jobLabel, 20).rightSpaceToView(self, 110).heightIs(40);
 }
 
+#pragma mark -- 名字
 - (UILabel*)nameLabel {
     if (!_nameLabel) {
         _nameLabel = [[UILabel alloc] init];
@@ -42,6 +45,7 @@
     return _nameLabel;
 }
 
+#pragma mark -- 年龄
 - (UILabel*)ageLabel {
     if (!_ageLabel) {
         _ageLabel = [[UILabel alloc] init];
@@ -51,6 +55,7 @@
     return _ageLabel;
 }
 
+#pragma mark -- 工作
 - (UILabel*)jobLabel {
     if (!_jobLabel) {
         _jobLabel = [[UILabel alloc] init];
@@ -60,6 +65,7 @@
     return _jobLabel;
 }
 
+#pragma mark -- 信息
 - (UILabel*)infoLabel {
     if (!_infoLabel) {
         _infoLabel = [[UILabel alloc] init];
@@ -69,6 +75,7 @@
     return _infoLabel;
 }
 
+#pragma mark -- 按键
 - (UIButton*)disLikeBtn {
     if (!_disLikeBtn) {
         _disLikeBtn = [UIButton buttonWithType:UIButtonTypeCustom];
@@ -78,6 +85,9 @@
         _disLikeBtn.layer.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1].CGColor;
         _disLikeBtn.layer.cornerRadius = 40;
         _disLikeBtn.layer.masksToBounds = YES;
+        [_disLikeBtn setBackgroundImage:[UIImage imageNamed:@"inforNoLike"] forState:UIControlStateNormal];
+        // setBackgroundImg,会适应大小，setImage不会适应大小
+        [_disLikeBtn addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _disLikeBtn;
 }
@@ -92,6 +102,8 @@
         _collectBtn.layer.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1].CGColor;
         _collectBtn.layer.cornerRadius = 25;
         _collectBtn.layer.masksToBounds = YES;
+        [_collectBtn setBackgroundImage:[UIImage imageNamed:@"inforSC"] forState:UIControlStateNormal];
+        [_collectBtn addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _collectBtn;
 }
@@ -105,9 +117,16 @@
         _likeBtn.layer.backgroundColor = [UIColor colorWithRed:240/255.0 green:240/255.0 blue:240/255.0 alpha:1].CGColor;
         _likeBtn.layer.cornerRadius = 40;
         _likeBtn.layer.masksToBounds = YES;
+        [_likeBtn setBackgroundImage:[UIImage imageNamed:@"inforLike"] forState:UIControlStateNormal];
+        [_likeBtn addTarget:self action:@selector(clickButton:) forControlEvents:UIControlEventTouchUpInside];
     }
     return _likeBtn;
 }
 
+- (void)clickButton:(UIButton*)btn {
+    if ([_delegate respondsToSelector:@selector(clickinfoButton:)]) {
+        [_delegate clickinfoButton:btn.tag];
+    }
+}
 
 @end

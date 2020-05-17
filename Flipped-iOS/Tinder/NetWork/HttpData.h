@@ -32,6 +32,7 @@ NS_ASSUME_NONNULL_BEGIN
 + (void)requestHomeCollectToken:(NSString*)token user_id:(NSString*)user_id type:(NSString*)type success:(void(^)(id json))success failure:(void(^)(NSError* err))failure;
 
 
+
 @end
 
 NS_ASSUME_NONNULL_END

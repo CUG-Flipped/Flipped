@@ -45,6 +45,7 @@
 //    [self creatCardView];
 }
 
+#pragma mark -- 请求首页数据
 - (void)requestHomeDatas {
     [HttpData requestHomeListToken:[UserDefaults getUserDefaults:@"token"] page:_page pageSize:5 success:^(id  _Nonnull json) {
         if ([json isKindOfClass:[NSDictionary class]]) {
@@ -62,6 +63,7 @@
     }];
 }
 
+#pragma mark -- 创建顶部视图
 - (void)creatTopView {
     self.topView = [[HomeTopView alloc] initWithFrame:CGRectMake(0, 0, SCREEN_WIDTH, self.navigationController.navigationBar.frame.size.height + 80)];
     self.topView.backgroundColor = [UIColor whiteColor];
@@ -69,6 +71,7 @@
     self.topView.delegate = self;
 }
 
+#pragma mark -- 创建底部是图
 - (void)creatBottomView {
     self.bottomView = [[HomeBottomView alloc] init];
     self.bottomView.backgroundColor = [UIColor whiteColor];
@@ -77,6 +80,7 @@
     self.bottomView.delegate = self;
 }
 
+#pragma mark -- 创建名片视图
 - (void)creatCardView {
 //    for (int i = 0; i < self.dataSources.count; i++) {
     for (int i = 0; i < self.listArr.count; i++) {
@@ -118,6 +122,7 @@
     }
 }
 
+#pragma mark -- 拖动手势
 - (void)panHandle:(UIPanGestureRecognizer*)pan {
     CardView* cv = ( CardView*)pan.view;
     if (pan.state == UIGestureRecognizerStateBegan) {
@@ -173,6 +178,7 @@
     }
 }
 
+#pragma mark -- 卡片相关
 - (void)changeCardView:(CGFloat)x {
     for (UIView* card in self.cards) {
         if (card != self.topCard) {
@@ -209,16 +215,19 @@
     
 }
 
-
+#pragma mark -- 顶部按键
 - (void)clickButton:(NSInteger)btnTag {
     if (btnTag == 1) {
-        NSLog(@"left");
+//        NSLog(@"left");
+        PersonalInfoViewController *infoVC = [[PersonalInfoViewController alloc] init];
+        [self presentViewController:infoVC animated:YES completion:nil];
     }
     if (btnTag == 2) {
         NSLog(@"right");
     }
 }
 
+#pragma mark -- 底部按键
 - (void)homeBottomClickBtn:(UIButton *)btn {
     switch (btn.tag) {
         case 1: // 刷新

@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol infoButtonViewDelegate <NSObject>
+
+- (void)clickinfoButton:(NSInteger)tag;
+
+@end
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface InfoBottonView : UIView
@@ -19,7 +25,10 @@ NS_ASSUME_NONNULL_BEGIN
 
 @property (strong, nonatomic) UIButton *disLikeBtn;
 @property (strong, nonatomic) UIButton *likeBtn;
-@property (strong, nonatomic) UIButton *collectBtn;;
+@property (strong, nonatomic) UIButton *collectBtn;
+
+@property (weak, nonatomic) id<infoButtonViewDelegate> delegate;
+
 @end
 
 NS_ASSUME_NONNULL_END
