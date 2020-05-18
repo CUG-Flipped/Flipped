@@ -1,18 +1,19 @@
 package sqlmapper
 
 import (
+	"Flipped_Server/dataBase"
+	"Flipped_Server/logger"
 	"bytes"
-	"encoding/binary"
 	"errors"
 	"fmt"
+	"github.com/sirupsen/logrus"
 	"reflect"
 	"strconv"
 )
 
 var (
-	stringAttr = [...]string{"pid", "username", "password", "email", "realName", "profession", "region", "hobby"}
+	stringAttr = [...]string{"pid", "username", "photo","password", "email", "realName", "profession", "region", "hobby"}
 	intAttr = [...]string{"user_type", "age"}
-	hexAttr = [1]string{"photo"}
 )
 
 func isStringAttr(str string) bool {
@@ -33,18 +34,6 @@ func isIntAttr(str string) bool {
 	return false
 }
 
-func isHexAttr(str string) bool {
-	return str == hexAttr[0]
-}
-
-func byteToInt(b []byte) int{
-	bytesBuffer := bytes.NewBuffer(b)
-
-	var x int32
-	binary.Read(bytesBuffer, binary.LittleEndian, &x)
-
-	return int(x)
-}
 
 type SqlMapper interface {
 	Insert(data interface {}) error
@@ -62,7 +51,12 @@ func splitDataAndStruct(metaData interface{}) ([]string, []string, error){
 		return nil, nil, errors.New("Expect Struct")
 	}
 	fieldNum := dataVal.NumField()
-	fmt.Printf("该结构体有%d个字段\n", fieldNum)
+
+
+	logger.Logger.WithFields(logrus.Fields {
+		"function": "splitDataAndStruct",
+		"cause": "count member number of the interface",
+	}).Infof(fmt.Sprintf("该结构体有%d个字段\n", fieldNum))
 
 	tagArr := make([]string, fieldNum)
 	dataArr := make([]string, fieldNum)
@@ -73,8 +67,6 @@ func splitDataAndStruct(metaData interface{}) ([]string, []string, error){
 		if tagVal == "" {
 			return nil, nil, errors.New("tag is empty")
 		}
-
-		//fmt.Printf("Field %d: 值=%v, tag=%v\n", i, dataVal.Field(i), tagVal)
 
 		tagArr[i] = tagVal
 		dataArr[i] = dataVal.Field(i).String()
@@ -99,24 +91,32 @@ func Insert(data interface {}, tableName string) error{
 		if isStringAttr(tagArr[i]) {
 			buffer.WriteString("'")
 			buffer.WriteString(dataArr[i])
-			buffer.WriteString("',\n")
+			buffer.WriteString("'")
 		} else if isIntAttr(tagArr[i]) {
 			integer, _ := strconv.Atoi(dataArr[i])
 			buffer.WriteString(strconv.Itoa(integer))
-			buffer.WriteString(",\n")
-		} else if isHexAttr(tagArr[i]) {
-			buffer.WriteString("x'")
-
-			//ToDO: 将[]byte转为hex string
-
-			buffer.WriteString("',\n")
+			buffer.WriteString("")
 		} else {
 			return errors.New("unexpected value: " + tagArr[i])
 		}
+
+		if i != tagLen - 1 {
+			buffer.WriteString(",\n")
+		}
+
 	}
 	buffer.WriteString(");")
 	sql := buffer.String()
 	fmt.Println(sql)
+
+	res, err := dataBase.ExecSQL(sql)
+	if err != nil {
+		return err
+	}
+	logger.Logger.WithFields(logrus.Fields {
+		"function": "Insert",
+		"cause": "succeed to insert data into database",
+	}).Info(res)
 
 	return nil
 }
