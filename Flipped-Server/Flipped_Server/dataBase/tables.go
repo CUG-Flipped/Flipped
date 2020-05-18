@@ -6,7 +6,7 @@ type RegisterTable struct {
 	Password   string `sql:"password"`
 	UserType   byte   `sql:"user_type"`
 	Email      string `sql:"email"`
-	Photo      []byte `sql:"photo"`
+	Photo      string `sql:"photo"`
 	RealName   string `sql:"realName"`
 	Profession string `sql:"profession"`
 	Age        byte   `sql:"age"`
@@ -14,9 +14,5 @@ type RegisterTable struct {
 	Hobby      string `sql:"hobby"`
 }
 
-func (register *RegisterTable) Insert(table RegisterTable) error {
-	//imageData :=
-	//var sql = "INSERT INTO im.userinfo VALUES(" +
-	return nil
-}
+
 
