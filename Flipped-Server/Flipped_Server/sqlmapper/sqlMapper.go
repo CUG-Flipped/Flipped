@@ -1,3 +1,7 @@
+// @Title  sqlMapper.go
+// @Description  To provide an extensive sql interface to the Server
+// @Author  郑康
+// @Update  郑康 2020.5.18
 package sqlmapper
 
 import (
@@ -11,11 +15,19 @@ import (
 	"strconv"
 )
 
+//包内全局字符串列表，将tag分类，在stringAttr内的tag表示其字段为字符串，在intAttr内的tag表示器字段为整型
 var (
 	stringAttr = [...]string{"pid", "username", "photo","password", "email", "realName", "profession", "region", "hobby"}
 	intAttr = [...]string{"user_type", "age"}
+	stringDefault = ""
+	intDefault = 1000
 )
 
+// @title    isStringAttr
+// @description   给定一个字符串判断该字符串是否在stringAttr列表中
+// @auth      郑康           2020.5.17
+// @param     string		tag字符串
+// @return    bool			判断结果
 func isStringAttr(str string) bool {
 	for i := 0; i < len(stringAttr); i++ {
 		if str == stringAttr[i] {
@@ -25,6 +37,11 @@ func isStringAttr(str string) bool {
 	return false
 }
 
+// @title    isIntAttr
+// @description   给定一个字符串判断该字符串是否在intAttr列表中
+// @auth      郑康           2020.5.17
+// @param     string		tag字符串
+// @return    bool			判断结果
 func isIntAttr(str string) bool {
 	for i := 0; i < len(intAttr); i++ {
 		if str == intAttr[i] {
@@ -35,23 +52,26 @@ func isIntAttr(str string) bool {
 }
 
 
-type SqlMapper interface {
-	Insert(data interface {}) error
-	Update(data interface {}) error
-	Select(data interface {}) error
-	Delete(data interface {}) error
-}
+//type SqlMapper interface {
+//	Insert(data interface {}) error
+//	Update(data interface {}) error
+//	Select(data interface {}) error
+//	Delete(data interface {}) error
+//}
 
-
+// @title    splitDataAndStruct
+// @description   使用反射的方法将给定的接口的tag字段与其值进行分离，如果该接口不是tables.go中定义的某一个struct则返回错误
+// @auth      郑康           					2020.5.17
+// @param     interface{}						接口变量
+// @return    []string, []string, error			tag列表；值列表；错误信息
 func splitDataAndStruct(metaData interface{}) ([]string, []string, error){
 	dataType := reflect.TypeOf(metaData)
 	dataVal := reflect.ValueOf(metaData)
 	dataKind := dataVal.Kind()
 	if dataKind != reflect.Struct {
-		return nil, nil, errors.New("Expect Struct")
+		return nil, nil, errors.New("expect an struct")
 	}
 	fieldNum := dataVal.NumField()
-
 
 	logger.Logger.WithFields(logrus.Fields {
 		"function": "splitDataAndStruct",
@@ -75,7 +95,11 @@ func splitDataAndStruct(metaData interface{}) ([]string, []string, error){
 	return tagArr, dataArr, nil
 }
 
-
+// @title    Insert
+// @description   Insert接口函数，通过给定的结构体和表名来进行Insert操作
+// @auth      郑康           					2020.5.17
+// @param     interface{}；string				接口变量；数据表名称
+// @return    error								错误信息
 func Insert(data interface {}, tableName string) error{
 	tagArr, dataArr, err := splitDataAndStruct(data)
 	tagLen := len(tagArr)
@@ -107,7 +131,10 @@ func Insert(data interface {}, tableName string) error{
 	}
 	buffer.WriteString(");")
 	sql := buffer.String()
-	fmt.Println(sql)
+	logger.Logger.WithFields(logrus.Fields {
+		"function": "Insert",
+		"cause": "display sql",
+	}).Info(sql)
 
 	res, err := dataBase.ExecSQL(sql)
 	if err != nil {
@@ -121,4 +148,96 @@ func Insert(data interface {}, tableName string) error{
 	return nil
 }
 
+func Update(oldData *map[string]string, newData *map[string]string, tableName string)  error {
+	var buffer bytes.Buffer
+	buffer.WriteString("Update im." + tableName + " set ")
 
+	newDataLen := len(*newData)
+	index := 0
+	for key, value := range *newData {
+		if isStringAttr(key){
+			buffer.WriteString(key + "='" + value + "'")
+		} else if isIntAttr(key) {
+			integer, _ := strconv.Atoi(value)
+			buffer.WriteString(key + "=" + strconv.Itoa(integer))
+		} else {
+			return errors.New("unexpected value: " + key)
+		}
+		if index != newDataLen - 1{
+			buffer.WriteString(", ")
+		}
+		index++
+	}
+
+	index = 0
+	buffer.WriteString(" where ")
+	for key, value := range *oldData {
+		if isStringAttr(key){
+			buffer.WriteString(key + "='" + value + "'")
+		} else if isIntAttr(key) {
+			buffer.WriteString(key + "=" + value)
+		} else {
+			return errors.New("unexpected value: " + key)
+		}
+		if index != newDataLen - 1{
+			buffer.WriteString(" and ")
+		}
+	}
+	buffer.WriteString(";")
+	sql := buffer.String()
+	logger.Logger.WithFields(logrus.Fields {
+		"function": "Update",
+		"cause": "display sql",
+	}).Info(sql)
+
+	fmt.Println(sql)
+	return nil
+}
+
+func Delete(data interface {}, tableName string) error {
+	tagArr, dataArr, err := splitDataAndStruct(data)
+	tagLen := len(tagArr)
+	dataLen := len(dataArr)
+	if err != nil ||tagLen  == 0 ||dataLen  == 0{
+		return err
+	}
+
+	var buffer bytes.Buffer
+	buffer.WriteString("Delete from im." + tableName + " where ")
+	for i := 0; i < tagLen; i++ {
+		if i != 0  {
+			buffer.WriteString("and ")
+		}
+
+		if isStringAttr(tagArr[i]){
+			if dataArr[i] != stringDefault{
+				buffer.WriteString(tagArr[i] + "='" + dataArr[i] + "' ")
+			}
+		} else if isIntAttr(tagArr[i]) {
+			integer, _ := strconv.Atoi(dataArr[i])
+			if integer != intDefault{
+				buffer.WriteString(tagArr[i] + "=" + strconv.Itoa(integer) + " ")
+			}
+		} else {
+			return errors.New("unexpected value: " + tagArr[i])
+		}
+	}
+	buffer.WriteString(";")
+	sql := buffer.String()
+	logger.Logger.WithFields(logrus.Fields {
+		"function": "Delete",
+		"cause": "display sql",
+	}).Info(sql)
+	fmt.Println(sql)
+
+	res, err := dataBase.ExecSQL(sql)
+	if err != nil {
+		return err
+	}
+	logger.Logger.WithFields(logrus.Fields {
+		"function": "Delete",
+		"cause": "succeed to Delete data from database",
+	}).Info(res)
+
+	return nil
+}
