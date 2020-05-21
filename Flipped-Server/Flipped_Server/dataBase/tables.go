@@ -1,6 +1,11 @@
+// @Title  mysqlDBConnector.go
+// @Description  To provide a map between structs and database tables
+// @Author  郑康
+// @Update  郑康 2020.5.18
 package dataBase
 
-type RegisterTable struct {
+// 用户信息信息表，各个字段对应数据库的各个字段
+type UserInfoTable struct {
 	Pid        string `sql:"pid"`
 	Username   string `sql:"username"`
 	Password   string `sql:"password"`
@@ -13,6 +18,7 @@ type RegisterTable struct {
 	Region     string `sql:"region"`
 	Hobby      string `sql:"hobby"`
 }
+
 
 
 

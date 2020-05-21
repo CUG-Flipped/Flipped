@@ -1,3 +1,7 @@
+// @Title  httpServer.go
+// @Description  To provide a network interface of Http、TCP and UDP to the Server
+// @Author  郑康
+// @Update  郑康 2020.5.17
 package network
 
 import (
@@ -13,20 +17,28 @@ import (
 	"strconv"
 )
 
+// IFunction接口包含了http路由处理函数
 type IFunction interface {
 	registerHandler(context *gin.Context)
 	loginHandler(context *gin.Context)
 }
 
+// HttpServer结构体包含了Http服务器绑定的IP地址和端口号
 type HttpServer struct {
 	IPAddr string
 	Port int
 }
 
+// 全局变量，gin实例
 var(
 	Router = gin.Default()
 )
 
+// @title    Run
+// @description   启动Http服务器
+// @auth      郑康             2020.5.17
+// @param     void
+// @return    void
 func (server *HttpServer) Run() {
 	server.bindRouteAndHandler()
 	dataBase.Init()
@@ -34,12 +46,21 @@ func (server *HttpServer) Run() {
 	_ = Router.Run(server.IPAddr + ":" + strconv.Itoa(server.Port))
 }
 
-
+// @title    bindRouteAndHandler
+// @description   将路由与处理函数绑定
+// @auth      郑康             2020.5.17
+// @param     void
+// @return    void
 func (server *HttpServer) bindRouteAndHandler() {
 	Router.POST("/login", server.loginHandler)
 	Router.POST("/register", server.registerHandler)
 }
 
+// @title    registerHandler
+// @description   注册路由的处理函数
+// @auth      郑康             2020.5.17
+// @param     *gin.Context	  gin的上下文指针
+// @return    void
 func (server *HttpServer)registerHandler(context *gin.Context) {
 	var res bytes.Buffer
 	status := http.StatusOK
@@ -73,7 +94,7 @@ func (server *HttpServer)registerHandler(context *gin.Context) {
 		logger.Logger.WithFields(logrus.Fields {
 			"function": "registerHandler",
 			"cause": "open photoInfo",
-		}).Error(err1.Error())
+		}).Error(err.Error())
 
 		status = http.StatusBadRequest
 		responseStr = "upload file is unacceptable"
@@ -86,7 +107,7 @@ func (server *HttpServer)registerHandler(context *gin.Context) {
 
 	res.WriteString(fmt.Sprintf("type: %d, name: %s, email: %s, password: %s\n", userType, name,email, password))
 
-	registerTable := dataBase.RegisterTable{
+	registerTable := dataBase.UserInfoTable{
 			Pid:        utils.GeneratorUUID(),
 			Username:   name,
 			Password:   password,
@@ -124,6 +145,11 @@ func (server *HttpServer)registerHandler(context *gin.Context) {
 	}).Info("response: " + responseStr + ", Status: "+ strconv.Itoa(status))
 }
 
+// @title    loginHandler
+// @description   登录路由的处理函数
+// @auth      郑康             2020.5.17
+// @param     *gin.Context	  gin的上下文指针
+// @return    void
 func (server *HttpServer)loginHandler(context *gin.Context) {
 	context.String(http.StatusOK, "You're going to login")
 

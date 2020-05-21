@@ -1,3 +1,7 @@
+// @Title  mysqlDBConnector.go
+// @Description  To provide a database interface of mysql to the Server
+// @Author  郑康
+// @Update  郑康 2020.5.18
 package dataBase
 
 import (
@@ -9,17 +13,24 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
+// 包内全局变量，存放于数据库的指针
 var mysqlDB *sql.DB
 
+// 数据库结构体用于连接时使用
 type DBInfo struct {
-	Engine string
-	UserName string
-	PassWord string
-	IP string
-	Port string
-	DBName string
+	Engine string //引擎名称
+	UserName string //登录数据库的用户名
+	PassWord string //登录数据库的密码
+	IP string //数据库的公网IP地址
+	Port string //数据库的端口号
+	DBName string //数据库名称
 }
 
+// @title    Init
+// @description   数据库初始化函数，用户对数据库进行初始化、连接等操作
+// @auth      郑康             2020.5.17
+// @param     void
+// @return    void
 func Init() {
 	db := DBInfo{
 		Engine: "mysql",
@@ -53,6 +64,11 @@ func Init() {
 	//mysqlDB = nil
 }
 
+// @title    ExecSQL
+// @description   			执行给定的SQL语句
+// @auth      郑康       	2020.5.17
+// @param     string		sql语句字符串
+// @return    string；error	处理结果字符串；错误信息
 func ExecSQL(sql string) (string, error){
 	if mysqlDB != nil{
 		result, err := mysqlDB.Exec(sql)
