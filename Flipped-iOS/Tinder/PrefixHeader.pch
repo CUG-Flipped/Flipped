@@ -56,12 +56,18 @@
 #import "PersonalInfoViewController.h"
 #import "PersonalInfoTopView.h"
 #import "SettingImageView.h"
+#import "SetSlideCellTableViewCell.h"
 
 #import "SDAutoLayout.h"
 #import "AFNetworking.h"
 #import "SVProgressHUD.h"
 #import "SDWebImage.h"
 
+#import "AddressBookViewController.h"
+#import "AddressBookTopView.h"
+#import "FriendTableViewCell.h"
+#import "OneFriendTableViewCell.h"
+#import "OneFriendCollectionViewCell.h"
 
 static NSString* const baseUrl = @"http://101.132.114.122:8099";
 

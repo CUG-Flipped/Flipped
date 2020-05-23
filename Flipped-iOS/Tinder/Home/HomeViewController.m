@@ -223,7 +223,9 @@
         [self presentViewController:infoVC animated:YES completion:nil];
     }
     if (btnTag == 2) {
-        NSLog(@"right");
+//        NSLog(@"right");
+        AddressBookViewController *addVC = [[AddressBookViewController alloc] init];
+        [self.navigationController pushViewController:addVC animated:YES];
     }
 }
 

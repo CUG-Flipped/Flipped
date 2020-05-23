@@ -13,6 +13,7 @@
 		7811F0DB246FC76A00C21D93 /* PersonalInfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811F0DA246FC76A00C21D93 /* PersonalInfoViewController.m */; };
 		7811F0DE246FCB8500C21D93 /* PersonalInfoTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811F0DD246FCB8500C21D93 /* PersonalInfoTopView.m */; };
 		7811F0E1246FE56000C21D93 /* SettingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811F0E0246FE56000C21D93 /* SettingImageView.m */; };
+		7811F0E424713D6300C21D93 /* SetSlideCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7811F0E324713D6300C21D93 /* SetSlideCellTableViewCell.m */; };
 		788B593B24618C70002D6BCA /* LoginView.m in Sources */ = {isa = PBXBuildFile; fileRef = 788B593A24618C70002D6BCA /* LoginView.m */; };
 		78923C6D2451C6DE000E3A37 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 78923C6C2451C6DE000E3A37 /* AppDelegate.m */; };
 		78923C732451C6DE000E3A37 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78923C722451C6DE000E3A37 /* ViewController.m */; };
@@ -32,6 +33,11 @@
 		78C1D8792465A455009DF083 /* HomeBottomView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1D8782465A455009DF083 /* HomeBottomView.m */; };
 		78C1D87C24668F51009DF083 /* CardView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1D87B24668F51009DF083 /* CardView.m */; };
 		78C1D88024684448009DF083 /* InfoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C1D87F24684448009DF083 /* InfoViewController.m */; };
+		78F1C6FB2478208400FD5404 /* AddressBookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F1C6FA2478208400FD5404 /* AddressBookViewController.m */; };
+		78F1C6FE2478C64A00FD5404 /* AddressBookTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F1C6FD2478C64A00FD5404 /* AddressBookTopView.m */; };
+		78F1C70124791DA600FD5404 /* FriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F1C70024791DA600FD5404 /* FriendTableViewCell.m */; };
+		78F1C70424792A0600FD5404 /* OneFriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F1C70324792A0500FD5404 /* OneFriendTableViewCell.m */; };
+		78F1C707247942F900FD5404 /* OneFriendCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F1C706247942F900FD5404 /* OneFriendCollectionViewCell.m */; };
 		78F4D19A245D681500176D13 /* Regular.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F4D199245D681500176D13 /* Regular.m */; };
 		78F4D1A0245D9E2500176D13 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F4D19F245D9E2500176D13 /* LoginViewController.m */; };
 		B62DD1974FA770BE8C16823B /* libPods-Tinder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D920F200E4BB292399D38F2C /* libPods-Tinder.a */; };
@@ -68,6 +74,8 @@
 		7811F0DD246FCB8500C21D93 /* PersonalInfoTopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = PersonalInfoTopView.m; sourceTree = "<group>"; };
 		7811F0DF246FE56000C21D93 /* SettingImageView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SettingImageView.h; sourceTree = "<group>"; };
 		7811F0E0246FE56000C21D93 /* SettingImageView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SettingImageView.m; sourceTree = "<group>"; };
+		7811F0E224713D6300C21D93 /* SetSlideCellTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SetSlideCellTableViewCell.h; sourceTree = "<group>"; };
+		7811F0E324713D6300C21D93 /* SetSlideCellTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SetSlideCellTableViewCell.m; sourceTree = "<group>"; };
 		788B593924618C70002D6BCA /* LoginView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginView.h; sourceTree = "<group>"; };
 		788B593A24618C70002D6BCA /* LoginView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LoginView.m; sourceTree = "<group>"; };
 		78923C682451C6DE000E3A37 /* Tinder.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Tinder.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -106,6 +114,16 @@
 		78C1D87B24668F51009DF083 /* CardView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CardView.m; sourceTree = "<group>"; };
 		78C1D87E24684448009DF083 /* InfoViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = InfoViewController.h; sourceTree = "<group>"; };
 		78C1D87F24684448009DF083 /* InfoViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = InfoViewController.m; sourceTree = "<group>"; };
+		78F1C6F92478208400FD5404 /* AddressBookViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddressBookViewController.h; sourceTree = "<group>"; };
+		78F1C6FA2478208400FD5404 /* AddressBookViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddressBookViewController.m; sourceTree = "<group>"; };
+		78F1C6FC2478C64A00FD5404 /* AddressBookTopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AddressBookTopView.h; sourceTree = "<group>"; };
+		78F1C6FD2478C64A00FD5404 /* AddressBookTopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AddressBookTopView.m; sourceTree = "<group>"; };
+		78F1C6FF24791DA600FD5404 /* FriendTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = FriendTableViewCell.h; sourceTree = "<group>"; };
+		78F1C70024791DA600FD5404 /* FriendTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = FriendTableViewCell.m; sourceTree = "<group>"; };
+		78F1C70224792A0500FD5404 /* OneFriendTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OneFriendTableViewCell.h; sourceTree = "<group>"; };
+		78F1C70324792A0500FD5404 /* OneFriendTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OneFriendTableViewCell.m; sourceTree = "<group>"; };
+		78F1C705247942F900FD5404 /* OneFriendCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OneFriendCollectionViewCell.h; sourceTree = "<group>"; };
+		78F1C706247942F900FD5404 /* OneFriendCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OneFriendCollectionViewCell.m; sourceTree = "<group>"; };
 		78F4D198245D681500176D13 /* Regular.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Regular.h; sourceTree = "<group>"; };
 		78F4D199245D681500176D13 /* Regular.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Regular.m; sourceTree = "<group>"; };
 		78F4D19E245D9E2500176D13 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -158,6 +176,8 @@
 				7811F0DD246FCB8500C21D93 /* PersonalInfoTopView.m */,
 				7811F0DF246FE56000C21D93 /* SettingImageView.h */,
 				7811F0E0246FE56000C21D93 /* SettingImageView.m */,
+				7811F0E224713D6300C21D93 /* SetSlideCellTableViewCell.h */,
+				7811F0E324713D6300C21D93 /* SetSlideCellTableViewCell.m */,
 			);
 			path = PersonalInfo;
 			sourceTree = "<group>";
@@ -195,6 +215,7 @@
 				78C1D87024654B66009DF083 /* Home */,
 				78C1D87D24684418009DF083 /* Info */,
 				7811F0D8246FC73000C21D93 /* PersonalInfo */,
+				78F1C6F224781A7100FD5404 /* AddressBook */,
 				78C1D86A246307FB009DF083 /* UserDefaults */,
 				78C1D86E2463FD85009DF083 /* NetWork */,
 				78F4D19C245D9D6700176D13 /* Others */,
@@ -274,6 +295,23 @@
 				7811F0D6246D8DBB00C21D93 /* InfoBottonView.m */,
 			);
 			path = Info;
+			sourceTree = "<group>";
+		};
+		78F1C6F224781A7100FD5404 /* AddressBook */ = {
+			isa = PBXGroup;
+			children = (
+				78F1C6F92478208400FD5404 /* AddressBookViewController.h */,
+				78F1C6FA2478208400FD5404 /* AddressBookViewController.m */,
+				78F1C6FC2478C64A00FD5404 /* AddressBookTopView.h */,
+				78F1C6FD2478C64A00FD5404 /* AddressBookTopView.m */,
+				78F1C6FF24791DA600FD5404 /* FriendTableViewCell.h */,
+				78F1C70024791DA600FD5404 /* FriendTableViewCell.m */,
+				78F1C70224792A0500FD5404 /* OneFriendTableViewCell.h */,
+				78F1C70324792A0500FD5404 /* OneFriendTableViewCell.m */,
+				78F1C705247942F900FD5404 /* OneFriendCollectionViewCell.h */,
+				78F1C706247942F900FD5404 /* OneFriendCollectionViewCell.m */,
+			);
+			path = AddressBook;
 			sourceTree = "<group>";
 		};
 		78F4D19B245D9CEF00176D13 /* Registration */ = {
@@ -490,19 +528,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				7811F0D4246D4A4700C21D93 /* PageControl.m in Sources */,
+				78F1C70424792A0600FD5404 /* OneFriendTableViewCell.m in Sources */,
 				78C1D8792465A455009DF083 /* HomeBottomView.m in Sources */,
 				78F4D1A0245D9E2500176D13 /* LoginViewController.m in Sources */,
 				78923C812451C6E1000E3A37 /* main.m in Sources */,
 				78C1D87624658802009DF083 /* HomeTopView.m in Sources */,
 				788B593B24618C70002D6BCA /* LoginView.m in Sources */,
 				7811F0D1246D3D4600C21D93 /* InfoImageView.m in Sources */,
+				78F1C70124791DA600FD5404 /* FriendTableViewCell.m in Sources */,
+				78F1C707247942F900FD5404 /* OneFriendCollectionViewCell.m in Sources */,
 				78923C732451C6DE000E3A37 /* ViewController.m in Sources */,
 				78C1D86D24630860009DF083 /* UserDefaults.m in Sources */,
 				78923C792451C6DE000E3A37 /* Tinder.xcdatamodeld in Sources */,
+				78F1C6FE2478C64A00FD5404 /* AddressBookTopView.m in Sources */,
 				78923CA52451D189000E3A37 /* HomeView.m in Sources */,
 				78F4D19A245D681500176D13 /* Regular.m in Sources */,
 				78C1D88024684448009DF083 /* InfoViewController.m in Sources */,
 				7811F0E1246FE56000C21D93 /* SettingImageView.m in Sources */,
+				78F1C6FB2478208400FD5404 /* AddressBookViewController.m in Sources */,
 				78923C6D2451C6DE000E3A37 /* AppDelegate.m in Sources */,
 				78C1D8662462939E009DF083 /* RequestDatas.m in Sources */,
 				78C1D87C24668F51009DF083 /* CardView.m in Sources */,
@@ -511,6 +554,7 @@
 				7811F0DB246FC76A00C21D93 /* PersonalInfoViewController.m in Sources */,
 				7811F0DE246FCB8500C21D93 /* PersonalInfoTopView.m in Sources */,
 				78C1D87324654BD5009DF083 /* HomeViewController.m in Sources */,
+				7811F0E424713D6300C21D93 /* SetSlideCellTableViewCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

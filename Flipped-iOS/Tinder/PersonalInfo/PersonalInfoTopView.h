@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+@protocol PersonalInfoTopViewDelegate <NSObject>
+
+- (void)clickPersonalInfoTopViewButton:(NSInteger)tag;
+
+@end
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface PersonalInfoTopView : UIView
@@ -17,6 +23,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIButton *cancelBtn;
 @property (strong, nonatomic) UIButton *logoutBtn;
 @property (strong, nonatomic) UIButton *saveBtn;
+
+@property (weak, nonatomic) id<PersonalInfoTopViewDelegate> delegate;
 
 @end
 

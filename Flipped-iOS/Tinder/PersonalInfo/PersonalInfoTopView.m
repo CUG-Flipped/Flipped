@@ -87,7 +87,12 @@
 }
 
 - (void)clickButton:(UIButton*)btn {
-    NSLog(@"%ld", btn.tag);
+//    NSLog(@"%ld", btn.tag);
+    if ([_delegate respondsToSelector:@selector(clickPersonalInfoTopViewButton:)]) {
+        [_delegate clickPersonalInfoTopViewButton:btn.tag];
+    }
 }
+
+
 
 @end

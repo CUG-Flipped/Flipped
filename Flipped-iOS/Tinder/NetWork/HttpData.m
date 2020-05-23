@@ -170,6 +170,35 @@
     [RequestDatas requestWithMethond:RequestMethondTypePost withUrl:@"/user/operation" withIsPullDown:YES withParamter:dic seccess:success failure:failure];
 }
 
+// 个人信息获取
++ (void)requestInfoToken:(NSString *)token success:(void(^)(id json))success failure:(void(^)(NSError* err))failure {
+    
+    NSDictionary* dic = @{
+        @"token" : token
+    };
+    
+    [RequestDatas requestWithMethond:RequestMethondTypeGet withUrl:@"/user/personal" withIsPullDown:YES withParamter:dic seccess:success failure:failure];
+}
+
+// 上传信息
++ (void)requestSaveOneSelfDataToken:(NSString *)token photo:(NSString *)photo photo1:(NSString *)photo1 photo2:(NSString *)photo2 photo3:(NSString *)photo3 user_name:(NSString *)user_name age:(NSString *)age work:(NSString *)work bio:(NSString *)bio age_min:(NSString *)age_min age_max:(NSString *)age_max success:(void(^)(id json))success failure:(void(^)(NSError *err))failure
+{
+    NSDictionary* parmas = @{
+                             @"token":token,
+                             @"photo":photo,
+                             @"photo1":photo1,
+                             @"photo2":photo2,
+                             @"photo3":photo3,
+                             @"user_name":user_name,
+                             @"age":age,
+                             @"work":work,
+                             @"bio":bio,
+                             @"age_min":age_min,
+                             @"age_max":age_max
+                             };
+    
+    [RequestDatas requestWithMethond:RequestMethondTypePost withUrl:@"/user/user_save" withIsPullDown:YES withParamter:parmas seccess:success failure:failure];
+}
 
 @end
 
