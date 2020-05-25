@@ -29,7 +29,7 @@ namespace Flipped_Win10
             std.Begin();
         }
 
-        private void registerBtn_Click(object sender, RoutedEventArgs e)
+        private void RegisterBtn_Click(object sender, RoutedEventArgs e)
         {
             var registerWin = new Register();
             this.Hide();

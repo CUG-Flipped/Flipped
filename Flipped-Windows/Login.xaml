@@ -11,8 +11,8 @@
     </WindowChrome.WindowChrome>
     <Window.Resources>
         <Storyboard x:Key="ClosedStoryboard" Storyboard.TargetName="grid">
-            <DoubleAnimation From="1" To="0" Duration="0:0:1.5" Storyboard.TargetProperty="OpacityMask.(GradientBrush.GradientStops)[1].Offset"/>
-            <DoubleAnimation From="1" To="0" Duration="0:0:1" BeginTime="0:0:0.5" Storyboard.TargetProperty="OpacityMask.(GradientBrush.GradientStops)[2].Offset"/>
+            <DoubleAnimation From="1" To="0" Duration="0:0:0.3" Storyboard.TargetProperty="OpacityMask.(GradientBrush.GradientStops)[1].Offset"/>
+            <DoubleAnimation From="1" To="0" Duration="0:0:0.3" BeginTime="0:0:0.3" Storyboard.TargetProperty="OpacityMask.(GradientBrush.GradientStops)[2].Offset"/>
             <ColorAnimation To="#00000000" Duration="0" Storyboard.TargetProperty="OpacityMask.(GradientBrush.GradientStops)[2].Color"/>
         </Storyboard>
         <LinearGradientBrush x:Key="ClosedBrush" StartPoint="0.5,0" EndPoint="0.5,1">
@@ -72,8 +72,8 @@
                 <EventTrigger.Actions>
                     <BeginStoryboard>
                         <Storyboard>
-                            <DoubleAnimation From="1" To="0" Duration="0:0:1.5" Storyboard.TargetProperty="OpacityMask.(GradientBrush.GradientStops)[1].Offset"/>
-                            <DoubleAnimation From="1" To="0" Duration="0:0:1" BeginTime="0:0:0.5" Storyboard.TargetProperty="OpacityMask.(GradientBrush.GradientStops)[2].Offset"/>
+                            <DoubleAnimation From="1" To="0" Duration="0:0:0.5" Storyboard.TargetProperty="OpacityMask.(GradientBrush.GradientStops)[1].Offset"/>
+                            <DoubleAnimation From="1" To="0" Duration="0:0:0.5" BeginTime="0:0:0.2" Storyboard.TargetProperty="OpacityMask.(GradientBrush.GradientStops)[2].Offset"/>
                             <ColorAnimation To="#FF000000" Duration="0" Storyboard.TargetProperty="OpacityMask.(GradientBrush.GradientStops)[2].Color"/>
                         </Storyboard>
                     </BeginStoryboard>
@@ -109,7 +109,7 @@
             <Button x:Name="findPwdBtn" Grid.Column="1" Grid.Row="0" Foreground="Black" FontSize="16" FontFamily="SimSun" FontWeight="Light"
                     HorizontalAlignment="Right" Style="{StaticResource MaterialDesignFlatButton}" Content="找回密码"/>
             <Button x:Name="registerBtn" Grid.Column="1" Grid.Row="1" Foreground="Black" FontSize="16" FontFamily="SimSun" FontWeight="Light"
-                    HorizontalAlignment="Right" Style="{StaticResource MaterialDesignFlatButton}" Content="注册账号" Click="registerBtn_Click"/>
+                    HorizontalAlignment="Right" Style="{StaticResource MaterialDesignFlatButton}" Content="注册账号" Click="RegisterBtn_Click"/>
         </Grid>
         <Button HorizontalAlignment="Left" Click="CloseButton_Click"  VerticalAlignment="Top" Style="{StaticResource WindowCloseButtonStyle}" Height="30" Width="60" WindowChrome.IsHitTestVisibleInChrome="True" Margin="602,0,0,0"/>
     </Grid>
