@@ -241,3 +241,14 @@ func Delete(data interface {}, tableName string) error {
 
 	return nil
 }
+
+func FindUserInfo(username string, pwd string) (*dataBase.UserInfoTable, error) {
+	sql := "SELECT * FROM im.userinfo \nWHERE username = '" + username + "' AND password = '" + pwd + "';"
+	fmt.Println(sql)
+	data := dataBase.ExecSelectSQL(sql)
+	if data == nil || len(data) != 1 {
+		return nil, errors.New("the data you select is nil or has repetitive")
+	}
+
+	return data[0], nil
+}
