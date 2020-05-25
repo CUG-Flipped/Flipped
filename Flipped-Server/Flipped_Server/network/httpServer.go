@@ -26,11 +26,11 @@ type IFunction interface {
 // HttpServer结构体包含了Http服务器绑定的IP地址和端口号
 type HttpServer struct {
 	IPAddr string
-	Port int
+	Port   int
 }
 
 // 全局变量，gin实例
-var(
+var (
 	Router = gin.Default()
 )
 
@@ -61,7 +61,7 @@ func (server *HttpServer) bindRouteAndHandler() {
 // @auth      郑康             2020.5.17
 // @param     *gin.Context	  gin的上下文指针
 // @return    void
-func (server *HttpServer)registerHandler(context *gin.Context) {
+func (server *HttpServer) registerHandler(context *gin.Context) {
 	var res bytes.Buffer
 	status := http.StatusOK
 	responseStr := ""
@@ -80,9 +80,9 @@ func (server *HttpServer)registerHandler(context *gin.Context) {
 
 	if err1 != nil {
 
-		logger.Logger.WithFields(logrus.Fields {
+		logger.Logger.WithFields(logrus.Fields{
 			"function": "registerHandler",
-			"cause": "convert user_type",
+			"cause":    "convert user_type",
 		}).Error(err1.Error())
 
 		status = http.StatusBadRequest
@@ -91,34 +91,34 @@ func (server *HttpServer)registerHandler(context *gin.Context) {
 
 	if err != nil {
 		fmt.Println(err.Error())
-		logger.Logger.WithFields(logrus.Fields {
+		logger.Logger.WithFields(logrus.Fields{
 			"function": "registerHandler",
-			"cause": "open photoInfo",
+			"cause":    "open photoInfo",
 		}).Error(err.Error())
 
 		status = http.StatusBadRequest
 		responseStr = "upload file is unacceptable"
-		
+
 	} else {
 		count, _ := file.Read(photo)
 		res.WriteString(fmt.Sprintf("Photo total %d bytes\n", count))
 		defer file.Close()
 	}
 
-	res.WriteString(fmt.Sprintf("type: %d, name: %s, email: %s, password: %s\n", userType, name,email, password))
+	res.WriteString(fmt.Sprintf("type: %d, name: %s, email: %s, password: %s\n", userType, name, email, password))
 
 	registerTable := dataBase.UserInfoTable{
-			Pid:        utils.GeneratorUUID(),
-			Username:   name,
-			Password:   password,
-			UserType:   byte(userType),
-			Email:      email,
-			Photo:      utils.GetImageURL(photoName, photo),
-			RealName:   "",
-			Profession: "",
-			Age:        0,
-			Region:     ""  ,
-			Hobby:      "",
+		Pid:        utils.GeneratorUUID(),
+		Username:   name,
+		Password:   password,
+		UserType:   userType,
+		Email:      email,
+		Photo:      utils.GetImageURL(photoName, photo),
+		RealName:   "",
+		Profession: "",
+		Age:        0,
+		Region:     "",
+		Hobby:      "",
 	}
 
 	err2 := sqlmapper.Insert(registerTable, "userinfo")
@@ -127,9 +127,9 @@ func (server *HttpServer)registerHandler(context *gin.Context) {
 		status = http.StatusInternalServerError
 		responseStr = "Get an error when insert into DataBase"
 
-		logger.Logger.WithFields(logrus.Fields {
+		logger.Logger.WithFields(logrus.Fields{
 			"function": "registerHandler",
-			"cause": "Insert into database using 'sqlmapper.Insert'",
+			"cause":    "Insert into database using 'sqlmapper.Insert'",
 		}).Error(err2.Error())
 	}
 
@@ -141,8 +141,8 @@ func (server *HttpServer)registerHandler(context *gin.Context) {
 
 	logger.Logger.WithFields(logrus.Fields{
 		"function": "registerHandler",
-		"cause": "receive Request from client",
-	}).Info("response: " + responseStr + ", Status: "+ strconv.Itoa(status))
+		"cause":    "receive Request from client",
+	}).Info("response: " + responseStr + ", Status: " + strconv.Itoa(status))
 }
 
 // @title    loginHandler
@@ -150,8 +150,32 @@ func (server *HttpServer)registerHandler(context *gin.Context) {
 // @auth      郑康             2020.5.17
 // @param     *gin.Context	  gin的上下文指针
 // @return    void
-func (server *HttpServer)loginHandler(context *gin.Context) {
-	context.String(http.StatusOK, "You're going to login")
+func (server *HttpServer) loginHandler(context *gin.Context) {
+	username := context.DefaultQuery("username", "")
+	pwd := context.DefaultQuery("password", "")
 
+	userInfo, err := sqlmapper.FindUserInfo(username, pwd)
+	if err != nil {
+		logger.Logger.WithFields(logrus.Fields{
+			"Function": "loginHandler",
+			"cause":    "execute function of FindUserInfo",
+		}).Error(err.Error())
+	}
+	if userInfo == nil {
+		logger.Logger.WithFields(logrus.Fields{
+			"Function": "loginHandler",
+			"cause":    "the username or password of the request is incorrect",
+		}).Info(username, pwd)
+		context.String(http.StatusUnauthorized, "user does't exist or wrong username or wrong password")
+		return
+	}
+	tokenStr, _ := GenerateToken(username)
+	//context.String(http.StatusOK, "You're going to login")
+	context.JSON(http.StatusOK, gin.H{
+		"code":    200,
+		"message": "succeed to login",
+		"data": gin.H{
+			"token": tokenStr,
+		},
+	})
 }
-

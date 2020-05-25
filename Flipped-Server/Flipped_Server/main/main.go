@@ -15,5 +15,3 @@ func main() {
 	httpServer := network.HttpServer{IPAddr: "", Port: 8080}
 	httpServer.Run()
 }
-
-
