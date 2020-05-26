@@ -1,7 +1,7 @@
 // @Title  mysqlDBConnector.go
 // @Description  To provide a database interface of mysql to the Server
 // @Author  郑康
-// @Update  郑康 2020.5.18
+// @Update  郑康 2020.5.25
 package dataBase
 
 import (
@@ -60,9 +60,6 @@ func Init() {
 		}).Info("mysql open Successfully")
 	}
 	mysqlDB = database
-
-	//defer database.Close()
-	//mysqlDB = nil
 }
 
 // @title    ExecSQL
@@ -89,6 +86,11 @@ func ExecSQL(sql string) (string, error) {
 	}
 }
 
+// @title    ExecSelectSQL
+// @description   			执行给定(select)的SQL语句
+// @auth      郑康       	2020.5.25
+// @param     string		sql语句字符串
+// @return    []*UserInfoTable 根据sql语句选择出的用户信息表
 func ExecSelectSQL(sql string) []*UserInfoTable {
 	rows, err := mysqlDB.Query(sql)
 
@@ -102,6 +104,11 @@ func ExecSelectSQL(sql string) []*UserInfoTable {
 	return userInfoList
 }
 
+// @title    rowsMapper
+// @description   			解析select结果
+// @auth      郑康       	2020.5.25
+// @param     string		select结果
+// @return    []*UserInfoTable 根据解析select结果构成的用户信息表
 func rowsMapper(rows *sql.Rows) []*UserInfoTable {
 	columns, err := rows.Columns()
 	if err != nil {
@@ -135,4 +142,20 @@ func rowsMapper(rows *sql.Rows) []*UserInfoTable {
 		res = append(res, userInfo)
 	}
 	return res
+}
+
+// @title    CLoseMySqlClient
+// @description   			关闭mysql连接
+// @auth      郑康       	2020.5.26
+// @param     void
+// @return    void
+func CLoseMySqlClient()  {
+	if mysqlDB != nil {
+		defer mysqlDB.Close()
+	}
+	logger.Logger.WithFields(logrus.Fields{
+		"function": "CLoseMySqlClient",
+		"cause": "close mysql connection",
+	})
+	mysqlDB = nil
 }

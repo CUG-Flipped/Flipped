@@ -35,7 +35,7 @@ var (
 )
 
 // @title    Run
-// @description   启动Http服务器
+// @description   绑定路由处理函数、初始化mysql数据库、日志模块、初始化Redis数据库、启动Http服务器
 // @auth      郑康             2020.5.17
 // @param     void
 // @return    void
@@ -43,6 +43,7 @@ func (server *HttpServer) Run() {
 	server.bindRouteAndHandler()
 	dataBase.Init()
 	logger.InitLog()
+	dataBase.RedisClient_Init()
 	_ = Router.Run(server.IPAddr + ":" + strconv.Itoa(server.Port))
 }
 

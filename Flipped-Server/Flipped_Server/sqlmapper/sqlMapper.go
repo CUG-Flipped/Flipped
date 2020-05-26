@@ -51,14 +51,6 @@ func isIntAttr(str string) bool {
 	return false
 }
 
-
-//type SqlMapper interface {
-//	Insert(data interface {}) error
-//	Update(data interface {}) error
-//	Select(data interface {}) error
-//	Delete(data interface {}) error
-//}
-
 // @title    splitDataAndStruct
 // @description   使用反射的方法将给定的接口的tag字段与其值进行分离，如果该接口不是tables.go中定义的某一个struct则返回错误
 // @auth      郑康           					2020.5.17
@@ -96,9 +88,9 @@ func splitDataAndStruct(metaData interface{}) ([]string, []string, error){
 }
 
 // @title    Insert
-// @description   Insert接口函数，通过给定的结构体和表名来进行Insert操作
+// @description   Insert接口函数, 通过给定的结构体和表名来进行Insert操作
 // @auth      郑康           					2020.5.17
-// @param     interface{}；string				接口变量；数据表名称
+// @param     interface{}, string				接口变量, 数据表名称
 // @return    error								错误信息
 func Insert(data interface {}, tableName string) error{
 	tagArr, dataArr, err := splitDataAndStruct(data)
@@ -148,6 +140,11 @@ func Insert(data interface {}, tableName string) error{
 	return nil
 }
 
+// @title    Update
+// @description   Update接口函数，通过给定旧数据和新数据来进行Update操作
+// @auth      郑康           											2020.5.17
+// @param     *map[string]string, *map[string]string, string			旧数据, 新数据, 表名
+// @return    error														错误信息
 func Update(oldData *map[string]string, newData *map[string]string, tableName string)  error {
 	var buffer bytes.Buffer
 	buffer.WriteString("Update im." + tableName + " set ")
@@ -194,6 +191,11 @@ func Update(oldData *map[string]string, newData *map[string]string, tableName st
 	return nil
 }
 
+// @title    	Delete
+// @description   							Delete接口函数，通过给定结构体和表名来进行Update操作
+// @auth      	郑康           				2020.5.17
+// @param     	interface {}, string		数据, 表名
+// @return    	error						错误信息
 func Delete(data interface {}, tableName string) error {
 	tagArr, dataArr, err := splitDataAndStruct(data)
 	tagLen := len(tagArr)
@@ -242,6 +244,11 @@ func Delete(data interface {}, tableName string) error {
 	return nil
 }
 
+// @title    	FindUserInfo
+// @description   								通过用户名和密码在数据库中查找完整的信息
+// @auth      	郑康           					2020.5.25
+// @param     	string, string					用户名, 密码
+// @return    	*dataBase.UserInfoTable, error	用户信息结构体指针, 错误信息
 func FindUserInfo(username string, pwd string) (*dataBase.UserInfoTable, error) {
 	sql := "SELECT * FROM im.userinfo \nWHERE username = '" + username + "' AND password = '" + pwd + "';"
 	fmt.Println(sql)
@@ -249,6 +256,5 @@ func FindUserInfo(username string, pwd string) (*dataBase.UserInfoTable, error) 
 	if data == nil || len(data) != 1 {
 		return nil, errors.New("the data you select is nil or has repetitive")
 	}
-
 	return data[0], nil
 }
