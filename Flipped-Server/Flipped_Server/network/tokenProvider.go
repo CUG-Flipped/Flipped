@@ -20,7 +20,7 @@ type MyClaims struct {
 }
 
 //设置Token过期时间为1小时
-const TokenExpireDuration = 3*time.Hour
+const TokenExpireDuration = 3*3600
 
 //自定义Secret
 var MySecret = []byte("First Blood")
