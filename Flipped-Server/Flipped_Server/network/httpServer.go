@@ -43,7 +43,7 @@ func (server *HttpServer) Run() {
 	server.bindRouteAndHandler()
 	dataBase.Init()
 	logger.InitLog()
-	dataBase.RedisClient_Init()
+	dataBase.RedisClientInit()
 	_ = Router.Run(server.IPAddr + ":" + strconv.Itoa(server.Port))
 }
 
@@ -155,28 +155,60 @@ func (server *HttpServer) loginHandler(context *gin.Context) {
 	username := context.DefaultQuery("username", "")
 	pwd := context.DefaultQuery("password", "")
 
+	var status int
+	var msg string
+	var data interface{}
+
 	userInfo, err := sqlmapper.FindUserInfo(username, pwd)
 	if err != nil {
 		logger.Logger.WithFields(logrus.Fields{
 			"Function": "loginHandler",
 			"cause":    "execute function of FindUserInfo",
 		}).Error(err.Error())
+		status = http.StatusInternalServerError
+		msg = "there is something going wrong with the server, please try it again"
+		data = ""
 	}
 	if userInfo == nil {
 		logger.Logger.WithFields(logrus.Fields{
 			"Function": "loginHandler",
 			"cause":    "the username or password of the request is incorrect",
 		}).Info(username, pwd)
-		context.String(http.StatusUnauthorized, "user does't exist or wrong username or wrong password")
-		return
+		//context.String(http.StatusUnauthorized, "user does't exist or wrong username or wrong password")
+		status = http.StatusUnauthorized
+		msg = "account does't exist or wrong username or wrong password"
+		data = ""
 	}
-	tokenStr, _ := GenerateToken(username)
-	//context.String(http.StatusOK, "You're going to login")
-	context.JSON(http.StatusOK, gin.H{
-		"code":    200,
-		"message": "succeed to login",
-		"data": gin.H{
-			"token": tokenStr,
-		},
-	})
+	var tokenStr string
+	if dataBase.KeyExists(username) {
+		tokenStr, err = dataBase.ReadFromRedis(username)
+		if err != nil {
+			status = http.StatusInternalServerError
+			msg = "there is something going wrong with the server, please try it again"
+			data = ""
+		} else {
+			status = http.StatusOK
+			msg = "succeed to login"
+			data = gin.H{
+				"token": tokenStr,
+			}
+		}
+	} else {
+		tokenStr, err = GenerateToken(username)
+		if err != nil {
+			status = http.StatusInternalServerError
+			msg = "there is something going wrong with the server, please try it again"
+			data = ""
+		} else {
+			status = http.StatusOK
+			msg = "succeed to login"
+			data = gin.H{
+				"token": tokenStr,
+			}
+		}
+		context.JSON(status, gin.H{
+			"message": msg,
+			"data":    data,
+		})
+	}
 }

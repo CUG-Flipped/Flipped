@@ -10,18 +10,20 @@ import (
 	"errors"
 	"github.com/garyburd/redigo/redis"
 	"github.com/sirupsen/logrus"
-	"time"
 )
 
 //文件内全局变量，Redis连接指针
-var client *redis.Conn
+var (
+	client *redis.Conn
+	timeout = 3*3600
+)
 
 // @title    RedisClient_Init
 // @description   			初始化Redis数据库
 // @auth      郑康       	2020.5.26
 // @param     void
 // @return    void
-func RedisClient_Init(){
+func RedisClientInit(){
 	c, err := redis.Dial("tcp", "127.0.0.1:6379")
 	//Client, err := redis.Dial("tcp", "127.0.0.1:6379")
 	if err != nil {
@@ -56,43 +58,35 @@ func CloseRedisClient()  {
 // @param     string, string	键、值
 // @return    error				错误信息
 func WriteToRedis(key string, value string) error{
-	err1 := (*client).Send("SET", key, value)
-	err2 := (*client).Send("expire", key, 3*time.Hour)
-
+	res1, err1 := (*client).Do("SET", key, value)
 	if err1 != nil {
 		logger.Logger.WithFields(logrus.Fields {
 			"function": "WriteToRedis",
-			"cause": "send to redis",
+			"cause": "set key to redis failed",
 		}).Error(err1.Error())
 		return err1
+
+	} else {
+		logger.Logger.WithFields(logrus.Fields {
+			"function": "WriteToRedis",
+			"cause": "set key to redis successfully",
+		}).Info(res1)
 	}
+
+	res2, err2 := (*client).Do("EXPIRE", key, timeout)
 	if err2 != nil {
 		logger.Logger.WithFields(logrus.Fields {
 			"function": "WriteToRedis",
-			"cause": "send to redis",
+			"cause": "set expire to redis failed",
 		}).Error(err2.Error())
 		return err2
-	}
-	err3 := (*client).Flush()
-	if err3 != nil {
+
+	} else {
 		logger.Logger.WithFields(logrus.Fields {
 			"function": "WriteToRedis",
-			"cause": "flush to redis",
-		}).Error(err3.Error())
-		return err3
+			"cause": "set expire to redis successfully",
+		}).Info(res2)
 	}
-	reply, err4 := (*client).Receive()
-	if err4 != nil {
-		logger.Logger.WithFields(logrus.Fields {
-			"function": "WriteToRedis",
-			"cause": "receive from redis",
-		}).Error(err4.Error())
-		return err4
-	}
-	logger.Logger.WithFields(logrus.Fields {
-		"function": "WriteToRedis",
-		"cause": "write to redis",
-	}).Info(reply)
 	return nil
 }
 
@@ -117,6 +111,29 @@ func ReadFromRedis(key string) (string, error) {
 		}).Error("value is Empty")
 		return "", errors.New("nil value of the key")
 	}
-	value := reply.(string)
+	res, err1 := (*client).Do("EXPIRE", key, timeout)
+	if err1 != nil {
+		logger.Logger.WithFields(logrus.Fields {
+			"function": "ReadFromRedis",
+			"cause": "update the expire time failed",
+		}).Error(err1.Error())
+		return "", err1
+	} else {
+		logger.Logger.WithFields(logrus.Fields {
+			"function": "ReadFromRedis",
+			"cause": "update the expire time successfully",
+		}).Info(res)
+	}
+	value := string(reply.([]uint8))
 	return value, nil
+}
+
+// @title    ReadFromRedis
+// @description   			判断Redis数据库中是否存在某个键
+// @auth      郑康       	2020.5.26
+// @param     string		键
+// @return    error			值、错误信息
+func KeyExists(key string) bool{
+	exists, _ := redis.Bool((*client).Do("EXISTS", key))
+	return exists
 }
