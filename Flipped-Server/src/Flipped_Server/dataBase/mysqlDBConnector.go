@@ -144,12 +144,56 @@ func rowsMapper(rows *sql.Rows) []*UserInfoTable {
 	return res
 }
 
+func SelectSimilarUser(username string) (*UserInfoTable, error) {
+	SQL := "Select * From im.userinfo Order By Rand() Limit 20"
+	currentUser, err := FindUserInfo(username, "")
+	if err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "SelectSimilarUser", "to find user by username: " + username, err.Error())
+		return nil, err
+	}
+	userList := ExecSelectSQL(SQL)
+	userSimilarMap := make(map[int]float32)
+	maxSimilarityIndex, maxSimilarValue := 0, float32(0.0)
+	for index := range userList {
+		if userList[index].Username == username{
+			continue
+		}
+		res := CalculateSimilarity(currentUser, userList[index])
+		if res > maxSimilarValue {
+			maxSimilarValue = res
+			maxSimilarityIndex = index
+		}
+		userSimilarMap[index] = res
+	}
+	return userList[maxSimilarityIndex], nil
+}
+
+// @title    	FindUserInfo
+// @description   								通过用户名和密码在数据库中查找完整的信息
+// @auth      	郑康           					2020.5.25
+// @param     	string, string					用户名, 密码
+// @return    	*dataBase.UserInfoTable, error	用户信息结构体指针, 错误信息
+func FindUserInfo(username string, pwd string) (*UserInfoTable, error) {
+	SQL := "SELECT * FROM im.userinfo \nWHERE username = '" + username + "'"
+	if pwd != "" {
+		SQL += "And password = '" + pwd + "';"
+	} else {
+		SQL += ";"
+	}
+	fmt.Println(SQL)
+	data := ExecSelectSQL(SQL)
+	if data == nil || len(data) != 1 {
+		return nil, errors.New("the data you select is nil or has repetitive")
+	}
+	return data[0], nil
+}
+
 // @title    CLoseMySqlClient
 // @description   			关闭mysql连接
 // @auth      郑康       	2020.5.26
 // @param     void
 // @return    void
-func CLoseMySqlClient()  {
+func CloseMySqlClient()  {
 	if mysqlDB != nil {
 		defer mysqlDB.Close()
 	}

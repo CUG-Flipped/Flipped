@@ -1,8 +1,12 @@
 package utils
 
 import (
+	"Flipped_Server/logger"
+	"encoding/base64"
 	"errors"
 	"github.com/gofrs/uuid"
+	"github.com/sirupsen/logrus"
+	"io/ioutil"
 	"os"
 	"path"
 	"path/filepath"
@@ -70,5 +74,16 @@ func Contains(container []string, item string) bool {
 	}
 }
 
-
-
+func Image2Base64(imagePath string) (string, error){
+	if !Exists(imagePath){
+		logger.SetToLogger(logrus.ErrorLevel, "Image2Base64", "image doesn't exist", "")
+		return "", errors.New("image doesn't exist")
+	}
+	imageBytes, err := ioutil.ReadFile(imagePath)
+	if err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "Image2Base64", "read from path: " + imagePath, err.Error())
+		return "", err
+	}
+	imageStr := base64.StdEncoding.EncodeToString(imageBytes)
+	return imageStr, nil
+}

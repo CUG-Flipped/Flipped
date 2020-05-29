@@ -243,18 +243,3 @@ func Delete(data interface {}, tableName string) error {
 
 	return nil
 }
-
-// @title    	FindUserInfo
-// @description   								通过用户名和密码在数据库中查找完整的信息
-// @auth      	郑康           					2020.5.25
-// @param     	string, string					用户名, 密码
-// @return    	*dataBase.UserInfoTable, error	用户信息结构体指针, 错误信息
-func FindUserInfo(username string, pwd string) (*dataBase.UserInfoTable, error) {
-	sql := "SELECT * FROM im.userinfo \nWHERE username = '" + username + "' AND password = '" + pwd + "';"
-	fmt.Println(sql)
-	data := dataBase.ExecSelectSQL(sql)
-	if data == nil || len(data) != 1 {
-		return nil, errors.New("the data you select is nil or has repetitive")
-	}
-	return data[0], nil
-}
