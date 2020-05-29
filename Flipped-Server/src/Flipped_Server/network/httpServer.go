@@ -10,6 +10,7 @@ import (
 	"Flipped_Server/sqlmapper"
 	"Flipped_Server/utils"
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -22,6 +23,7 @@ type IFunction interface {
 	registerHandler(context *gin.Context)
 	loginHandler(context *gin.Context)
 	friendsListHandler(context *gin.Context)
+	recommendedFriendsListHandler(context *gin.Context)
 }
 
 // HttpServer结构体包含了Http服务器绑定的IP地址和端口号
@@ -58,6 +60,7 @@ func (server *HttpServer) bindRouteAndHandler() {
 	Router.POST("/login", server.loginHandler)
 	Router.POST("/register", server.registerHandler)
 	Router.GET("/friendList", server.friendsListHandler)
+	Router.GET("/recommendUser", server.recommendedFriendsListHandler)
 }
 
 // @title    registerHandler
@@ -162,7 +165,7 @@ func (server *HttpServer) loginHandler(context *gin.Context) {
 	var msg string
 	var data interface{}
 
-	userInfo, err := sqlmapper.FindUserInfo(username, pwd)
+	userInfo, err := dataBase.FindUserInfo(username, pwd)
 	if err != nil {
 		logger.Logger.WithFields(logrus.Fields{
 			"Function": "loginHandler",
@@ -216,13 +219,18 @@ func (server *HttpServer) loginHandler(context *gin.Context) {
 	}
 }
 
+// @title    loginHandler
+// @description   获取好友列表路由的处理函数
+// @auth      郑康             2020.5.28
+// @param     *gin.Context	  gin的上下文指针
+// @return    void
 func (server *HttpServer) friendsListHandler(context *gin.Context)  {
 	tokenStr := context.Request.Header.Get("token")
 	username, err := ParseToken(tokenStr)
 	if err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "friendsListHandler", "Parse Token which sent by client", "")
-		context.JSON(http.StatusInternalServerError, gin.H {
-			"message": "some error occur when parsing tokenStr",
+		context.JSON(http.StatusUnauthorized, gin.H {
+			"message": "some error occur when parsing tokenStr, Please login again",
 			"data": err.Error(),
 		})
 	} else {
@@ -240,4 +248,65 @@ func (server *HttpServer) friendsListHandler(context *gin.Context)  {
 			})
 		}
 	}
+}
+
+// @title    loginHandler
+// @description   获取好友列表路由的处理函数
+// @auth      郑康             2020.5.28
+// @param     *gin.Context	  gin的上下文指针
+// @return    void
+func (server *HttpServer) recommendedFriendsListHandler(context *gin.Context) {
+	tokenStr := context.Request.Header.Get("token")
+	username, err := ParseToken(tokenStr)
+	if err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "recommendedFriendsListHandler", "Parse Token which sent by client", "")
+		context.JSON(http.StatusUnauthorized, gin.H {
+			"message": "some error occur when parsing tokenStr, Please login again",
+			"data": err.Error(),
+		})
+		return
+	}
+	selectedUser, err := dataBase.SelectSimilarUser(username)
+	if err != nil{
+		logger.SetToLogger(logrus.ErrorLevel, "recommendedFriendsListHandler", "select similar user", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H {
+			"message": "some error occur in the server, Please try again",
+			"data": err.Error(),
+		})
+		return
+	}
+	imageStr, err := utils.Image2Base64(selectedUser.Photo)
+	if err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "recommendedFriendsListHandler", "convert image to Base64 string", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H {
+			"message": "some error occur in the server, Please try again",
+			"data": err.Error(),
+		})
+		return
+	}
+	selectedUser.Photo = imageStr
+	dataJson, err := json.Marshal(selectedUser)
+	if err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "recommendedFriendsListHandler", "convert Struct to Json", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H {
+			"message": "some error occur in the server, Please try again",
+			"data": err.Error(),
+		})
+		return
+	}
+
+	var dataMap map[string] interface{}
+	err = json.Unmarshal(dataJson, &dataMap)
+	if err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "recommendedFriendsListHandler", "convert Json to Map", err.Error())
+		context.JSON(http.StatusInternalServerError, gin.H {
+			"message": "some error occur in the server, Please try again",
+			"data": err.Error(),
+		})
+		return
+	}
+	context.JSON(http.StatusOK, gin.H {
+		"message": "succeed to handle the request",
+		"data": dataMap,
+	})
 }

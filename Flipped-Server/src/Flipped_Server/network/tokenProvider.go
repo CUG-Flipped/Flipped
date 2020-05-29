@@ -62,7 +62,7 @@ func GenerateToken(username string) (string, error) {
 }
 
 // @title    ParseToken
-// @description   			通过token字符串解析用户名
+// @description   			通过token字符串解析用户名, 同时判断token是否合法
 // @auth      郑康       	2020.5.25
 // @param     string		token字符串
 // @return    string；error	用户名字符串；错误信息
@@ -70,13 +70,14 @@ func ParseToken(tokenStr string) (string, error) {
 	token, err := jwt.ParseWithClaims(tokenStr, &MyClaims{}, func(token *jwt.Token) (interface{}, error) {
 		return MySecret, nil
 	})
-	if token == nil {
-		logger.SetToLogger(logrus.ErrorLevel, "ParseToken", "parsed empty token", "")
-	}
 	if err != nil {
 		logger.SetToLogger(logrus.InfoLevel, "ParseToken", "Parse tokenStr", err.Error())
 	}
-	if claims, ok := token.Claims.(*MyClaims); ok && token.Valid{
+	if token == nil {
+		return "", err
+	}
+
+	if claims, ok := token.Claims.(*MyClaims); ok && dataBase.KeyExists(claims.UserName){
 		return claims.UserName, nil
 	}
 	return "", errors.New("invalid token")
