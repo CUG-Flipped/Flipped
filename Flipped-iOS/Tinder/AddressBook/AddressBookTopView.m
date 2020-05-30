@@ -96,6 +96,9 @@
         btn.selected = YES;
         _messageBtn.selected = NO;
     }
+    if ([self.delegate respondsToSelector:@selector(clickAddressBookTopViewButton:)]) {
+        [self.delegate clickAddressBookTopViewButton:btn.tag];
+    }
 }
 
 

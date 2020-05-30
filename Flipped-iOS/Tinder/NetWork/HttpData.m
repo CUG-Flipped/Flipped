@@ -200,5 +200,26 @@
     [RequestDatas requestWithMethond:RequestMethondTypePost withUrl:@"/user/user_save" withIsPullDown:YES withParamter:parmas seccess:success failure:failure];
 }
 
+// 好友列表
++ (void)requestFriendDataToken:(NSString *)token success:(void(^)(id json))success failure:(void(^)(NSError* err))failure {
+    
+    NSDictionary* dic = @{
+        @"token" : token
+    };
+    
+    [RequestDatas requestWithMethond:RequestMethondTypeGet withUrl:@"/message/message_list" withIsPullDown:YES withParamter:dic seccess:success failure:failure];
+    
+}
+
++ (void)requestCollectFriendDataToken:(NSString *)token success:(void(^)(id json))success failure:(void(^)(NSError* err))failure {
+   
+    NSDictionary* dic = @{
+        @"token" : token
+    };
+    
+    [RequestDatas requestWithMethond:RequestMethondTypeGet withUrl:@"/message/collect_list" withIsPullDown:YES withParamter:dic seccess:success failure:failure];
+    
+}
+
 @end
 

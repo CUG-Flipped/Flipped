@@ -15,6 +15,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UIImageView *headImg;
 @property (strong, nonatomic) UILabel *nameLab;
 
+-(void)installDataDic:(NSDictionary *)dic;
+
 @end
 
 NS_ASSUME_NONNULL_END

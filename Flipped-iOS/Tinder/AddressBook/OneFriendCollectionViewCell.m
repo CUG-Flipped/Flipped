@@ -34,4 +34,9 @@
     return self;
 }
 
+- (void)installDataDic:(NSDictionary *)dic {
+    [_headImg sd_setImageWithURL:[NSURL URLWithString:dic[@"photo"]] placeholderImage:nil];
+    _nameLab.text = dic[@"name"];
+}
+
 @end

@@ -34,7 +34,7 @@
         _messageLab.numberOfLines = 0; // 自动换行
         _messageLab.textColor = [UIColor colorWithRed:180 / 255.0 green:180 / 255.0 blue:180 / 255.0 alpha:1];
         [self.contentView addSubview:_messageLab];
-        _messageLab.sd_layout.leftSpaceToView(_headImg, 15).bottomSpaceToView(self.contentView, 30).rightSpaceToView(self.contentView, 15).heightIs(35);
+        _messageLab.sd_layout.leftSpaceToView(_headImg, 15).topSpaceToView(_nameLab, 3).rightSpaceToView(self.contentView, 15).heightIs(35);
         
     }
     return self;
@@ -46,6 +46,5 @@
 
     // Configure the view for the selected state
 }
-
 
 @end

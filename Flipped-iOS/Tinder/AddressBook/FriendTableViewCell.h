@@ -16,6 +16,8 @@ NS_ASSUME_NONNULL_BEGIN
 @property (strong, nonatomic) UILabel *nameLab;
 @property (strong, nonatomic) UILabel *messageLab;
 
+
+
 @end
 
 NS_ASSUME_NONNULL_END

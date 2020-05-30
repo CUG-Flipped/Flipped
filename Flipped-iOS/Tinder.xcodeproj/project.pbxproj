@@ -38,6 +38,22 @@
 		78F1C70124791DA600FD5404 /* FriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F1C70024791DA600FD5404 /* FriendTableViewCell.m */; };
 		78F1C70424792A0600FD5404 /* OneFriendTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F1C70324792A0500FD5404 /* OneFriendTableViewCell.m */; };
 		78F1C707247942F900FD5404 /* OneFriendCollectionViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F1C706247942F900FD5404 /* OneFriendCollectionViewCell.m */; };
+		78F1C70B247A6D6700FD5404 /* ChatViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F1C70A247A6D6700FD5404 /* ChatViewController.m */; };
+		78F1C70E247A700B00FD5404 /* ChatTopView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F1C70D247A700B00FD5404 /* ChatTopView.m */; };
+		78F1C726247AA83500FD5404 /* btn_keyboard@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78F1C713247AA83500FD5404 /* btn_keyboard@3x.png */; };
+		78F1C727247AA83500FD5404 /* btn_expression@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78F1C714247AA83500FD5404 /* btn_expression@3x.png */; };
+		78F1C728247AA83500FD5404 /* btn_expression@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78F1C715247AA83500FD5404 /* btn_expression@2x.png */; };
+		78F1C729247AA83500FD5404 /* btn_keyboard@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78F1C716247AA83500FD5404 /* btn_keyboard@2x.png */; };
+		78F1C72A247AA83500FD5404 /* STInputBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F1C717247AA83500FD5404 /* STInputBar.m */; };
+		78F1C72B247AA83500FD5404 /* STEmojiCollectionView.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F1C71A247AA83500FD5404 /* STEmojiCollectionView.m */; };
+		78F1C72C247AA83500FD5404 /* STEmoji.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F1C71B247AA83500FD5404 /* STEmoji.m */; };
+		78F1C72D247AA83500FD5404 /* STEmojiKeyboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F1C71C247AA83500FD5404 /* STEmojiKeyboard.m */; };
+		78F1C72E247AA83500FD5404 /* emoji.json in Resources */ = {isa = PBXBuildFile; fileRef = 78F1C71F247AA83500FD5404 /* emoji.json */; };
+		78F1C72F247AA83500FD5404 /* keyboard_btn_delete@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78F1C720247AA83500FD5404 /* keyboard_btn_delete@2x.png */; };
+		78F1C730247AA83500FD5404 /* keyboard_preview_bg@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78F1C721247AA83500FD5404 /* keyboard_preview_bg@2x.png */; };
+		78F1C731247AA83500FD5404 /* keyboard_preview_bg@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78F1C722247AA83500FD5404 /* keyboard_preview_bg@3x.png */; };
+		78F1C732247AA83500FD5404 /* keyboard_btn_delete@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 78F1C723247AA83500FD5404 /* keyboard_btn_delete@3x.png */; };
+		78F1C735248236EB00FD5404 /* ChatTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F1C734248236EB00FD5404 /* ChatTableViewCell.m */; };
 		78F4D19A245D681500176D13 /* Regular.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F4D199245D681500176D13 /* Regular.m */; };
 		78F4D1A0245D9E2500176D13 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 78F4D19F245D9E2500176D13 /* LoginViewController.m */; };
 		B62DD1974FA770BE8C16823B /* libPods-Tinder.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D920F200E4BB292399D38F2C /* libPods-Tinder.a */; };
@@ -124,6 +140,29 @@
 		78F1C70324792A0500FD5404 /* OneFriendTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OneFriendTableViewCell.m; sourceTree = "<group>"; };
 		78F1C705247942F900FD5404 /* OneFriendCollectionViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = OneFriendCollectionViewCell.h; sourceTree = "<group>"; };
 		78F1C706247942F900FD5404 /* OneFriendCollectionViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = OneFriendCollectionViewCell.m; sourceTree = "<group>"; };
+		78F1C709247A6D6700FD5404 /* ChatViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatViewController.h; sourceTree = "<group>"; };
+		78F1C70A247A6D6700FD5404 /* ChatViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatViewController.m; sourceTree = "<group>"; };
+		78F1C70C247A700B00FD5404 /* ChatTopView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatTopView.h; sourceTree = "<group>"; };
+		78F1C70D247A700B00FD5404 /* ChatTopView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatTopView.m; sourceTree = "<group>"; };
+		78F1C713247AA83500FD5404 /* btn_keyboard@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_keyboard@3x.png"; sourceTree = "<group>"; };
+		78F1C714247AA83500FD5404 /* btn_expression@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_expression@3x.png"; sourceTree = "<group>"; };
+		78F1C715247AA83500FD5404 /* btn_expression@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_expression@2x.png"; sourceTree = "<group>"; };
+		78F1C716247AA83500FD5404 /* btn_keyboard@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "btn_keyboard@2x.png"; sourceTree = "<group>"; };
+		78F1C717247AA83500FD5404 /* STInputBar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STInputBar.m; sourceTree = "<group>"; };
+		78F1C718247AA83500FD5404 /* STInputBar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STInputBar.h; sourceTree = "<group>"; };
+		78F1C71A247AA83500FD5404 /* STEmojiCollectionView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STEmojiCollectionView.m; sourceTree = "<group>"; };
+		78F1C71B247AA83500FD5404 /* STEmoji.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STEmoji.m; sourceTree = "<group>"; };
+		78F1C71C247AA83500FD5404 /* STEmojiKeyboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = STEmojiKeyboard.m; sourceTree = "<group>"; };
+		78F1C71D247AA83500FD5404 /* STEmojiCollectionView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STEmojiCollectionView.h; sourceTree = "<group>"; };
+		78F1C71F247AA83500FD5404 /* emoji.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = emoji.json; sourceTree = "<group>"; };
+		78F1C720247AA83500FD5404 /* keyboard_btn_delete@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "keyboard_btn_delete@2x.png"; sourceTree = "<group>"; };
+		78F1C721247AA83500FD5404 /* keyboard_preview_bg@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "keyboard_preview_bg@2x.png"; sourceTree = "<group>"; };
+		78F1C722247AA83500FD5404 /* keyboard_preview_bg@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "keyboard_preview_bg@3x.png"; sourceTree = "<group>"; };
+		78F1C723247AA83500FD5404 /* keyboard_btn_delete@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "keyboard_btn_delete@3x.png"; sourceTree = "<group>"; };
+		78F1C724247AA83500FD5404 /* STEmojiKeyboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STEmojiKeyboard.h; sourceTree = "<group>"; };
+		78F1C725247AA83500FD5404 /* STEmoji.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = STEmoji.h; sourceTree = "<group>"; };
+		78F1C733248236EB00FD5404 /* ChatTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ChatTableViewCell.h; sourceTree = "<group>"; };
+		78F1C734248236EB00FD5404 /* ChatTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ChatTableViewCell.m; sourceTree = "<group>"; };
 		78F4D198245D681500176D13 /* Regular.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Regular.h; sourceTree = "<group>"; };
 		78F4D199245D681500176D13 /* Regular.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Regular.m; sourceTree = "<group>"; };
 		78F4D19E245D9E2500176D13 /* LoginViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
@@ -216,6 +255,7 @@
 				78C1D87D24684418009DF083 /* Info */,
 				7811F0D8246FC73000C21D93 /* PersonalInfo */,
 				78F1C6F224781A7100FD5404 /* AddressBook */,
+				78F1C708247A6D4300FD5404 /* Chat */,
 				78C1D86A246307FB009DF083 /* UserDefaults */,
 				78C1D86E2463FD85009DF083 /* NetWork */,
 				78F4D19C245D9D6700176D13 /* Others */,
@@ -314,6 +354,75 @@
 			path = AddressBook;
 			sourceTree = "<group>";
 		};
+		78F1C708247A6D4300FD5404 /* Chat */ = {
+			isa = PBXGroup;
+			children = (
+				78F1C709247A6D6700FD5404 /* ChatViewController.h */,
+				78F1C70A247A6D6700FD5404 /* ChatViewController.m */,
+				78F1C70C247A700B00FD5404 /* ChatTopView.h */,
+				78F1C70D247A700B00FD5404 /* ChatTopView.m */,
+				78F1C733248236EB00FD5404 /* ChatTableViewCell.h */,
+				78F1C734248236EB00FD5404 /* ChatTableViewCell.m */,
+			);
+			path = Chat;
+			sourceTree = "<group>";
+		};
+		78F1C710247AA83500FD5404 /* 聊天键盘加消息 */ = {
+			isa = PBXGroup;
+			children = (
+				78F1C711247AA83500FD5404 /* input bar */,
+				78F1C719247AA83500FD5404 /* emoji keyboard */,
+			);
+			path = "聊天键盘加消息";
+			sourceTree = "<group>";
+		};
+		78F1C711247AA83500FD5404 /* input bar */ = {
+			isa = PBXGroup;
+			children = (
+				78F1C712247AA83500FD5404 /* res */,
+				78F1C717247AA83500FD5404 /* STInputBar.m */,
+				78F1C718247AA83500FD5404 /* STInputBar.h */,
+			);
+			path = "input bar";
+			sourceTree = "<group>";
+		};
+		78F1C712247AA83500FD5404 /* res */ = {
+			isa = PBXGroup;
+			children = (
+				78F1C713247AA83500FD5404 /* btn_keyboard@3x.png */,
+				78F1C714247AA83500FD5404 /* btn_expression@3x.png */,
+				78F1C715247AA83500FD5404 /* btn_expression@2x.png */,
+				78F1C716247AA83500FD5404 /* btn_keyboard@2x.png */,
+			);
+			path = res;
+			sourceTree = "<group>";
+		};
+		78F1C719247AA83500FD5404 /* emoji keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				78F1C71A247AA83500FD5404 /* STEmojiCollectionView.m */,
+				78F1C71B247AA83500FD5404 /* STEmoji.m */,
+				78F1C71C247AA83500FD5404 /* STEmojiKeyboard.m */,
+				78F1C71D247AA83500FD5404 /* STEmojiCollectionView.h */,
+				78F1C71E247AA83500FD5404 /* resource */,
+				78F1C724247AA83500FD5404 /* STEmojiKeyboard.h */,
+				78F1C725247AA83500FD5404 /* STEmoji.h */,
+			);
+			path = "emoji keyboard";
+			sourceTree = "<group>";
+		};
+		78F1C71E247AA83500FD5404 /* resource */ = {
+			isa = PBXGroup;
+			children = (
+				78F1C71F247AA83500FD5404 /* emoji.json */,
+				78F1C720247AA83500FD5404 /* keyboard_btn_delete@2x.png */,
+				78F1C721247AA83500FD5404 /* keyboard_preview_bg@2x.png */,
+				78F1C722247AA83500FD5404 /* keyboard_preview_bg@3x.png */,
+				78F1C723247AA83500FD5404 /* keyboard_btn_delete@3x.png */,
+			);
+			path = resource;
+			sourceTree = "<group>";
+		};
 		78F4D19B245D9CEF00176D13 /* Registration */ = {
 			isa = PBXGroup;
 			children = (
@@ -328,6 +437,7 @@
 		78F4D19C245D9D6700176D13 /* Others */ = {
 			isa = PBXGroup;
 			children = (
+				78F1C710247AA83500FD5404 /* 聊天键盘加消息 */,
 				78F4D198245D681500176D13 /* Regular.h */,
 				78F4D199245D681500176D13 /* Regular.m */,
 			);
@@ -459,8 +569,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				78923C7E2451C6E1000E3A37 /* LaunchScreen.storyboard in Resources */,
+				78F1C730247AA83500FD5404 /* keyboard_preview_bg@2x.png in Resources */,
+				78F1C732247AA83500FD5404 /* keyboard_btn_delete@3x.png in Resources */,
+				78F1C727247AA83500FD5404 /* btn_expression@3x.png in Resources */,
+				78F1C726247AA83500FD5404 /* btn_keyboard@3x.png in Resources */,
+				78F1C731247AA83500FD5404 /* keyboard_preview_bg@3x.png in Resources */,
 				78923C7B2451C6E1000E3A37 /* Assets.xcassets in Resources */,
+				78F1C729247AA83500FD5404 /* btn_keyboard@2x.png in Resources */,
+				78F1C72F247AA83500FD5404 /* keyboard_btn_delete@2x.png in Resources */,
 				78923C762451C6DE000E3A37 /* Main.storyboard in Resources */,
+				78F1C72E247AA83500FD5404 /* emoji.json in Resources */,
+				78F1C728247AA83500FD5404 /* btn_expression@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -527,6 +646,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				78F1C72D247AA83500FD5404 /* STEmojiKeyboard.m in Sources */,
+				78F1C70E247A700B00FD5404 /* ChatTopView.m in Sources */,
 				7811F0D4246D4A4700C21D93 /* PageControl.m in Sources */,
 				78F1C70424792A0600FD5404 /* OneFriendTableViewCell.m in Sources */,
 				78C1D8792465A455009DF083 /* HomeBottomView.m in Sources */,
@@ -542,8 +663,12 @@
 				78923C792451C6DE000E3A37 /* Tinder.xcdatamodeld in Sources */,
 				78F1C6FE2478C64A00FD5404 /* AddressBookTopView.m in Sources */,
 				78923CA52451D189000E3A37 /* HomeView.m in Sources */,
+				78F1C735248236EB00FD5404 /* ChatTableViewCell.m in Sources */,
+				78F1C70B247A6D6700FD5404 /* ChatViewController.m in Sources */,
+				78F1C72A247AA83500FD5404 /* STInputBar.m in Sources */,
 				78F4D19A245D681500176D13 /* Regular.m in Sources */,
 				78C1D88024684448009DF083 /* InfoViewController.m in Sources */,
+				78F1C72B247AA83500FD5404 /* STEmojiCollectionView.m in Sources */,
 				7811F0E1246FE56000C21D93 /* SettingImageView.m in Sources */,
 				78F1C6FB2478208400FD5404 /* AddressBookViewController.m in Sources */,
 				78923C6D2451C6DE000E3A37 /* AppDelegate.m in Sources */,
@@ -553,6 +678,7 @@
 				78C1D8692462AC47009DF083 /* HttpData.m in Sources */,
 				7811F0DB246FC76A00C21D93 /* PersonalInfoViewController.m in Sources */,
 				7811F0DE246FCB8500C21D93 /* PersonalInfoTopView.m in Sources */,
+				78F1C72C247AA83500FD5404 /* STEmoji.m in Sources */,
 				78C1D87324654BD5009DF083 /* HomeViewController.m in Sources */,
 				7811F0E424713D6300C21D93 /* SetSlideCellTableViewCell.m in Sources */,
 			);

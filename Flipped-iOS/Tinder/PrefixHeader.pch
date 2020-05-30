@@ -26,7 +26,8 @@
 #define FontCustom(x, y)  [UIFont systemFontOfSize:x weight:y]
 #define BoldFont(x)      [UIFont fontWithName:@"Arial-BoldMT" size:x];
 
-#define kWeakSelf(type)   __weak typeof(type) weak##type = type; // 弱引用
+#define kWeakSelf(type)   __weak typeof(type) weakself = type; // 弱引用
+//weak##type
 
 #import <UIKit/UIKit.h>
 #import <CoreData/CoreData.h>
@@ -68,6 +69,11 @@
 #import "FriendTableViewCell.h"
 #import "OneFriendTableViewCell.h"
 #import "OneFriendCollectionViewCell.h"
+
+#import "ChatViewController.h"
+#import "ChatTopView.h"
+#import "STInputBar.h"
+#import "ChatTableViewCell.h"
 
 static NSString* const baseUrl = @"http://101.132.114.122:8099";
 

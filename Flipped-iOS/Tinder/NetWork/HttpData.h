@@ -37,6 +37,13 @@ NS_ASSUME_NONNULL_BEGIN
 // 上传信息
 + (void)requestSaveOneSelfDataToken:(NSString *)token photo:(NSString *)photo photo1:(NSString *)photo1 photo2:(NSString *)photo2 photo3:(NSString *)photo3 user_name:(NSString *)user_name age:(NSString *)age work:(NSString *)work bio:(NSString *)bio age_min:(NSString *)age_min age_max:(NSString *)age_max success:(void(^)(id json))success failure:(void(^)(NSError *err))failure;
 
+// 好友列表
++ (void)requestFriendDataToken:(NSString *)token success:(void(^)(id json))success failure:(void(^)(NSError* err))failure;
+
+// 收藏列表
++ (void)requestCollectFriendDataToken:(NSString *)token success:(void(^)(id json))success failure:(void(^)(NSError* err))failure;
+
+
 @end
 
 NS_ASSUME_NONNULL_END

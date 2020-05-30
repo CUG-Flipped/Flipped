@@ -36,11 +36,12 @@
 }
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-    return 5;
+    return _collList.count;
 }
 
 - (__kindof UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     OneFriendCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cellid" forIndexPath:indexPath];
+    [cell installDataDic:_collList[indexPath.section]];
     return cell;
 }
 
@@ -66,6 +67,13 @@
     return 5;
 }
 
+#pragma mark - UICollectionViewDelegate
+- (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath {
+    NSLog(@"%ld",indexPath.row);
+    if([_delegate respondsToSelector:@selector(clickFriendCollectiomItemTag:)]) {
+        [_delegate clickFriendCollectiomItemTag:indexPath.row];
+    }
+}
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
     [super setSelected:selected animated:animated];
