@@ -1,75 +1,12 @@
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-21T15:51:23+08:00"}
-{"cause":"display sql","function":"Delete","level":"info","msg":"Delete from im.userinfo where pid='988a66fa-77be-4458-8b96-d06984411a9f' and and and and and and and and and and ;","time":"2020-05-21T15:51:36+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-21T15:52:30+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-21T15:54:20+08:00"}
-{"cause":"display sql","function":"Delete","level":"info","msg":"Delete from im.userinfo where pid='325da6d9-be09-4777-8d69-a02e7981780a' and username='1' and password='123456789' and user_type=\u003cuint8 Value\u003e and email='906747215@qq.com' and photo='F:/Go_WorkSpace/Projects/src/Flipped_Server/imageContainer/1.png' and realName='' and profession='' and age=\u003cuint8 Value\u003e and region='' and hobby='' ;","time":"2020-05-21T15:54:53+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-21T15:56:48+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-21T16:02:18+08:00"}
-{"cause":"display sql","function":"Delete","level":"info","msg":"Delete from im.userinfo where pid='f60f3903-d5b2-47d8-a153-c356a82eb316' and username='1' and password='123456789' and user_type=0 and email='906747215@qq.com' and photo='F:/Go_WorkSpace/Projects/src/Flipped_Server/imageContainer/1.png' and realName='' and profession='' and age=0 and region='' and hobby='' ;","time":"2020-05-21T16:02:36+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-24T18:27:19+08:00"}
-{"cause":"display sql","function":"Insert","level":"info","msg":"INSERT INTO im.userinfo VALUES(\n'f2f85873-3959-4ba5-ad2e-f7aa6a39f636',\n'MrSecond',\n'123456789',\n0,\n'906747215@qq.com',\n'F:/Go_WorkSpace/Projects/src/Flipped_Server/imageContainer/1.png',\n'',\n'',\n0,\n'',\n'');","time":"2020-05-24T18:27:19+08:00"}
-{"cause":"succeed to insert data into database","function":"Insert","level":"info","msg":"LastInsertID: 0, affected row count: 1","time":"2020-05-24T18:27:19+08:00"}
-{"cause":"receive Request from client","function":"registerHandler","level":"info","msg":"response: , Status: 200","time":"2020-05-24T18:27:19+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-24T18:31:07+08:00"}
-{"cause":"display sql","function":"Insert","level":"info","msg":"INSERT INTO im.userinfo VALUES(\n'fc651279-edda-42d0-a026-efd9d0316811',\n'MrSecond',\n'123456',\n0,\n'906747215@qq.com',\n'F:/Go_WorkSpace/Projects/src/Flipped_Server/imageContainer/1.png',\n'',\n'',\n0,\n'',\n'');","time":"2020-05-24T18:31:07+08:00"}
-{"cause":"succeed to insert data into database","function":"Insert","level":"info","msg":"LastInsertID: 0, affected row count: 1","time":"2020-05-24T18:31:07+08:00"}
-{"cause":"receive Request from client","function":"registerHandler","level":"info","msg":"response: , Status: 200","time":"2020-05-24T18:31:07+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-24T18:34:19+08:00"}
-{"cause":"display sql","function":"Insert","level":"info","msg":"INSERT INTO im.userinfo VALUES(\n'97d15832-dc2b-4572-bcce-8c4fcf161976',\n'123',\n'123',\n0,\n'123@qq.com',\n'F:/Go_WorkSpace/Projects/src/Flipped_Server/imageContainer/1.png',\n'',\n'',\n0,\n'',\n'');","time":"2020-05-24T18:34:19+08:00"}
-{"cause":"succeed to insert data into database","function":"Insert","level":"info","msg":"LastInsertID: 0, affected row count: 1","time":"2020-05-24T18:34:19+08:00"}
-{"cause":"receive Request from client","function":"registerHandler","level":"info","msg":"response: , Status: 200","time":"2020-05-24T18:34:19+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-24T18:35:27+08:00"}
-{"cause":"display sql","function":"Insert","level":"info","msg":"INSERT INTO im.userinfo VALUES(\n'3f2c2bea-fa85-426e-99bf-9659bbd6e18e',\n'1223',\n'123',\n0,\n'906@qq.com',\n'F:/Go_WorkSpace/Projects/src/Flipped_Server/imageContainer/1.png',\n'',\n'',\n0,\n'',\n'');","time":"2020-05-24T18:35:27+08:00"}
-{"cause":"succeed to insert data into database","function":"Insert","level":"info","msg":"LastInsertID: 0, affected row count: 1","time":"2020-05-24T18:35:27+08:00"}
-{"cause":"receive Request from client","function":"registerHandler","level":"info","msg":"response: , Status: 200","time":"2020-05-24T18:35:27+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-24T23:51:46+08:00"}
-{"cause":"display sql","function":"Insert","level":"info","msg":"INSERT INTO im.userinfo VALUES(\n'892d411e-d4c9-4e8f-83e1-124452cdf46e',\n'123',\n'123',\n0,\n'906747215@qq.com',\n'F:/Go_WorkSpace/Projects/src/Flipped_Server/imageContainer/1.png',\n'',\n'',\n0,\n'',\n'');","time":"2020-05-24T23:51:46+08:00"}
-{"cause":"succeed to insert data into database","function":"Insert","level":"info","msg":"LastInsertID: 0, affected row count: 1","time":"2020-05-24T23:51:47+08:00"}
-{"cause":"receive Request from client","function":"registerHandler","level":"info","msg":"response: , Status: 200","time":"2020-05-24T23:51:47+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-24T23:55:40+08:00"}
-{"cause":"display sql","function":"Insert","level":"info","msg":"INSERT INTO im.userinfo VALUES(\n'25ac9370-1d5b-4875-aa5d-d72ed2236b72',\n'123',\n'123',\n0,\n'906747215@qq.com',\n'F:/Go_WorkSpace/Projects/src/Flipped_Server/imageContainer/1.png',\n'',\n'',\n0,\n'',\n'');","time":"2020-05-24T23:55:40+08:00"}
-{"cause":"succeed to insert data into database","function":"Insert","level":"info","msg":"LastInsertID: 0, affected row count: 1","time":"2020-05-24T23:55:40+08:00"}
-{"cause":"receive Request from client","function":"registerHandler","level":"info","msg":"response: , Status: 200","time":"2020-05-24T23:55:40+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-25T00:12:37+08:00"}
-{"cause":"display sql","function":"Insert","level":"info","msg":"INSERT INTO im.userinfo VALUES(\n'e33ff3d0-6624-4b6a-8ee0-92a56bd3e515',\n'123',\n'123',\n0,\n'9060@123.com',\n'F:/Go_WorkSpace/Projects/src/Flipped_Server/imageContainer/1.png',\n'',\n'',\n0,\n'',\n'');","time":"2020-05-25T00:12:37+08:00"}
-{"cause":"succeed to insert data into database","function":"Insert","level":"info","msg":"LastInsertID: 0, affected row count: 1","time":"2020-05-25T00:12:37+08:00"}
-{"cause":"receive Request from client","function":"registerHandler","level":"info","msg":"response: , Status: 200","time":"2020-05-25T00:12:37+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-25T00:18:04+08:00"}
-{"cause":"display sql","function":"Insert","level":"info","msg":"INSERT INTO im.userinfo VALUES(\n'44bbe3f4-9a00-422b-8dad-a6851125d14b',\n'17412',\n'7278',\n0,\n'906@qq.com',\n'F:/Go_WorkSpace/Projects/src/Flipped_Server/imageContainer/1.png',\n'',\n'',\n0,\n'',\n'');","time":"2020-05-25T00:18:04+08:00"}
-{"cause":"succeed to insert data into database","function":"Insert","level":"info","msg":"LastInsertID: 0, affected row count: 1","time":"2020-05-25T00:18:04+08:00"}
-{"cause":"receive Request from client","function":"registerHandler","level":"info","msg":"response: , Status: 200","time":"2020-05-25T00:18:04+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-25T09:36:32+08:00"}
-{"cause":"display sql","function":"Insert","level":"info","msg":"INSERT INTO im.userinfo VALUES(\n'43d8c74e-c5b5-49bb-a919-30744e650fd3',\n'11',\n'11',\n0,\n'906@11',\n'F:/Go_WorkSpace/Projects/src/Flipped_Server/imageContainer/1.png',\n'',\n'',\n0,\n'',\n'');","time":"2020-05-25T09:36:32+08:00"}
-{"cause":"succeed to insert data into database","function":"Insert","level":"info","msg":"LastInsertID: 0, affected row count: 1","time":"2020-05-25T09:36:32+08:00"}
-{"cause":"receive Request from client","function":"registerHandler","level":"info","msg":"response: , Status: 200","time":"2020-05-25T09:36:32+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-25T09:41:51+08:00"}
-{"cause":"display sql","function":"Insert","level":"info","msg":"INSERT INTO im.userinfo VALUES(\n'0d2fef52-6e38-46bc-8f43-ab7684e15ab7',\n'11',\n'12',\n0,\n'906@123',\n'F:/Go_WorkSpace/Projects/src/Flipped_Server/imageContainer/1.png',\n'',\n'',\n0,\n'',\n'');","time":"2020-05-25T09:41:51+08:00"}
-{"cause":"succeed to insert data into database","function":"Insert","level":"info","msg":"LastInsertID: 0, affected row count: 1","time":"2020-05-25T09:41:51+08:00"}
-{"cause":"receive Request from client","function":"registerHandler","level":"info","msg":"response: , Status: 200","time":"2020-05-25T09:41:51+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-25T10:00:51+08:00"}
-{"cause":"display sql","function":"Insert","level":"info","msg":"INSERT INTO im.userinfo VALUES(\n'1cf1adcc-07c0-43ef-90e7-b8d999af682a',\n'11',\n'11',\n0,\n'906747215@qq.com',\n'F:/Go_WorkSpace/Projects/src/Flipped_Server/imageContainer/1.png',\n'',\n'',\n0,\n'',\n'');","time":"2020-05-25T10:00:51+08:00"}
-{"cause":"succeed to insert data into database","function":"Insert","level":"info","msg":"LastInsertID: 0, affected row count: 1","time":"2020-05-25T10:00:51+08:00"}
-{"cause":"receive Request from client","function":"registerHandler","level":"info","msg":"response: , Status: 200","time":"2020-05-25T10:00:51+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-25T10:04:33+08:00"}
-{"cause":"display sql","function":"Insert","level":"info","msg":"INSERT INTO im.userinfo VALUES(\n'd381526b-aab5-472b-bb33-003965fd777d',\n'2572752',\n'7272',\n0,\n'906747@qq.com',\n'F:/Go_WorkSpace/Projects/src/Flipped_Server/imageContainer/1.png',\n'',\n'',\n0,\n'',\n'');","time":"2020-05-25T10:04:33+08:00"}
-{"cause":"succeed to insert data into database","function":"Insert","level":"info","msg":"LastInsertID: 0, affected row count: 1","time":"2020-05-25T10:04:33+08:00"}
-{"cause":"receive Request from client","function":"registerHandler","level":"info","msg":"response: , Status: 200","time":"2020-05-25T10:04:33+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-25T10:05:20+08:00"}
-{"cause":"display sql","function":"Insert","level":"info","msg":"INSERT INTO im.userinfo VALUES(\n'89289649-bbea-4b71-9f8b-6a1bda38abb1',\n'7127',\n'727',\n0,\n'906747215@qq.com',\n'F:/Go_WorkSpace/Projects/src/Flipped_Server/imageContainer/1.png',\n'',\n'',\n0,\n'',\n'');","time":"2020-05-25T10:05:20+08:00"}
-{"cause":"succeed to insert data into database","function":"Insert","level":"info","msg":"LastInsertID: 0, affected row count: 1","time":"2020-05-25T10:05:20+08:00"}
-{"cause":"receive Request from client","function":"registerHandler","level":"info","msg":"response: , Status: 200","time":"2020-05-25T10:05:20+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-25T10:20:18+08:00"}
-{"cause":"display sql","function":"Insert","level":"info","msg":"INSERT INTO im.userinfo VALUES(\n'c9182fcf-ce25-4d0a-8ce0-ca846ebb2fbe',\n'11',\n'12',\n0,\n'906747215@qq.com',\n'F:/Go_WorkSpace/Projects/src/Flipped_Server/imageContainer/1.png',\n'',\n'',\n0,\n'',\n'');","time":"2020-05-25T10:20:18+08:00"}
-{"cause":"succeed to insert data into database","function":"Insert","level":"info","msg":"LastInsertID: 0, affected row count: 1","time":"2020-05-25T10:20:18+08:00"}
-{"cause":"receive Request from client","function":"registerHandler","level":"info","msg":"response: , Status: 200","time":"2020-05-25T10:20:18+08:00"}
-{"cause":"count member number of the interface","function":"splitDataAndStruct","level":"info","msg":"该结构体有11个字段\n","time":"2020-05-25T10:21:24+08:00"}
-{"cause":"display sql","function":"Insert","level":"info","msg":"INSERT INTO im.userinfo VALUES(\n'13fc30e1-b824-4f14-b4e5-80965a6f6eb2',\n'4141',\n'42754',\n0,\n'906747@qq.copm',\n'F:/Go_WorkSpace/Projects/src/Flipped_Server/imageContainer/1.png',\n'',\n'',\n0,\n'',\n'');","time":"2020-05-25T10:21:24+08:00"}
-{"cause":"succeed to insert data into database","function":"Insert","level":"info","msg":"LastInsertID: 0, affected row count: 1","time":"2020-05-25T10:21:25+08:00"}
-{"cause":"receive Request from client","function":"registerHandler","level":"info","msg":"response: , Status: 200","time":"2020-05-25T10:21:25+08:00"}
-{"Function":"loginHandler","cause":"the username or password of the request is incorrect","level":"info","msg":"1123456789","time":"2020-05-25T22:47:46+08:00"}
-{"cause":"find data in MongoDB","function":"GetFriendListByUserName","level":"error","msg":"not found","time":"2020-05-28T21:21:10+08:00"}
-{"cause":"find data in MongoDB","function":"GetFriendListByUserName","level":"error","msg":"not found","time":"2020-05-28T21:21:51+08:00"}
-{"cause":"find friends of User: mrfourth","function":"AddFriend","level":"error","msg":"not found","time":"2020-05-28T21:21:54+08:00"}
-{"fields.msg":"Succeed to Delete friend","function":"DeleteFriend","level":"info","msg":"","time":"2020-05-28T22:10:29+08:00"}
-{"fields.msg":"Succeed to Delete friend","function":"DeleteFriend","level":"info","msg":"","time":"2020-05-28T22:35:09+08:00"}
-{"fields.msg":"Succeed to Delete friend","function":"DeleteFriend","level":"info","msg":"","time":"2020-05-29T21:43:22+08:00"}
+{"cause":"connect to redis server","function":"RedisClient_Init","level":"error","msg":"dial tcp 39.99.190.67:6379: connectex: A connection attempt failed because the connected party did not properly respond after a period of time, or established connection failed because connected host has failed to respond.","time":"2020-05-30T22:19:22+08:00"}
+{"fields.msg":"Succeed to Delete friend","function":"DeleteFriend","level":"info","msg":"","time":"2020-05-30T22:27:30+08:00"}
+{"fields.msg":"Switch to redis db 2","function":"CountOnlineUsers","level":"info","msg":"OK","time":"2020-05-30T22:27:47+08:00"}
+{"fields.msg":"Succeed to Delete friend","function":"DeleteFriend","level":"info","msg":"","time":"2020-05-30T22:28:51+08:00"}
+{"fields.msg":"Switch to redis db 2","function":"CountOnlineUsers","level":"info","msg":"OK","time":"2020-05-30T22:28:52+08:00"}
+{"fields.msg":"Succeed to Delete friend","function":"DeleteFriend","level":"info","msg":"","time":"2020-05-30T23:23:05+08:00"}
+{"cause":"set key to redis successfully","function":"WriteToRedis","level":"info","msg":"OK","time":"2020-05-30T23:24:58+08:00"}
+{"cause":"set expire to redis successfully","function":"WriteToRedis","level":"info","msg":"1","time":"2020-05-30T23:24:58+08:00"}
+{"fields.msg":"Parse tokenStr","function":"ParseToken","level":"info","msg":"token is expired by 52s","time":"2020-05-30T23:25:49+08:00"}
+{"fields.msg":"Succeed to Delete friend","function":"DeleteFriend","level":"info","msg":"","time":"2020-05-30T23:35:31+08:00"}
+{"fields.msg":"Parse tokenStr","function":"ParseToken","level":"info","msg":"token is expired by 10m36s","time":"2020-05-30T23:35:33+08:00"}
+{"fields.msg":"Parse tokenStr","function":"ParseToken","level":"info","msg":"token is expired by 10m45s","time":"2020-05-30T23:35:42+08:00"}

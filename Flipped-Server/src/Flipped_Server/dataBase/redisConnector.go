@@ -8,14 +8,18 @@ package dataBase
 import (
 	"Flipped_Server/logger"
 	"errors"
+	"fmt"
 	"github.com/garyburd/redigo/redis"
 	"github.com/sirupsen/logrus"
+	"strconv"
+	"sync"
 )
 
 //文件内全局变量，Redis连接指针
 var (
 	client *redis.Conn
 	timeout = 3*3600
+	timeoutHeartBeat = 60
 )
 
 // @title    RedisClient_Init
@@ -24,7 +28,7 @@ var (
 // @param     void
 // @return    void
 func RedisClientInit(){
-	c, err := redis.Dial("tcp", "127.0.0.1:6379")
+	c, err := redis.Dial("tcp", "39.99.190.67:6379")
 	//Client, err := redis.Dial("tcp", "127.0.0.1:6379")
 	if err != nil {
 		logger.Logger.WithFields(logrus.Fields {
@@ -53,7 +57,7 @@ func CloseRedisClient()  {
 }
 
 // @title    WriteToRedis
-// @description   				向Redis数据库写入string键值对，并设置过期时间3小时
+// @description   				向Redis db1数据库写入string键值对，并设置过期时间3小时
 // @auth      郑康       		2020.5.26
 // @param     string, string	键、值
 // @return    error				错误信息
@@ -91,7 +95,7 @@ func WriteToRedis(key string, value string) error{
 }
 
 // @title    ReadFromRedis
-// @description   			向Redis数据库读取值，如果读取错误或者键对应的值不存在就会报错
+// @description   			向Redis db1数据库读取值，如果读取错误或者键对应的值不存在就会报错
 // @auth      郑康       	2020.5.26
 // @param     string		键
 // @return    error			值、错误信息
@@ -129,11 +133,61 @@ func ReadFromRedis(key string) (string, error) {
 }
 
 // @title    ReadFromRedis
-// @description   			判断Redis数据库中是否存在某个键
+// @description   			判断Redis db1数据库中是否存在某个键
 // @auth      郑康       	2020.5.26
 // @param     string		键
 // @return    error			值、错误信息
-func KeyExists(key string) bool{
+func KeyExists(key string, dbNum int) bool{
+	reply, err := (*client).Do("Select", dbNum)
+	if err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "KeyExists", "Select DB: " + strconv.Itoa(dbNum), err.Error())
+		return false
+	} else {
+		fmt.Printf("reply: %v", reply)
+	}
 	exists, _ := redis.Bool((*client).Do("EXISTS", key))
 	return exists
+}
+
+func DeleteKey(key string, dbNum int) error{
+	_, err := (*client).Do("Select", dbNum)
+	if err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "DeleteKey", "Error to switch db", err.Error())
+		return err
+	}
+	err = (*client).Send("Del", key)
+	if err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "DeleteKey", "Error to delete key: " + key, err.Error())
+		return err
+	}
+	return nil
+}
+
+func CountOnlineUsers() (int, error){
+	reply, err := (*client).Do("Select", 2)
+	if err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "CountOnlineUsers", "Switch to redis db 2", err.Error())
+		return -1, err
+	}
+	logger.SetToLogger(logrus.InfoLevel, "CountOnlineUsers", "Switch to redis db 2", reply.(string))
+	reply, err = (*client).Do("KEYS", "*")
+	_, _ = (*client).Do("Select", 0)
+	return len(reply.([]interface{})), nil
+}
+
+// 实时更新用户状态， 如果用户存在于redis db2中，则更新其过期时间， 不存在则建立该key
+func UpdateUserStatus(username string, lock *sync.Mutex){
+	lock.Lock()
+	isExist := KeyExists(username, 2)
+	if isExist {
+		_, _ = (*client).Do("Expire", username, timeoutHeartBeat)
+	} else {
+		_, err := (*client).Do("Set", username, "alive")
+		if err != nil {
+			logger.SetToLogger(logrus.ErrorLevel, "UpdateUserStatus", "Error to Set Key-Value", err.Error())
+			return
+		}
+		_, _ = (*client).Do("Expire", username, timeoutHeartBeat)
+	}
+	lock.Unlock()
 }
