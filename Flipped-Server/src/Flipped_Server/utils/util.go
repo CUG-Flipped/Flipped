@@ -79,11 +79,13 @@ func Image2Base64(imagePath string) (string, error){
 		logger.SetToLogger(logrus.ErrorLevel, "Image2Base64", "image doesn't exist", "")
 		return "", errors.New("image doesn't exist")
 	}
+	_, imageName := filepath.Split(imagePath)
+	imageType := path.Ext(imageName)[1:]
 	imageBytes, err := ioutil.ReadFile(imagePath)
 	if err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "Image2Base64", "read from path: " + imagePath, err.Error())
 		return "", err
 	}
-	imageStr := base64.StdEncoding.EncodeToString(imageBytes)
+	imageStr := "data:image/"+imageType+";base64," + base64.StdEncoding.EncodeToString(imageBytes)
 	return imageStr, nil
 }

@@ -16,6 +16,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"net/http"
 	"strconv"
+	"sync"
 )
 
 // IFunction接口包含了http路由处理函数
@@ -24,6 +25,9 @@ type IFunction interface {
 	loginHandler(context *gin.Context)
 	friendsListHandler(context *gin.Context)
 	recommendedFriendsListHandler(context *gin.Context)
+	heartBeatHandler(context *gin.Context)
+	countOnlineUserNumber(context *gin.Context)
+	judgeUserAlive(context *gin.Context)
 }
 
 // HttpServer结构体包含了Http服务器绑定的IP地址和端口号
@@ -35,6 +39,7 @@ type HttpServer struct {
 // 全局变量，gin实例
 var (
 	Router = gin.Default()
+	lock = &sync.Mutex{}
 )
 
 // @title    Run
@@ -46,7 +51,7 @@ func (server *HttpServer) Run() {
 	server.bindRouteAndHandler()
 	dataBase.Init()
 	logger.InitLog()
-	//dataBase.RedisClientInit()
+	dataBase.RedisClientInit()
 	dataBase.InitializeMongoDB()
 	_ = Router.Run(server.IPAddr + ":" + strconv.Itoa(server.Port))
 }
@@ -61,6 +66,9 @@ func (server *HttpServer) bindRouteAndHandler() {
 	Router.POST("/register", server.registerHandler)
 	Router.GET("/friendList", server.friendsListHandler)
 	Router.GET("/recommendUser", server.recommendedFriendsListHandler)
+	Router.GET("heartBeat", server.heartBeatHandler)
+	Router.GET("/onlineUserNumber", server.countOnlineUserNumber)
+	Router.POST("/isAlive", server.judgeUserAlive)
 }
 
 // @title    registerHandler
@@ -186,7 +194,7 @@ func (server *HttpServer) loginHandler(context *gin.Context) {
 		data = ""
 	}
 	var tokenStr string
-	if dataBase.KeyExists(username) {
+	if dataBase.KeyExists(username, 0) {
 		tokenStr, err = dataBase.ReadFromRedis(username)
 		if err != nil {
 			status = http.StatusInternalServerError
@@ -310,3 +318,70 @@ func (server *HttpServer) recommendedFriendsListHandler(context *gin.Context) {
 		"data": dataMap,
 	})
 }
+
+func (server *HttpServer) heartBeatHandler(context *gin.Context) {
+	status := http.StatusOK
+	msg := "succeed to handle the request"
+	data := ""
+	tokenStr := context.Request.Header.Get("token")
+	username, err := ParseToken(tokenStr)
+	if err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "heartBeatHandler", "parse token error", err.Error())
+		status = http.StatusUnauthorized
+		msg = "token is invalid, Please login again"
+		data = err.Error()
+		return
+	}
+	go dataBase.UpdateUserStatus(username, lock)
+	context.JSON(status, gin.H{
+		"message": msg,
+		"data":data,
+	})
+}
+
+func (server *HttpServer) countOnlineUserNumber(context *gin.Context){
+	num, err := dataBase.CountOnlineUsers()
+	if err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H {
+			"message": "some error occur in the server, Please try again",
+			"data": err.Error(),
+		})
+		return
+	} else {
+		context.JSON(http.StatusOK, gin.H {
+			"message": "succeed to handle the request",
+			"data": num,
+		})
+	}
+}
+
+func (server *HttpServer) judgeUserAlive(context *gin.Context) {
+	status := http.StatusOK
+	msg := "succeed to handle the request"
+	data := ""
+	tokenStr := context.Request.Header.Get("token")
+	_, err := ParseToken(tokenStr)
+	if err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "heartBeatHandler", "parse token error", err.Error())
+		status = http.StatusUnauthorized
+		msg = "token is invalid, Please login again"
+		data = err.Error()
+	} else {
+		targetUser := context.DefaultQuery("username", "")
+		if targetUser == ""{
+			msg = "the user you want to query can't be empty"
+		} else {
+			msg = "succeed top handle the request"
+			if dataBase.KeyExists(targetUser, 2) {
+				data = "user: " + targetUser + " is alive"
+			} else {
+				data = "user: " + targetUser + " is not alive"
+			}
+		}
+	}
+	context.JSONP(status, gin.H {
+		"message": msg,
+		"data": data,
+	})
+}
+

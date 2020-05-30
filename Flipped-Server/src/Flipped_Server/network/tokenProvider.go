@@ -77,7 +77,7 @@ func ParseToken(tokenStr string) (string, error) {
 		return "", err
 	}
 
-	if claims, ok := token.Claims.(*MyClaims); ok && dataBase.KeyExists(claims.UserName){
+	if claims, ok := token.Claims.(*MyClaims); ok && dataBase.KeyExists(claims.UserName, 0){
 		return claims.UserName, nil
 	}
 	return "", errors.New("invalid token")
