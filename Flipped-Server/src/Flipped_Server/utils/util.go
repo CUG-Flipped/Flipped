@@ -14,6 +14,9 @@ import (
 	"strings"
 )
 
+
+var ExitFlag chan bool
+
 func GeneratorUUID() string{
 	u2, err := uuid.NewV4()
 	if err != nil {

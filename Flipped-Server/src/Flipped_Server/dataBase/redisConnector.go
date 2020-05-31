@@ -133,7 +133,7 @@ func ReadFromRedis(key string) (string, error) {
 }
 
 // @title    ReadFromRedis
-// @description   			判断Redis db1数据库中是否存在某个键
+// @description   			判断Redis数据库中是否存在某个键
 // @auth      郑康       	2020.5.26
 // @param     string		键
 // @return    error			值、错误信息

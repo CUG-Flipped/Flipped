@@ -28,6 +28,7 @@ type IFunction interface {
 	heartBeatHandler(context *gin.Context)
 	countOnlineUserNumber(context *gin.Context)
 	judgeUserAlive(context *gin.Context)
+	closeServer(context *gin.Context)
 }
 
 // HttpServer结构体包含了Http服务器绑定的IP地址和端口号
@@ -69,6 +70,7 @@ func (server *HttpServer) bindRouteAndHandler() {
 	Router.GET("heartBeat", server.heartBeatHandler)
 	Router.GET("/onlineUserNumber", server.countOnlineUserNumber)
 	Router.POST("/isAlive", server.judgeUserAlive)
+	Router.GET("/closeServer", server.closeServer)
 }
 
 // @title    registerHandler
@@ -153,6 +155,8 @@ func (server *HttpServer) registerHandler(context *gin.Context) {
 	} else {
 		context.String(status, responseStr)
 	}
+
+	_ = dataBase.InitUserFriendList(name)
 
 	logger.Logger.WithFields(logrus.Fields{
 		"function": "registerHandler",
@@ -385,3 +389,6 @@ func (server *HttpServer) judgeUserAlive(context *gin.Context) {
 	})
 }
 
+func (server *HttpServer) closeServer(context *gin.Context){
+	utils.ExitFlag <- true
+}
