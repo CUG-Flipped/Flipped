@@ -15,6 +15,7 @@ const (
 	mongoUser = "root"
 	mongoPassword = "mountain"
 	collectionName = "friendMap"
+	msgCollectionName = "messageMap"
 )
 
 var (
@@ -25,6 +26,12 @@ var (
 type friendMap struct {
 	SourceUser string `bson:"sourceUser"`
 	FriendList []string `bson:"friendList"`
+}
+
+type Recorder struct {
+	TargetUser string `bson:"targetUser"`
+	SourceUser string `bson:"sourceUser"`
+	Content string `bson:"content"`
 }
 
 func (fl *friendMap)String() string {
@@ -57,7 +64,6 @@ func InitializeMongoDB() {
 	currentDB = session.DB("im")
 	currentCollection = currentDB.C(collectionName)
 	session.SetPoolLimit(5)
-	_ = DeleteFriend("mrsecond", "465")
 }
 
 func GetFriendListByUserName(username string) ([]string, error) {
@@ -72,6 +78,16 @@ func GetFriendListByUserName(username string) ([]string, error) {
 	} else {
 		return resFriendList.FriendList, nil
 	}
+}
+
+func InitUserFriendList(username string) error {
+	newFriendPair := friendMap{SourceUser: username, FriendList: []string{}}
+	err := currentCollection.Insert(newFriendPair)
+	if err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "InitUserFriendList", "insert into mongodb", err.Error())
+		return err
+	}
+	return nil
 }
 
 func AddFriend(sourceUser string, targetUser string) error {
@@ -118,5 +134,41 @@ func DeleteFriend(sourceUser string, targetUser string) error{
 		}
 	}
 	logger.SetToLogger(logrus.InfoLevel, "DeleteFriend", "Succeed to Delete friend", "")
+	return nil
+}
+
+func WriteMessage(sourceUser string, targetUser string, content string) error {
+	curRecorder := Recorder{SourceUser: sourceUser, Content: content, TargetUser: targetUser}
+	currentCollection = currentDB.C(msgCollectionName)
+	err := currentCollection.Insert(curRecorder)
+	if err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "WriteMessage", "insert into mongodb", err.Error())
+		return err
+	}
+	currentCollection = currentDB.C(collectionName)
+	return nil
+}
+
+func ReadMessageOfUser(username string) *Recorder {
+	currentCollection = currentDB.C(msgCollectionName)
+	recorder := Recorder{}
+	err := currentCollection.Find(bson.M{"targetUser": username}).One(&recorder)
+	if err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "ReadMessageOfUser", "error to read recorder from mongodb", err.Error())
+		return nil
+	}
+	currentCollection = currentDB.C(collectionName)
+	return &recorder
+}
+
+func DeleteMessageOfUser(username string) error {
+	currentCollection = currentDB.C(msgCollectionName)
+	selector := bson.M{"targetUser": username}
+	err := currentCollection.Remove(selector)
+	if err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "DeleteMessageOfUser", "error to remove message", err.Error())
+		return err
+	}
+	currentCollection = currentDB.C(collectionName)
 	return nil
 }

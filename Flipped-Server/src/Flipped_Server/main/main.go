@@ -4,7 +4,12 @@
 // @Update  郑康 2020.5.17
 package main
 
-import "Flipped_Server/network"
+import (
+	"Flipped_Server/network"
+	"Flipped_Server/utils"
+)
+
+
 
 // @title    main
 // @description   main函数用于启动服务器
@@ -12,6 +17,11 @@ import "Flipped_Server/network"
 // @param     void
 // @return    void
 func main() {
+	//runtime.GOMAXPROCS(4)
+	utils.ExitFlag = make(chan bool)
 	httpServer := network.HttpServer{IPAddr: "", Port: 8080}
-	httpServer.Run()
+	go httpServer.Run()
+	socketServer := network.SocketServer{IPAddr: "", Port:8081}
+	socketServer.Run()
+	<-utils.ExitFlag
 }
