@@ -39,9 +39,10 @@
 
 //    ViewController* vivRoot = [[ViewController alloc] init];
 //    nav = [[UINavigationController alloc] initWithRootViewController:vivRoot];
+//
+//    LoginViewController* vivRoot = [[LoginViewController alloc] init];
+//    nav = [[UINavigationController alloc] initWithRootViewController:vivRoot];
     
-    
-//    ViewController* vivRoot = [[ViewController alloc] init];
     nav.navigationBarHidden = YES;
     self.window.rootViewController = nav;
     [SVProgressHUD setDefaultStyle:SVProgressHUDStyleDark];

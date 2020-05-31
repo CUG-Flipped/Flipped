@@ -27,200 +27,267 @@
     // Put teardown code here. This method is called after the invocation of each test method in the class.
 }
 
-#pragma mark - 注册
+#pragma mark -- 注册
 - (void)testReginstration {
-    
-    XCUIApplication *app2 = [[XCUIApplication alloc] init];
-    [app2 launch];
-    XCUIApplication *app = app2;
-    [app.textFields[@"Enter full name"] tap];
-    
-    XCUIElement *tKey = app2/*@START_MENU_TOKEN@*/.keys[@"T"]/*[[".keyboards.keys[@\"T\"]",".keys[@\"T\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [tKey tap];
-    XCUIElement *eKey = app2/*@START_MENU_TOKEN@*/.keys[@"e"]/*[[".keyboards.keys[@\"e\"]",".keys[@\"e\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [eKey tap];
-    XCUIElement *sKey = app2/*@START_MENU_TOKEN@*/.keys[@"s"]/*[[".keyboards.keys[@\"s\"]",".keys[@\"s\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [sKey tap];
-    XCUIElement *tKey2 = app2/*@START_MENU_TOKEN@*/.keys[@"t"]/*[[".keyboards.keys[@\"t\"]",".keys[@\"t\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [tKey2 tap];
-    [app.textFields[@"Enter email"] tap];
-    XCUIElement *aKey = app2/*@START_MENU_TOKEN@*/.keys[@"A"]/*[[".keyboards.keys[@\"A\"]",".keys[@\"A\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [aKey tap];
-    [app2/*@START_MENU_TOKEN@*/.keys[@"b"]/*[[".keyboards.keys[@\"b\"]",".keys[@\"b\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
-    
-    XCUIElement *cKey = app2/*@START_MENU_TOKEN@*/.keys[@"c"]/*[[".keyboards.keys[@\"c\"]",".keys[@\"c\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [cKey tap];
-    XCUIElement *moreKey = app2/*@START_MENU_TOKEN@*/.keys[@"more"]/*[[".keyboards",".keys[@\"numbers\"]",".keys[@\"more\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/;
-    [moreKey tap];
-    XCUIElement *key = app2/*@START_MENU_TOKEN@*/.keys[@"@"]/*[[".keyboards.keys[@\"@\"]",".keys[@\"@\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [key tap];
-    XCUIElement *key2 = app2/*@START_MENU_TOKEN@*/.keys[@"1"]/*[[".keyboards.keys[@\"1\"]",".keys[@\"1\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [key2 tap];
-    XCUIElement *key3 = app2/*@START_MENU_TOKEN@*/.keys[@"6"]/*[[".keyboards.keys[@\"6\"]",".keys[@\"6\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [key3 tap];
-    
-    XCUIElement *key4 = app2/*@START_MENU_TOKEN@*/.keys[@"3"]/*[[".keyboards.keys[@\"3\"]",".keys[@\"3\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [key4 tap];
-    XCUIElement *key5 = app2/*@START_MENU_TOKEN@*/.keys[@"."]/*[[".keyboards.keys[@\".\"]",".keys[@\".\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [key5 tap];
-    XCUIElement *moreKey2 = app2/*@START_MENU_TOKEN@*/.keys[@"more"]/*[[".keyboards",".keys[@\"letters\"]",".keys[@\"more\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/;
-    [moreKey2 tap];
-    [cKey tap];
-    XCUIElement *oKey = app2/*@START_MENU_TOKEN@*/.keys[@"o"]/*[[".keyboards.keys[@\"o\"]",".keys[@\"o\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [oKey tap];
-    XCUIElement *mKey = app2/*@START_MENU_TOKEN@*/.keys[@"m"]/*[[".keyboards.keys[@\"m\"]",".keys[@\"m\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [mKey tap];
-    [app.secureTextFields[@"Enter password"] tap];
-    [moreKey tap];
-    [key2 tap];
-    [app2/*@START_MENU_TOKEN@*/.keys[@"2"]/*[[".keyboards.keys[@\"2\"]",".keys[@\"2\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
-    [key4 tap];
-    [app2/*@START_MENU_TOKEN@*/.keys[@"4"]/*[[".keyboards.keys[@\"4\"]",".keys[@\"4\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
-    
-    XCUIElement *key6 = app2/*@START_MENU_TOKEN@*/.keys[@"5"]/*[[".keyboards.keys[@\"5\"]",".keys[@\"5\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [key6 tap];
-    [key3 tap];
-    [app2/*@START_MENU_TOKEN@*/.staticTexts[@"Register"]/*[[".buttons[@\"Register\"].staticTexts[@\"Register\"]",".staticTexts[@\"Register\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
-    
-    XCUIElement *svprogresshudElement = app.otherElements[@"SVProgressHUD"];
-    [svprogresshudElement tap];
-    
-}
-
-#pragma mark - 登录
-- (void)testLogin {
-    
-    XCUIApplication *app2 = [[XCUIApplication alloc] init];
-    [app2 launch];
-    XCUIElement *enterEmailTextField = app2.textFields[@"Enter email"];
-    [enterEmailTextField tap];
-    
-    XCUIElement *tKey = app2/*@START_MENU_TOKEN@*/.keys[@"T"]/*[[".keyboards.keys[@\"T\"]",".keys[@\"T\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [tKey tap];
-    XCUIElement *eKey = app2/*@START_MENU_TOKEN@*/.keys[@"e"]/*[[".keyboards.keys[@\"e\"]",".keys[@\"e\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [eKey tap];
-    XCUIElement *sKey = app2/*@START_MENU_TOKEN@*/.keys[@"s"]/*[[".keyboards.keys[@\"s\"]",".keys[@\"s\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [sKey tap];
-    XCUIElement *tKey2 = app2/*@START_MENU_TOKEN@*/.keys[@"t"]/*[[".keyboards.keys[@\"t\"]",".keys[@\"t\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [tKey2 tap];
-    
-    XCUIApplication *app = app2;
-    [app.secureTextFields[@"Enter password"] tap];
-    
-    XCUIElement *moreKey = app2/*@START_MENU_TOKEN@*/.keys[@"more"]/*[[".keyboards",".keys[@\"numbers\"]",".keys[@\"more\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/;
-    [moreKey tap];
-    
-    XCUIElement *key = app2/*@START_MENU_TOKEN@*/.keys[@"1"]/*[[".keyboards.keys[@\"1\"]",".keys[@\"1\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [key tap];
-    [app2/*@START_MENU_TOKEN@*/.keys[@"2"]/*[[".keyboards.keys[@\"2\"]",".keys[@\"2\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
-    
-    XCUIElement *key2 = app2/*@START_MENU_TOKEN@*/.keys[@"3"]/*[[".keyboards.keys[@\"3\"]",".keys[@\"3\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [key2 tap];
-    [app2/*@START_MENU_TOKEN@*/.keys[@"4"]/*[[".keyboards.keys[@\"4\"]",".keys[@\"4\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
-    
-    XCUIElement *key3 = app2/*@START_MENU_TOKEN@*/.keys[@"5"]/*[[".keyboards.keys[@\"5\"]",".keys[@\"5\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [key3 tap];
-    XCUIElement *key4 = app2/*@START_MENU_TOKEN@*/.keys[@"6"]/*[[".keyboards.keys[@\"6\"]",".keys[@\"6\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [key4 tap];
-    XCUIElement *key5 = app2/*@START_MENU_TOKEN@*/.keys[@"7"]/*[[".keyboards.keys[@\"7\"]",".keys[@\"7\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [key5 tap];
-    
-    XCUIElement *key6 = app2/*@START_MENU_TOKEN@*/.keys[@"8"]/*[[".keyboards.keys[@\"8\"]",".keys[@\"8\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [key6 tap];
-    [app2/*@START_MENU_TOKEN@*/.keys[@"9"]/*[[".keyboards.keys[@\"9\"]",".keys[@\"9\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
-    
-    XCUIElement *key7 = app2/*@START_MENU_TOKEN@*/.keys[@"0"]/*[[".keyboards.keys[@\"0\"]",".keys[@\"0\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [key7 tap];
-    
-    XCUIElement *logInButton = app.buttons[@"Log In"];
-    [logInButton tap];
-    [enterEmailTextField tap];
-    [moreKey tap];
-    
-    XCUIElement *key8 = app2/*@START_MENU_TOKEN@*/.keys[@"@"]/*[[".keyboards.keys[@\"@\"]",".keys[@\"@\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [key8 tap];
-    [key tap];
-    [key4 tap];
-    [key2 tap];
-    XCUIElement *key9 = app2/*@START_MENU_TOKEN@*/.keys[@"."]/*[[".keyboards.keys[@\".\"]",".keys[@\".\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [key9 tap];
-    XCUIElement *moreKey2 = app2/*@START_MENU_TOKEN@*/.keys[@"more"]/*[[".keyboards",".keys[@\"letters\"]",".keys[@\"more\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/;
-    [moreKey2 tap];
-    XCUIElement *cKey = app2/*@START_MENU_TOKEN@*/.keys[@"c"]/*[[".keyboards.keys[@\"c\"]",".keys[@\"c\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [cKey tap];
-    XCUIElement *oKey = app2/*@START_MENU_TOKEN@*/.keys[@"o"]/*[[".keyboards.keys[@\"o\"]",".keys[@\"o\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [oKey tap];
-    XCUIElement *mKey = app2/*@START_MENU_TOKEN@*/.keys[@"m"]/*[[".keyboards.keys[@\"m\"]",".keys[@\"m\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
-    [mKey tap];
-    [logInButton tap];
-    [app2/*@START_MENU_TOKEN@*/.buttons[@"Clear text"]/*[[".textFields[@\"Enter email\"].buttons[@\"Clear text\"]",".buttons[@\"Clear text\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
-    [moreKey tap];
-    [key tap];
-    [key5 tap];
-    [key4 tap];
-    [key2 tap];
-    [key3 tap];
-    [key2 tap];
-    [key4 tap];
-    [key4 tap];
-    [key tap];
-    [key5 tap];
-    [key5 tap];
-    [key8 tap];
-    [key tap];
-    [key4 tap];
-    [key2 tap];
-    [key9 tap];
-    [moreKey2 tap];
-    [cKey tap];
-    [oKey tap];
-    [mKey tap];
-    [logInButton tap];
-}
-
-#pragma mark - 主页测试
-- (void)testHome {
     XCUIApplication *app = [[XCUIApplication alloc] init];
     [app launch];
+    
+    XCUIElement *enterFullNameTextField = app.textFields[@"Enter full name"];
+    [enterFullNameTextField tap];
+    
+    XCUIElement *tKey = app/*@START_MENU_TOKEN@*/.keys[@"T"]/*[[".keyboards.keys[@\"T\"]",".keys[@\"T\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [tKey tap];
+    
+    XCUIElement *eKey = app/*@START_MENU_TOKEN@*/.keys[@"e"]/*[[".keyboards.keys[@\"e\"]",".keys[@\"e\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [eKey tap];
+    
+    XCUIElement *sKey = app/*@START_MENU_TOKEN@*/.keys[@"s"]/*[[".keyboards.keys[@\"s\"]",".keys[@\"s\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [sKey tap];
+
+    XCUIElement *tKey2 = app/*@START_MENU_TOKEN@*/.keys[@"t"]/*[[".keyboards.keys[@\"t\"]",".keys[@\"t\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [tKey2 tap];
+    
+    XCUIElement *element = [[[[[[[[[app childrenMatchingType:XCUIElementTypeWindow] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element;
+    [element tap];
+    [app.textFields[@"Enter email"] tap];
+    [tKey tap];
+    [eKey tap];
+    [sKey tap];
+    [tKey2 tap];
+    
+    XCUIElement *moreKey = app/*@START_MENU_TOKEN@*/.keys[@"more"]/*[[".keyboards",".keys[@\"numbers\"]",".keys[@\"more\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/;
+    [moreKey tap];
+    
+    XCUIElement *key = app/*@START_MENU_TOKEN@*/.keys[@"@"]/*[[".keyboards.keys[@\"@\"]",".keys[@\"@\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [key tap];
+    
+    XCUIElement *key2 = app/*@START_MENU_TOKEN@*/.keys[@"1"]/*[[".keyboards.keys[@\"1\"]",".keys[@\"1\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [key2 tap];
+    
+    XCUIElement *key3 = app/*@START_MENU_TOKEN@*/.keys[@"6"]/*[[".keyboards.keys[@\"6\"]",".keys[@\"6\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [key3 tap];
+    
+    XCUIElement *key4 = app/*@START_MENU_TOKEN@*/.keys[@"3"]/*[[".keyboards.keys[@\"3\"]",".keys[@\"3\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [key4 tap];
+    
+    XCUIElement *key5 = app/*@START_MENU_TOKEN@*/.keys[@"."]/*[[".keyboards.keys[@\".\"]",".keys[@\".\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [key5 tap];
+    
+    XCUIElement *moreKey2 = app/*@START_MENU_TOKEN@*/.keys[@"more"]/*[[".keyboards",".keys[@\"letters\"]",".keys[@\"more\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/;
+    [moreKey2 tap];
+    
+    XCUIElement *cKey = app/*@START_MENU_TOKEN@*/.keys[@"c"]/*[[".keyboards.keys[@\"c\"]",".keys[@\"c\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [cKey tap];
+    
+    XCUIElement *oKey = app/*@START_MENU_TOKEN@*/.keys[@"o"]/*[[".keyboards.keys[@\"o\"]",".keys[@\"o\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [oKey tap];
+    
+    XCUIElement *mKey = app/*@START_MENU_TOKEN@*/.keys[@"m"]/*[[".keyboards.keys[@\"m\"]",".keys[@\"m\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [mKey tap];
+    [element tap];
+    [app.secureTextFields[@"Enter password"] tap];
+    
+    XCUIElement *qKey = app/*@START_MENU_TOKEN@*/.keys[@"q"]/*[[".keyboards.keys[@\"q\"]",".keys[@\"q\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [qKey tap];
+    
+    XCUIElement *wKey = app/*@START_MENU_TOKEN@*/.keys[@"w"]/*[[".keyboards.keys[@\"w\"]",".keys[@\"w\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [wKey tap];
+    [eKey tap];
+    
+    XCUIElement *rKey = app/*@START_MENU_TOKEN@*/.keys[@"r"]/*[[".keyboards.keys[@\"r\"]",".keys[@\"r\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [rKey tap];
+    [tKey2 tap];
+    
+    XCUIElement *yKey = app/*@START_MENU_TOKEN@*/.keys[@"y"]/*[[".keyboards.keys[@\"y\"]",".keys[@\"y\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [yKey tap];
+    [element tap];
+    
+    XCUIElement *registerButton = app.buttons[@"Register"];
+    [registerButton tap];
+    [enterFullNameTextField tap];
+    [wKey tap];
+    [wKey tap];
+    [wKey tap];
+    [wKey tap];
+    [wKey tap];
+    [element tap];
+    [registerButton tap];
+}
+
+#pragma mark -- 登录
+- (void)testLogin {
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    [app launch];
+    
+    [app.textFields[@"Enter email"] tap];
+    
+    XCUIElement *tKey = app/*@START_MENU_TOKEN@*/.keys[@"T"]/*[[".keyboards.keys[@\"T\"]",".keys[@\"T\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [tKey tap];
+    
+    XCUIElement *eKey = app/*@START_MENU_TOKEN@*/.keys[@"e"]/*[[".keyboards.keys[@\"e\"]",".keys[@\"e\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [eKey tap];
+    
+    XCUIElement *sKey = app/*@START_MENU_TOKEN@*/.keys[@"s"]/*[[".keyboards.keys[@\"s\"]",".keys[@\"s\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [sKey tap];
+    
+    XCUIElement *tKey2 = app/*@START_MENU_TOKEN@*/.keys[@"t"]/*[[".keyboards.keys[@\"t\"]",".keys[@\"t\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [tKey2 tap];
+    
+    XCUIElement *moreKey = app/*@START_MENU_TOKEN@*/.keys[@"more"]/*[[".keyboards",".keys[@\"numbers\"]",".keys[@\"more\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/;
+    [moreKey tap];
+    
+    XCUIElement *key = app/*@START_MENU_TOKEN@*/.keys[@"@"]/*[[".keyboards.keys[@\"@\"]",".keys[@\"@\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [key tap];
+    
+    XCUIElement *key2 = app/*@START_MENU_TOKEN@*/.keys[@"1"]/*[[".keyboards.keys[@\"1\"]",".keys[@\"1\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [key2 tap];
+    
+    XCUIElement *key3 = app/*@START_MENU_TOKEN@*/.keys[@"6"]/*[[".keyboards.keys[@\"6\"]",".keys[@\"6\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [key3 tap];
+    
+    XCUIElement *key4 = app/*@START_MENU_TOKEN@*/.keys[@"3"]/*[[".keyboards.keys[@\"3\"]",".keys[@\"3\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [key4 tap];
+    
+    XCUIElement *key5 = app/*@START_MENU_TOKEN@*/.keys[@"."]/*[[".keyboards.keys[@\".\"]",".keys[@\".\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [key5 tap];
+    
+    XCUIElement *moreKey2 = app/*@START_MENU_TOKEN@*/.keys[@"more"]/*[[".keyboards",".keys[@\"letters\"]",".keys[@\"more\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/;
+    [moreKey2 tap];
+    
+    XCUIElement *cKey = app/*@START_MENU_TOKEN@*/.keys[@"c"]/*[[".keyboards.keys[@\"c\"]",".keys[@\"c\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [cKey tap];
+    
+    XCUIElement *oKey = app/*@START_MENU_TOKEN@*/.keys[@"o"]/*[[".keyboards.keys[@\"o\"]",".keys[@\"o\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [oKey tap];
+    
+    XCUIElement *mKey = app/*@START_MENU_TOKEN@*/.keys[@"m"]/*[[".keyboards.keys[@\"m\"]",".keys[@\"m\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [mKey tap];
+    
+    XCUIElement *element = [[[[[[[[[app childrenMatchingType:XCUIElementTypeWindow] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element;
+    [element tap];
+    [app.secureTextFields[@"Enter password"] tap];
+    
+    XCUIElement *qKey = app/*@START_MENU_TOKEN@*/.keys[@"q"]/*[[".keyboards.keys[@\"q\"]",".keys[@\"q\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [qKey tap];
+    [app/*@START_MENU_TOKEN@*/.keys[@"w"]/*[[".keyboards.keys[@\"w\"]",".keys[@\"w\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
+    [eKey tap];
+    
+    XCUIElement *rKey = app/*@START_MENU_TOKEN@*/.keys[@"r"]/*[[".keyboards.keys[@\"r\"]",".keys[@\"r\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [rKey tap];
+    [tKey2 tap];
+    
+    XCUIElement *yKey = app/*@START_MENU_TOKEN@*/.keys[@"y"]/*[[".keyboards.keys[@\"y\"]",".keys[@\"y\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [yKey tap];
+    [element tap];
+    [app.buttons[@"Log In"] tap];
+}
+
+#pragma mark -- 首页
+- (void)testHome {
+    
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    [app launch];
+    
     XCUIElement *element = [[[[[[[[[[app childrenMatchingType:XCUIElementTypeWindow] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther] elementBoundByIndex:1];
     [element swipeLeft];
+    
     [element swipeRight];
+    
     [element swipeUp];
+    
     [element swipeDown];
-    [element swipeLeft];
-    [element swipeRight];
     
-    XCUIElement *twoimgButton = app.buttons[@"twoImg"];
-    [twoimgButton tap];
+    [app.buttons[@"twoImg"] tap];
     
-    XCUIElement *fourimgButton = app.buttons[@"fourImg"];
-    [fourimgButton tap];
-    [twoimgButton tap];
-    [fourimgButton tap];
+    [app.buttons[@"fourImg"] tap];
     
-    XCUIElement *threeimgButton = app.buttons[@"threeImg"];
-    [threeimgButton tap];
-    [threeimgButton tap];
+    [app.buttons[@"threeImg"] tap];
+    
     [app.buttons[@"firstImg"] tap];
-    [twoimgButton tap];
-    [fourimgButton tap];
     
-    // Use recording to get started writing UI tests.
-    // Use XCTAssert and related functions to verify your tests produce the correct results.
-}
-
-#pragma mark - 个人中心
-- (void)testinfo {
+    [app.buttons[@"fiveImg"] tap];
     
 }
 
-#pragma mark - 通讯录
-- (void)testAddressBook {
+#pragma mark -- 个人信息
+- (void)testInfo1 {
+    
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    [app launch];
+    
+    [app.buttons[@"navLeftImg"] tap];
+    
+    XCUIElementQuery *tablesQuery2 = app.tables;
+    [[[[tablesQuery2 childrenMatchingType:XCUIElementTypeCell] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeTextField].element tap];
+    
+    XCUIElementQuery *tablesQuery = tablesQuery2;
+    [tablesQuery/*@START_MENU_TOKEN@*/.buttons[@"Clear text"]/*[[".cells",".textFields.buttons[@\"Clear text\"]",".buttons[@\"Clear text\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/ tap];
+    
+    XCUIElement *lKey = app/*@START_MENU_TOKEN@*/.keys[@"L"]/*[[".keyboards.keys[@\"L\"]",".keys[@\"L\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [lKey tap];
+    
+    XCUIElement *aKey = app/*@START_MENU_TOKEN@*/.keys[@"a"]/*[[".keyboards.keys[@\"a\"]",".keys[@\"a\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [aKey tap];
+    
+    XCUIElement *yKey = app/*@START_MENU_TOKEN@*/.keys[@"y"]/*[[".keyboards.keys[@\"y\"]",".keys[@\"y\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [yKey tap];
+    
+    [app/*@START_MENU_TOKEN@*/.keys[@"e"]/*[[".keyboards.keys[@\"e\"]",".keys[@\"e\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
+    
+    XCUIElement *rKey = app/*@START_MENU_TOKEN@*/.keys[@"r"]/*[[".keyboards.keys[@\"r\"]",".keys[@\"r\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [rKey tap];
+    
+    [tablesQuery/*@START_MENU_TOKEN@*/.staticTexts[@"Profession"]/*[[".otherElements[@\"Profession\"].staticTexts[@\"Profession\"]",".staticTexts[@\"Profession\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ swipeUp];
+    [app/*@START_MENU_TOKEN@*/.staticTexts[@"Save"]/*[[".buttons[@\"Save\"].staticTexts[@\"Save\"]",".staticTexts[@\"Save\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
+    [app.buttons[@"Cancel"] tap];
+    
     
 }
 
-#pragma mark - 聊天
-- (void)testAddressChat {
+#pragma mark -- 详细信息
+- (void)testInfo2 {
+    
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    
+    [app launch];
+    
+    [[[[[[[[[[[app childrenMatchingType:XCUIElementTypeWindow] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther] elementBoundByIndex:1].buttons[@"i"] tap];
+    
+    [app.buttons[@"inforNoLike"] tap];
+    
+    [app.buttons[@"inforLike"] tap];
+    
+    [app.buttons[@"inforSC"] tap];
+    
+    [app.buttons[@"infoBackDown"] tap];
+    
+}
+
+#pragma mark -- 通讯录及聊天
+- (void)testChat {
+    
+    XCUIApplication *app = [[XCUIApplication alloc] init];
+    [app.buttons[@"navRightImg"] tap];
+    
+    [app.tables/*@START_MENU_TOKEN@*/.staticTexts[@"Hermosa"]/*[[".cells.staticTexts[@\"Hermosa\"]",".staticTexts[@\"Hermosa\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/ tap];
+    [app.staticTexts[@"Please enter here..."] tap];
+    
+    XCUIElement *hKey = app/*@START_MENU_TOKEN@*/.keys[@"H"]/*[[".keyboards.keys[@\"H\"]",".keys[@\"H\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [hKey tap];
+    
+    XCUIElement *eKey = app/*@START_MENU_TOKEN@*/.keys[@"e"]/*[[".keyboards.keys[@\"e\"]",".keys[@\"e\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [eKey tap];
+    
+    XCUIElement *lKey = app/*@START_MENU_TOKEN@*/.keys[@"l"]/*[[".keyboards.keys[@\"l\"]",".keys[@\"l\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [lKey tap];
+    
+    XCUIElement *oKey = app/*@START_MENU_TOKEN@*/.keys[@"o"]/*[[".keyboards.keys[@\"o\"]",".keys[@\"o\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/;
+    [oKey tap];
+    [oKey tap];
+    [app.buttons[@"btn expression"] tap];
+//    [[app.scrollViews containingType:XCUIElementTypeStaticText identifier:@"\U4eba\U7269"].element tap];
+    [[[[[[[[[[app childrenMatchingType:XCUIElementTypeWindow] elementBoundByIndex:0] childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeOther].element childrenMatchingType:XCUIElementTypeTable].element tap];
+    
     
 }
 
