@@ -8,6 +8,7 @@ import (
 	"github.com/sirupsen/logrus"
 	"net"
 	"strconv"
+	"sync"
 )
 
 type SocketServer struct {
@@ -32,40 +33,97 @@ func (ss *SocketServer) Run() {
 			logger.SetToLogger(logrus.ErrorLevel, "Run", "error to Accept socket", err.Error())
 		} else {
 			logger.SetToLogger(logrus.InfoLevel, "Run", "succeed to Accept socket", "")
-			connectionHandler(conn)
+			go connectionHandler(conn)
 		}
 	}
 }
 
-//ToDo: 持续监听该客户端的消息
 func connectionHandler(conn net.Conn) {
-
-	data := json.NewDecoder(conn)
-	var msg utils.FromClientMsg
-	err := data.Decode(&msg)
-	if err != nil {
-		logger.SetToLogger(logrus.ErrorLevel, "connectionHandler", "error to decode message sent from client", err.Error())
-		return
-	}
-	switch msg.MsgType {
-	case 1:
-		err = communicationRequestHandler(&msg, conn)
-		if err != nil {
-			reply := utils.ReplyMsg{
-				ResultCode: 500,
-				MsgContent: "Some error occur in the server, please try it latter",
+	var bytesFlag chan []byte
+	var countFlag chan int
+	var exitFlag chan bool
+	bytesFlag = make(chan []byte)
+	countFlag = make(chan int)
+	exitFlag = make(chan bool)
+	var wg sync.WaitGroup
+	wg.Add(2)
+	go func() {
+		for {
+			select {
+			case <-exitFlag:
+				{
+					logger.SetToLogger(logrus.ErrorLevel, "Anonymous function one in connectionHandler", "receive a exit signal", "")
+					wg.Done()
+					return
+				}
+			default:
+				{
+					buf := make([]byte, 1024*1024)
+					count, err := conn.Read(buf)
+					if err != nil {
+						logger.SetToLogger(logrus.ErrorLevel, "Anonymous function one in connectionHandler", "error to read from connection", err.Error())
+						exitFlag <- true
+						wg.Done()
+						return
+					} else {
+						logger.SetToLogger(logrus.InfoLevel, "Anonymous function one in connectionHandler", "succeed to read from connection", "bytes number:"+strconv.Itoa(count))
+						bytesFlag <- buf
+						countFlag <- count
+						logger.SetToLogger(logrus.InfoLevel, "Anonymous function one in connectionHandler", "succeed to send bytes to bytesFlag channel", "bytes number:"+strconv.Itoa(count))
+					}
+				}
 			}
-			buf, _ := json.Marshal(reply)
-			_, _ = conn.Write(buf)
 		}
-	case 2:
-		err = connectionRequestHandler(&msg, conn)
-		if err != nil {
-			replyToClient(conn, 500, "Some error occur in the server, please try it latter")
+	}()
+	go func() {
+		for {
+			select {
+			case <-exitFlag:
+				{
+					logger.SetToLogger(logrus.ErrorLevel, "Anonymous function one in connectionHandler", "receive a exit sigal", "")
+					wg.Done()
+					return
+				}
+			default:
+				{
+					logger.SetToLogger(logrus.InfoLevel, "Anonymous function two in connectionHandler", "go into default branch", "")
+					bytes := <-bytesFlag
+					count := <- countFlag
+					msg := utils.FromClientMsg{}
+					err := json.Unmarshal(bytes[:count], &msg)
+					if err != nil {
+						logger.SetToLogger(logrus.ErrorLevel, "Anonymous function two in connectionHandler", "error to decode message sent from client", err.Error())
+						exitFlag <- true
+						wg.Done()
+						return
+					}
+					switch msg.MsgType {
+					case 1:
+						err = communicationRequestHandler(&msg, conn)
+						if err != nil {
+							reply := utils.ReplyMsg{
+								ResultCode: 500,
+								MsgContent: "Some error occur in the server, please try it latter",
+							}
+							buf, _ := json.Marshal(reply)
+							_, _ = conn.Write(buf)
+						}
+					case 2:
+						err = connectionRequestHandler(&msg, conn)
+						if err != nil {
+							replyToClient(conn, 500, "Some error occur in the server, please try it latter")
+						}
+					default:
+						logger.SetToLogger(logrus.ErrorLevel, "connectionHandler", "error type in communicationMsg struct", "")
+					}
+				}
+			}
 		}
-	default:
-		logger.SetToLogger(logrus.ErrorLevel, "connectionHandler", "error type in communicationMsg struct", "")
-	}
+	}()
+	wg.Wait()
+	logger.SetToLogger(logrus.InfoLevel,"connectionHandler", "one connection to client is disconnected", "")
+	utils.DeleteConnection(conn)
+	logger.SetToLogger(logrus.InfoLevel,"connectionHandler", "delete the connection with client", "")
 }
 
 //交流请求

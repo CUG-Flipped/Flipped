@@ -5,6 +5,7 @@ go 1.14
 require (
 	github.com/appleboy/gin-jwt/v2 v2.6.3 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/fwhezfwhez/tcpx v0.0.0-20200110044634-c35f3f515f4e // indirect
 	github.com/garyburd/redigo v1.6.0
 	github.com/gin-gonic/gin v1.6.3
 	github.com/go-sql-driver/mysql v1.5.0

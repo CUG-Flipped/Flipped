@@ -1,0 +1,27 @@
+{
+    "dataBase": {
+        "mongodb": {
+            "host": "47.94.134.159",
+            "port": "27017",
+            "userName": "root",
+            "pwd": "mountain",
+            "friendCollectionName": "friendMap",
+            "msgCollectionName": "messageMap"
+        },
+        "mysql":{
+            "engine": "mysql",
+            "userName": "admin",
+            "pwd": "mountain",
+            "host": "47.94.134.159",
+            "port": "3306",
+            "dbName": "im"
+        },
+        "redis": {
+            "host": "39.99.190.67",
+            "port": "6379"
+        }
+    },
+    "logger": {
+        "filePath": "./server.log"
+    }
+}

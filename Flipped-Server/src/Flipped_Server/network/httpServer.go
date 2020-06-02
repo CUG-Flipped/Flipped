@@ -224,11 +224,11 @@ func (server *HttpServer) loginHandler(context *gin.Context) {
 				"token": tokenStr,
 			}
 		}
-		context.JSON(status, gin.H{
-			"message": msg,
-			"data":    data,
-		})
 	}
+	context.JSON(status, gin.H{
+		"message": msg,
+		"data":    data,
+	})
 }
 
 // @title    loginHandler

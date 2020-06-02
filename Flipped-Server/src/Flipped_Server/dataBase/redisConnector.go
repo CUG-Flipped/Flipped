@@ -6,6 +6,7 @@
 package dataBase
 
 import (
+	"Flipped_Server/initialSetting"
 	"Flipped_Server/logger"
 	"errors"
 	"fmt"
@@ -20,7 +21,15 @@ var (
 	client *redis.Conn
 	timeout = 3*3600
 	timeoutHeartBeat = 60
+	redisIP string
+	redisPort string
 )
+
+func initialSettingsRedis() {
+	redisSetting := initialSetting.DataBaseConfig["redis"].(map[string] interface {})
+	redisIP = redisSetting["host"].(string)
+	redisPort = redisSetting["port"].(string)
+}
 
 // @title    RedisClient_Init
 // @description   			初始化Redis数据库
@@ -28,8 +37,9 @@ var (
 // @param     void
 // @return    void
 func RedisClientInit(){
-	c, err := redis.Dial("tcp", "39.99.190.67:6379")
-	//Client, err := redis.Dial("tcp", "127.0.0.1:6379")
+	initialSettingsRedis()
+	c, err := redis.Dial("tcp", redisIP + ":" + redisPort)
+	//c, err := redis.Dial("tcp", "39.99.190.67:6379")
 	if err != nil {
 		logger.Logger.WithFields(logrus.Fields {
 			"function": "RedisClient_Init",
