@@ -5,8 +5,10 @@
 package main
 
 import (
+	"Flipped_Server/initialSetting"
 	"Flipped_Server/network"
 	"Flipped_Server/utils"
+	"runtime"
 )
 
 
@@ -17,11 +19,14 @@ import (
 // @param     void
 // @return    void
 func main() {
-	//runtime.GOMAXPROCS(4)
+	runtime.GOMAXPROCS(4)
 	utils.ExitFlag = make(chan bool)
-	httpServer := network.HttpServer{IPAddr: "", Port: 8080}
-	go httpServer.Run()
+
+	initialSetting.InitSettings()
 	socketServer := network.SocketServer{IPAddr: "", Port:8081}
-	socketServer.Run()
+	go socketServer.Run()
+
+	httpServer := network.HttpServer{IPAddr: "", Port: 8080}
+	httpServer.Run()
 	<-utils.ExitFlag
 }

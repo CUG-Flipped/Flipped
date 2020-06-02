@@ -5,6 +5,7 @@
 package dataBase
 
 import (
+	"Flipped_Server/initialSetting"
 	"Flipped_Server/logger"
 	"database/sql"
 	"errors"
@@ -17,6 +18,15 @@ import (
 // 包内全局变量，存放于数据库的指针
 var mysqlDB *sql.DB
 
+var (
+	engine string
+	username string
+	password string
+	ip string
+	port string
+	dbName string
+)
+
 // 数据库结构体用于连接时使用
 type DBInfo struct {
 	Engine   string //引擎名称
@@ -27,19 +37,38 @@ type DBInfo struct {
 	DBName   string //数据库名称
 }
 
+func initialSettingsMysql(){
+	mysqlSettings := initialSetting.DataBaseConfig["mysql"].(map[string] interface {})
+	engine = mysqlSettings["engine"].(string)
+	username = mysqlSettings["userName"].(string)
+	password = mysqlSettings["pwd"].(string)
+	ip = mysqlSettings["host"].(string)
+	port = mysqlSettings["port"].(string)
+	dbName = mysqlSettings["dbName"].(string)
+}
+
 // @title    Init
 // @description   数据库初始化函数，用户对数据库进行初始化、连接等操作
 // @auth      郑康             2020.5.17
 // @param     void
 // @return    void
 func Init() {
+	initialSettingsMysql()
+	//db := DBInfo{
+	//	Engine:   "mysql",
+	//	UserName: "admin",
+	//	PassWord: "mountain",
+	//	IP:       "47.94.134.159",
+	//	Port:     "3306",
+	//	DBName:   "im",
+	//}
 	db := DBInfo{
-		Engine:   "mysql",
-		UserName: "admin",
-		PassWord: "mountain",
-		IP:       "47.94.134.159",
-		Port:     "3306",
-		DBName:   "im",
+		Engine: engine,
+		UserName: username,
+		PassWord: password,
+		IP: ip,
+		Port: port,
+		DBName: dbName,
 	}
 
 	database, err := sql.Open(db.Engine, fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", db.UserName, db.PassWord, db.IP, db.Port, db.DBName))

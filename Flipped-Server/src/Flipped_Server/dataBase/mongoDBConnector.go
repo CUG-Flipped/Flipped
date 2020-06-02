@@ -1,6 +1,7 @@
 package dataBase
 
 import (
+	"Flipped_Server/initialSetting"
 	"Flipped_Server/logger"
 	"Flipped_Server/utils"
 	"fmt"
@@ -9,13 +10,19 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-const (
-	mongoHost = "47.94.134.159"
-	mongoPort = "27017"
-	mongoUser = "root"
-	mongoPassword = "mountain"
-	collectionName = "friendMap"
-	msgCollectionName = "messageMap"
+var (
+	//mongoHost = "47.94.134.159"
+	//mongoPort = "27017"
+	//mongoUser = "root"
+	//mongoPassword = "mountain"
+	//collectionName = "friendMap"
+	//msgCollectionName = "messageMap"
+	mongoHost string
+	mongoPort string
+	mongoUser string
+	mongoPassword string
+	collectionName string
+	msgCollectionName string
 )
 
 var (
@@ -37,7 +44,18 @@ func (fl *friendMap)String() string {
 	return res
 }
 
+func initialSettingsMongo(){
+	mongoSettings := initialSetting.DataBaseConfig["mongodb"].(map[string] interface {})
+	mongoHost = mongoSettings["host"].(string)
+	mongoPort = mongoSettings["port"].(string)
+	mongoUser = mongoSettings["userName"].(string)
+	mongoPassword = mongoSettings["pwd"].(string)
+	collectionName = mongoSettings["friendCollectionName"].(string)
+	msgCollectionName = mongoSettings["msgCollectionName"].(string)
+}
+
 func InitializeMongoDB() {
+	initialSettingsMongo()
 	session, err := mgo.Dial(mongoHost + ":" + mongoPort)
 	if err != nil {
 		logger.Logger.WithFields(logrus.Fields{

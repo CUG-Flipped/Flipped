@@ -51,3 +51,10 @@ func GetUserConnection(username string) net.Conn {
 	}
 }
 
+func DeleteConnection(conn net.Conn)  {
+	for username, curConn := range UserConnectionMap {
+		if curConn == conn {
+			delete(UserConnectionMap, username)
+		}
+	}
+}
