@@ -11,10 +11,7 @@ var(
 
 func InitLog() {
 	// 设置日志格式为json格式
-	Logger.Formatter = &logrus.TextFormatter{
-		DisableColors: true,
-		FullTimestamp: true,
-	}
+	Logger.Formatter = &logrus.JSONFormatter{}
 	Logger.SetReportCaller(true)
 	file, err := os.OpenFile("./server.log", os.O_RDWR|os.O_CREATE|os.O_APPEND, 0666)
 	if err == nil {

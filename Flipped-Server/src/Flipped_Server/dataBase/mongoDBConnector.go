@@ -28,11 +28,6 @@ type friendMap struct {
 	FriendList []string `bson:"friendList"`
 }
 
-type Recorder struct {
-	TargetUser string `bson:"targetUser"`
-	SourceUser string `bson:"sourceUser"`
-	Content string `bson:"content"`
-}
 
 func (fl *friendMap)String() string {
 	res := fmt.Sprintf("Source User: %s, Friends: ", fl.SourceUser)
@@ -138,7 +133,7 @@ func DeleteFriend(sourceUser string, targetUser string) error{
 }
 
 func WriteMessage(sourceUser string, targetUser string, content string) error {
-	curRecorder := Recorder{SourceUser: sourceUser, Content: content, TargetUser: targetUser}
+	curRecorder := utils.Recorder{SourceUser: sourceUser, Content: content, TargetUser: targetUser}
 	currentCollection = currentDB.C(msgCollectionName)
 	err := currentCollection.Insert(curRecorder)
 	if err != nil {
@@ -149,9 +144,9 @@ func WriteMessage(sourceUser string, targetUser string, content string) error {
 	return nil
 }
 
-func ReadMessageOfUser(username string) *Recorder {
+func ReadMessageOfUser(username string) *utils.Recorder {
 	currentCollection = currentDB.C(msgCollectionName)
-	recorder := Recorder{}
+	recorder := utils.Recorder{}
 	err := currentCollection.Find(bson.M{"targetUser": username}).One(&recorder)
 	if err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "ReadMessageOfUser", "error to read recorder from mongodb", err.Error())

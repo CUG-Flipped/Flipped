@@ -10,6 +10,14 @@ require (
 	github.com/go-sql-driver/mysql v1.5.0
 	github.com/gofrs/uuid v3.3.0+incompatible
 	github.com/golang/protobuf v1.4.2 // indirect
+	github.com/lestrrat-go/file-rotatelogs v2.3.0+incompatible // indirect
+	github.com/lestrrat-go/strftime v1.0.1 // indirect
+	github.com/nats-io/gnatsd v1.4.1 // indirect
+	github.com/nats-io/nats-server v1.4.1 // indirect
+	github.com/nats-io/nats.go v1.10.0
+	github.com/nats-io/nuid v1.0.1 // indirect
+	github.com/nsqio/go-nsq v1.0.8
+	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5 // indirect
 	github.com/satori/go.uuid v1.2.0 // indirect
 	github.com/shurcooL/sanitized_anchor_name v1.0.0 // indirect
 	github.com/sirupsen/logrus v1.6.0
