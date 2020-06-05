@@ -12,8 +12,14 @@ var(
 	LoggerConfig map[string] interface{}
 )
 
-func InitSettings(){
-	buf, err := ioutil.ReadFile("./defaultSettings.json")
+func InitSettings(path string){
+	var buf []byte
+	var err error
+	if path != "" {
+		buf, err = ioutil.ReadFile(path)
+	} else {
+		buf, err = ioutil.ReadFile("./defaultSettings.json")
+	}
 	if err != nil {
 		panic(err)
 	}
