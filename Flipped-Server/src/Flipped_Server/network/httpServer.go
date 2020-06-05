@@ -11,6 +11,7 @@ import (
 	"Flipped_Server/utils"
 	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
@@ -57,6 +58,15 @@ func (server *HttpServer) Run() {
 	_ = Router.Run(server.IPAddr + ":" + strconv.Itoa(server.Port))
 }
 
+func (server *HttpServer) SetupRouter() *gin.Engine {
+	server.bindRouteAndHandler()
+	dataBase.Init()
+	logger.InitLog()
+	dataBase.RedisClientInit()
+	dataBase.InitializeMongoDB()
+	return Router
+}
+
 // @title    bindRouteAndHandler
 // @description   将路由与处理函数绑定
 // @auth      郑康             2020.5.17
@@ -67,7 +77,7 @@ func (server *HttpServer) bindRouteAndHandler() {
 	Router.POST("/register", server.registerHandler)
 	Router.GET("/friendList", server.friendsListHandler)
 	Router.GET("/recommendUser", server.recommendedFriendsListHandler)
-	Router.GET("heartBeat", server.heartBeatHandler)
+	Router.GET("/heartBeat", server.heartBeatHandler)
 	Router.GET("/onlineUserNumber", server.countOnlineUserNumber)
 	Router.POST("/isAlive", server.judgeUserAlive)
 	Router.GET("/closeServer", server.closeServer)
@@ -80,88 +90,81 @@ func (server *HttpServer) bindRouteAndHandler() {
 // @return    void
 func (server *HttpServer) registerHandler(context *gin.Context) {
 	var res bytes.Buffer
-	status := http.StatusOK
-	responseStr := ""
-
-	userType, err1 := strconv.Atoi(context.DefaultQuery("user_type", "-1"))
-	name := context.DefaultQuery("name", "")
-	email := context.DefaultQuery("email", "")
-	password := context.DefaultQuery("password", "")
-
-	form, _ := context.MultipartForm()
-	photoInfo := form.File["photo"][0]
-
-	photoName := photoInfo.Filename
-	photo := make([]byte, photoInfo.Size)
-	file, err := photoInfo.Open()
-
-	if err1 != nil {
-
-		logger.Logger.WithFields(logrus.Fields{
-			"function": "registerHandler",
-			"cause":    "convert user_type",
-		}).Error(err1.Error())
-
-		status = http.StatusBadRequest
-		responseStr = "wrong data type of 'userType'"
-	}
-
+	responseStr, status, err := checkRegister(context)
 	if err != nil {
-		fmt.Println(err.Error())
-		logger.Logger.WithFields(logrus.Fields{
-			"function": "registerHandler",
-			"cause":    "open photoInfo",
-		}).Error(err.Error())
-
-		status = http.StatusBadRequest
-		responseStr = "upload file is unacceptable"
-
-	} else {
-		count, _ := file.Read(photo)
-		res.WriteString(fmt.Sprintf("Photo total %d bytes\n", count))
-		defer file.Close()
-	}
-
-	res.WriteString(fmt.Sprintf("type: %d, name: %s, email: %s, password: %s\n", userType, name, email, password))
-
-	registerTable := dataBase.UserInfoTable{
-		Pid:        utils.GeneratorUUID(),
-		Username:   name,
-		Password:   password,
-		UserType:   userType,
-		Email:      email,
-		Photo:      utils.GetImageURL(photoName, photo),
-		RealName:   "",
-		Profession: "",
-		Age:        0,
-		Region:     "",
-		Hobby:      "",
-	}
-
-	err2 := sqlmapper.Insert(registerTable, "userinfo")
-
-	if err2 != nil {
-		status = http.StatusInternalServerError
-		responseStr = "Get an error when insert into DataBase"
-
-		logger.Logger.WithFields(logrus.Fields{
-			"function": "registerHandler",
-			"cause":    "Insert into database using 'sqlmapper.Insert'",
-		}).Error(err2.Error())
-	}
-
-	if status == http.StatusOK {
-		context.String(status, res.String())
-	} else {
 		context.String(status, responseStr)
+	} else {
+		userType, err1 := strconv.Atoi(context.DefaultQuery("user_type", "-1"))
+		name := context.DefaultQuery("name", "")
+		email := context.DefaultQuery("email", "")
+		password := context.DefaultQuery("password", "")
+
+		if isUserNameRepeated(name) {
+			context.String(http.StatusBadRequest, "username already exists, please set another username")
+			logger.SetToLogger(logrus.InfoLevel, "registerHandler", "repeated username", "")
+			return
+		}
+
+		form, _ := context.MultipartForm()
+		if len(form.File["photo"]) == 0 {
+			context.String(http.StatusBadRequest, "key 'photo' should be in request body and value of it should be a image")
+			return
+		}
+		photoInfo := form.File["photo"][0]
+
+		photoName := photoInfo.Filename
+		photo := make([]byte, photoInfo.Size)
+		file, err := photoInfo.Open()
+
+		if err1 != nil {
+			logger.SetToLogger(logrus.ErrorLevel, "registerHandler", "error to convert user_type", err1.Error())
+			status = http.StatusBadRequest
+			responseStr = "wrong data type of 'userType'"
+		}
+		if err != nil {
+			logger.SetToLogger(logrus.ErrorLevel, "registerHandler", "error to open photoInfo", err.Error())
+			status = http.StatusBadRequest
+			responseStr = "upload file is unacceptable"
+
+		} else {
+			count, _ := file.Read(photo)
+			res.WriteString(fmt.Sprintf("Photo total %d bytes\n", count))
+			defer file.Close()
+		}
+
+		res.WriteString(fmt.Sprintf("type: %d, name: %s, email: %s, password: %s\n", userType, name, email, password))
+
+		registerTable := dataBase.UserInfoTable{
+			Pid:        utils.GeneratorUUID(),
+			Username:   name,
+			Password:   password,
+			UserType:   userType,
+			Email:      email,
+			Photo:      utils.GetImageURL(photoName, photo),
+			RealName:   "",
+			Profession: "",
+			Age:        0,
+			Region:     "",
+			Hobby:      "",
+		}
+
+		err2 := sqlmapper.Insert(registerTable, "userinfo")
+
+		if err2 != nil {
+			status = http.StatusInternalServerError
+			responseStr = "Get an error when insert into DataBase"
+			logger.SetToLogger(logrus.ErrorLevel, "registerHandler", "Insert into database using 'sqlmapper.Insert'", err2.Error())
+		}
+
+		if status == http.StatusOK {
+			context.String(status, res.String())
+		} else {
+			context.String(status, responseStr)
+		}
+
+		_ = dataBase.InitUserFriendList(name)
+		logger.SetToLogger(logrus.InfoLevel, "registerHandler", "receive Request from client", "response: " + responseStr + ", Status: " + strconv.Itoa(status))
 	}
-
-	_ = dataBase.InitUserFriendList(name)
-
-	logger.Logger.WithFields(logrus.Fields{
-		"function": "registerHandler",
-		"cause":    "receive Request from client",
-	}).Info("response: " + responseStr + ", Status: " + strconv.Itoa(status))
 }
 
 // @title    loginHandler
@@ -193,38 +196,40 @@ func (server *HttpServer) loginHandler(context *gin.Context) {
 			"cause":    "the username or password of the request is incorrect",
 		}).Info(username, pwd)
 		//context.String(http.StatusUnauthorized, "user does't exist or wrong username or wrong password")
-		status = http.StatusUnauthorized
+		status = http.StatusNotFound
 		msg = "account does't exist or wrong username or wrong password"
 		data = ""
-	}
-	var tokenStr string
-	if dataBase.KeyExists(username, 0) {
-		tokenStr, err = dataBase.ReadFromRedis(username)
-		if err != nil {
-			status = http.StatusInternalServerError
-			msg = "there is something going wrong with the server, please try it again"
-			data = ""
-		} else {
-			status = http.StatusOK
-			msg = "succeed to login"
-			data = gin.H{
-				"token": tokenStr,
-			}
-		}
 	} else {
-		tokenStr, err = GenerateToken(username)
-		if err != nil {
-			status = http.StatusInternalServerError
-			msg = "there is something going wrong with the server, please try it again"
-			data = ""
+		var tokenStr string
+		if dataBase.KeyExists(username, 0) {
+			tokenStr, err = dataBase.ReadFromRedis(username)
+			if err != nil {
+				status = http.StatusInternalServerError
+				msg = "there is something going wrong with the server, please try it again"
+				data = ""
+			} else {
+				status = http.StatusOK
+				msg = "succeed to login"
+				data = gin.H{
+					"token": tokenStr,
+				}
+			}
 		} else {
-			status = http.StatusOK
-			msg = "succeed to login"
-			data = gin.H{
-				"token": tokenStr,
+			tokenStr, err = GenerateToken(username)
+			if err != nil {
+				status = http.StatusInternalServerError
+				msg = "there is something going wrong with the server, please try it again"
+				data = ""
+			} else {
+				status = http.StatusOK
+				msg = "succeed to login"
+				data = gin.H{
+					"token": tokenStr,
+				}
 			}
 		}
 	}
+
 	context.JSON(status, gin.H{
 		"message": msg,
 		"data":    data,
@@ -335,8 +340,10 @@ func (server *HttpServer) heartBeatHandler(context *gin.Context) {
 		msg = "token is invalid, Please login again"
 		data = err.Error()
 		return
+	} else {
+		go dataBase.UpdateUserStatus(username, lock)
 	}
-	go dataBase.UpdateUserStatus(username, lock)
+
 	context.JSON(status, gin.H{
 		"message": msg,
 		"data":data,
@@ -391,4 +398,50 @@ func (server *HttpServer) judgeUserAlive(context *gin.Context) {
 
 func (server *HttpServer) closeServer(context *gin.Context){
 	utils.ExitFlag <- true
+}
+
+func checkRegister(context *gin.Context) (string, int, error) {
+	status := http.StatusOK
+	responseStr := ""
+	err := errors.New("")
+	userType, _ := strconv.Atoi(context.DefaultQuery("user_type", "-1"))
+	email := context.DefaultQuery("email", "")
+	name := context.DefaultQuery("name", "")
+	password := context.DefaultQuery("password", "")
+	form, _ := context.MultipartForm()
+	if userType == -1 {
+		status = http.StatusBadRequest
+		responseStr = "parameter: 'user_type' is required"
+		err = errors.New("parameter: 'user_type' is required")
+	} else if name == "" {
+		status = http.StatusBadRequest
+		responseStr = "parameter: 'name' is required"
+		err = errors.New("parameter: 'name' is required")
+	} else if email == "" {
+		status = http.StatusBadRequest
+		responseStr = "parameter: 'email' is required"
+		err = errors.New("parameter: 'email' is required")
+	} else if password == "" {
+		status = http.StatusBadRequest
+		responseStr = "parameter: 'password' is required"
+		err = errors.New("parameter: 'password' is required")
+	} else if form == nil {
+		status = http.StatusBadRequest
+		responseStr = "parameter: 'photo' is required"
+		err = errors.New("parameter: 'photo' is required")
+	} else {
+		responseStr = "Ok to Register"
+		status = http.StatusOK
+		err = nil
+	}
+	return responseStr, status, err
+}
+
+func isUserNameRepeated(username string) bool{
+	userInfo, _ := dataBase.FindUserInfo(username, "")
+	if userInfo == nil {
+		return false
+	} else {
+		return true
+	}
 }

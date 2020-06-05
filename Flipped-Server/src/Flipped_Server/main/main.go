@@ -22,11 +22,11 @@ func main() {
 	runtime.GOMAXPROCS(4)
 	utils.ExitFlag = make(chan bool)
 
-	initialSetting.InitSettings()
-	socketServer := network.SocketServer{IPAddr: "", Port:8081}
+	initialSetting.InitSettings("")
+	socketServer := network.SocketServer{IPAddr: "", Port:8082}
 	go socketServer.Run()
 
-	httpServer := network.HttpServer{IPAddr: "", Port: 8080}
+	httpServer := network.HttpServer{IPAddr: "", Port: 8081}
 	httpServer.Run()
 	<-utils.ExitFlag
 }

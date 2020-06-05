@@ -1,2 +1,0 @@
-{"cause":"update the expire time successfully","file":"F:/Go_WorkSpace/Projects/src/Flipped_Server/dataBase/redisConnector.go:139","func":"Flipped_Server/dataBase.ReadFromRedis","function":"ReadFromRedis","level":"info","msg":"1","time":"2020-06-02T23:49:36+08:00"}
-{"cause":"update the expire time successfully","file":"F:/Go_WorkSpace/Projects/src/Flipped_Server/dataBase/redisConnector.go:139","func":"Flipped_Server/dataBase.ReadFromRedis","function":"ReadFromRedis","level":"info","msg":"1","time":"2020-06-02T23:50:08+08:00"}

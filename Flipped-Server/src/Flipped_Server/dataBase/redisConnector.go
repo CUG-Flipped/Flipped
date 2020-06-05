@@ -185,7 +185,7 @@ func CountOnlineUsers() (int, error){
 	return len(reply.([]interface{})), nil
 }
 
-// 实时更新用户状态， 如果用户存在于redis db2中，则更新其过期时间， 不存在则建立该key
+// 实时更新用户状态， 如果用户存在于redis db2中，则更新其过期时间60s， 不存在则建立该key
 func UpdateUserStatus(username string, lock *sync.Mutex){
 	lock.Lock()
 	isExist := KeyExists(username, 2)
