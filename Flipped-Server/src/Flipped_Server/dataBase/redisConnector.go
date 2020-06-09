@@ -10,23 +10,29 @@ import (
 	"Flipped_Server/logger"
 	"errors"
 	"fmt"
-	"github.com/garyburd/redigo/redis"
+	red "github.com/garyburd/redigo/redis"
 	"github.com/sirupsen/logrus"
 	"strconv"
 	"sync"
+	"time"
 )
 
 //文件内全局变量，Redis连接指针
 var (
-	client *redis.Conn
-	timeout = 3*3600
+	client           *red.Conn
+	timeout          = 3 * 3600
 	timeoutHeartBeat = 60
-	redisIP string
-	redisPort string
+	redisIP          string
+	redisPort        string
+	redis            *Redis
 )
 
+type Redis struct {
+	pool *red.Pool
+}
+
 func initialSettingsRedis() {
-	redisSetting := initialSetting.DataBaseConfig["redis"].(map[string] interface {})
+	redisSetting := initialSetting.DataBaseConfig["redis"].(map[string]interface{})
 	redisIP = redisSetting["host"].(string)
 	redisPort = redisSetting["port"].(string)
 }
@@ -36,18 +42,35 @@ func initialSettingsRedis() {
 // @auth      郑康       	2020.5.26
 // @param     void
 // @return    void
-func RedisClientInit(){
+func RedisClientInit() {
 	initialSettingsRedis()
-	c, err := redis.Dial("tcp", redisIP + ":" + redisPort)
-	//c, err := redis.Dial("tcp", "39.99.190.67:6379")
-	if err != nil {
-		logger.Logger.WithFields(logrus.Fields {
-			"function": "RedisClient_Init",
-			"cause": "connect to redis server",
-		}).Error(err.Error())
-		return
+	redis = new(Redis)
+	host := redisIP + ":" + redisPort
+	redis.pool = &red.Pool{
+		MaxIdle:     256,
+		MaxActive:   0,
+		IdleTimeout: time.Duration(120),
+		Dial: func() (red.Conn, error) {
+			return red.Dial(
+				"tcp",
+				host,
+				red.DialReadTimeout(time.Duration(1000)*time.Millisecond),
+				red.DialWriteTimeout(time.Duration(1000)*time.Millisecond),
+				red.DialConnectTimeout(time.Duration(1000)*time.Millisecond),
+				red.DialDatabase(0),
+			)
+		},
 	}
-	client = &c
+	//c, err := red.Dial("tcp", redisIP+":"+redisPort)
+	////c, err := redis.Dial("tcp", "39.99.190.67:6379")
+	//if err != nil {
+	//	logger.Logger.WithFields(logrus.Fields{
+	//		"function": "RedisClient_Init",
+	//		"cause":    "connect to redis server",
+	//	}).Error(err.Error())
+	//	return
+	//}
+	//client = &c
 }
 
 // @title    CloseRedisClient
@@ -55,13 +78,13 @@ func RedisClientInit(){
 // @auth      郑康       	2020.5.26
 // @param     void
 // @return    void
-func CloseRedisClient()  {
+func CloseRedisClient() {
 	if client != nil {
 		defer (*client).Close()
 	}
 	logger.Logger.WithFields(logrus.Fields{
 		"function": "CloseRedisClient",
-		"cause": "close redis connection",
+		"cause":    "close redis connection",
 	})
 	client = nil
 }
@@ -71,35 +94,27 @@ func CloseRedisClient()  {
 // @auth      郑康       		2020.5.26
 // @param     string, string	键、值
 // @return    error				错误信息
-func WriteToRedis(key string, value string) error{
-	res1, err1 := (*client).Do("SET", key, value)
+func WriteToRedis(key string, value string) error {
+	conn := redis.pool.Get()
+	if err:= conn.Err(); err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "WriteToRedis", "error to get instance from redis pool", err.Error())
+		return err
+	}
+	defer conn.Close()
+	res1, err1 := conn.Do("SET", key, value)
 	if err1 != nil {
-		logger.Logger.WithFields(logrus.Fields {
-			"function": "WriteToRedis",
-			"cause": "set key to redis failed",
-		}).Error(err1.Error())
+		logger.SetToLogger(logrus.ErrorLevel, "WriteToRedis", "set key to redis failed", err1.Error())
 		return err1
 
 	} else {
-		logger.Logger.WithFields(logrus.Fields {
-			"function": "WriteToRedis",
-			"cause": "set key to redis successfully",
-		}).Info(res1)
+		logger.SetToLogger(logrus.InfoLevel, "WriteToRedis", "set key to redis successfully", res1.(string))
 	}
-
-	res2, err2 := (*client).Do("EXPIRE", key, timeout)
+	res2, err2 := conn.Do("EXPIRE", key, timeout)
 	if err2 != nil {
-		logger.Logger.WithFields(logrus.Fields {
-			"function": "WriteToRedis",
-			"cause": "set expire to redis failed",
-		}).Error(err2.Error())
+		logger.SetToLogger(logrus.ErrorLevel, "WriteToRedis", "set expire to redis failed", err2.Error())
 		return err2
-
 	} else {
-		logger.Logger.WithFields(logrus.Fields {
-			"function": "WriteToRedis",
-			"cause": "set expire to redis successfully",
-		}).Info(res2)
+		logger.SetToLogger(logrus.InfoLevel, "WriteToRedis", "set expire to redis successfully", string(res2.(int64)))
 	}
 	return nil
 }
@@ -110,33 +125,28 @@ func WriteToRedis(key string, value string) error{
 // @param     string		键
 // @return    error			值、错误信息
 func ReadFromRedis(key string) (string, error) {
-	reply, err := (*client).Do("GET", key)
+	conn := redis.pool.Get()
+	if err:= conn.Err(); err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "ReadFromRedis", "error to get instance from redis pool", err.Error())
+		return "", err
+	}
+	defer conn.Close()
+
+	reply, err := conn.Do("GET", key)
 	if err != nil {
-		logger.Logger.WithFields(logrus.Fields {
-			"function": "ReadFromRedis",
-			"cause": "read from redis",
-		}).Error(err.Error())
+		logger.SetToLogger(logrus.ErrorLevel, "ReadFromRedis", "read from redis", err.Error())
 		return "", err
 	}
 	if reply == nil {
-		logger.Logger.WithFields(logrus.Fields {
-			"function": "ReadFromRedis",
-			"cause": "get reply",
-		}).Error("value is Empty")
+		logger.SetToLogger(logrus.ErrorLevel, "ReadFromRedis", "get reply", "")
 		return "", errors.New("nil value of the key")
 	}
-	res, err1 := (*client).Do("EXPIRE", key, timeout)
+	res, err1 := conn.Do("EXPIRE", key, timeout)
 	if err1 != nil {
-		logger.Logger.WithFields(logrus.Fields {
-			"function": "ReadFromRedis",
-			"cause": "update the expire time failed",
-		}).Error(err1.Error())
+		logger.SetToLogger(logrus.ErrorLevel, "ReadFromRedis", "update the expire time failed", err1.Error())
 		return "", err1
 	} else {
-		logger.Logger.WithFields(logrus.Fields {
-			"function": "ReadFromRedis",
-			"cause": "update the expire time successfully",
-		}).Info(res)
+		logger.SetToLogger(logrus.InfoLevel, "ReadFromRedis", "update the expire time successfully", string(res.(int64)))
 	}
 	value := string(reply.([]uint8))
 	return value, nil
@@ -147,57 +157,84 @@ func ReadFromRedis(key string) (string, error) {
 // @auth      郑康       	2020.5.26
 // @param     string		键
 // @return    error			值、错误信息
-func KeyExists(key string, dbNum int) bool{
-	reply, err := (*client).Do("Select", dbNum)
+func KeyExists(key string, dbNum int) bool {
+	conn := redis.pool.Get()
+	if err:= conn.Err(); err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "KeyExists", "error to get instance from redis pool", err.Error())
+		return false
+	}
+	defer conn.Close()
+	reply, err := conn.Do("Select", dbNum)
 	if err != nil {
-		logger.SetToLogger(logrus.ErrorLevel, "KeyExists", "Select DB: " + strconv.Itoa(dbNum), err.Error())
+		logger.SetToLogger(logrus.ErrorLevel, "KeyExists", "Select DB: "+strconv.Itoa(dbNum), err.Error())
 		return false
 	} else {
-		fmt.Printf("reply: %v", reply)
+		logger.SetToLogger(logrus.InfoLevel, "KeyExists", fmt.Sprintf("reply: %v", reply), "")
 	}
-	exists, _ := redis.Bool((*client).Do("EXISTS", key))
+	exists, _ := red.Bool(conn.Do("EXISTS", key))
 	return exists
 }
 
-func DeleteKey(key string, dbNum int) error{
-	_, err := (*client).Do("Select", dbNum)
+func DeleteKey(key string, dbNum int) error {
+	conn := redis.pool.Get()
+	if err:= conn.Err(); err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "KeyExists", "error to get instance from redis pool", err.Error())
+		return err
+	}
+	defer conn.Close()
+	_, err := conn.Do("Select", dbNum)
 	if err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "DeleteKey", "Error to switch db", err.Error())
 		return err
 	}
-	err = (*client).Send("Del", key)
+	err = conn.Send("Del", key)
 	if err != nil {
-		logger.SetToLogger(logrus.ErrorLevel, "DeleteKey", "Error to delete key: " + key, err.Error())
+		logger.SetToLogger(logrus.ErrorLevel, "DeleteKey", "Error to delete key: "+key, err.Error())
 		return err
 	}
 	return nil
 }
 
-func CountOnlineUsers() (int, error){
-	reply, err := (*client).Do("Select", 2)
+func CountOnlineUsers() (int, error) {
+	conn := redis.pool.Get()
+	if err:= conn.Err(); err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "CountOnlineUsers", "error to get instance from redis pool", err.Error())
+		return 0, err
+	}
+	defer conn.Close()
+
+	reply, err := conn.Do("Select", 2)
 	if err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "CountOnlineUsers", "Switch to redis db 2", err.Error())
 		return -1, err
 	}
-	logger.SetToLogger(logrus.InfoLevel, "CountOnlineUsers", "Switch to redis db 2", reply.(string))
-	reply, err = (*client).Do("KEYS", "*")
-	_, _ = (*client).Do("Select", 0)
+	_reply, _ := red.String(reply, err)
+	logger.SetToLogger(logrus.InfoLevel, "CountOnlineUsers", "Switch to redis db 2", _reply)
+	reply, err = conn.Do("KEYS", "*")
+	_, _ = conn.Do("Select", 0)
 	return len(reply.([]interface{})), nil
 }
 
 // 实时更新用户状态， 如果用户存在于redis db2中，则更新其过期时间60s， 不存在则建立该key
-func UpdateUserStatus(username string, lock *sync.Mutex){
+func UpdateUserStatus(username string, lock *sync.Mutex) {
+	conn := redis.pool.Get()
+	if err:= conn.Err(); err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "UpdateUserStatus", "error to get instance from redis pool", err.Error())
+		return
+	}
+	defer conn.Close()
+
 	lock.Lock()
 	isExist := KeyExists(username, 2)
 	if isExist {
-		_, _ = (*client).Do("Expire", username, timeoutHeartBeat)
+		_, _ = conn.Do("Expire", username, timeoutHeartBeat)
 	} else {
-		_, err := (*client).Do("Set", username, "alive")
+		_, err := conn.Do("Set", username, "alive")
 		if err != nil {
 			logger.SetToLogger(logrus.ErrorLevel, "UpdateUserStatus", "Error to Set Key-Value", err.Error())
 			return
 		}
-		_, _ = (*client).Do("Expire", username, timeoutHeartBeat)
+		_, _ = conn.Do("Expire", username, timeoutHeartBeat)
 	}
 	lock.Unlock()
 }

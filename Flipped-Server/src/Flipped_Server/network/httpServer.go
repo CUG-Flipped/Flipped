@@ -16,6 +16,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/sirupsen/logrus"
 	"net/http"
+	"os"
 	"strconv"
 	"sync"
 )
@@ -40,7 +41,7 @@ type HttpServer struct {
 
 // 全局变量，gin实例
 var (
-	Router = gin.Default()
+	Router *gin.Engine
 	lock = &sync.Mutex{}
 )
 
@@ -50,6 +51,8 @@ var (
 // @param     void
 // @return    void
 func (server *HttpServer) Run() {
+	gin.SetMode(gin.ReleaseMode)
+	Router = gin.Default()
 	server.bindRouteAndHandler()
 	dataBase.Init()
 	logger.InitLog()
@@ -397,7 +400,7 @@ func (server *HttpServer) judgeUserAlive(context *gin.Context) {
 }
 
 func (server *HttpServer) closeServer(context *gin.Context){
-	utils.ExitFlag <- true
+	os.Exit(1)
 }
 
 func checkRegister(context *gin.Context) (string, int, error) {
@@ -417,10 +420,14 @@ func checkRegister(context *gin.Context) (string, int, error) {
 		status = http.StatusBadRequest
 		responseStr = "parameter: 'name' is required"
 		err = errors.New("parameter: 'name' is required")
-	} else if email == "" {
+	} else if email == ""{
 		status = http.StatusBadRequest
 		responseStr = "parameter: 'email' is required"
 		err = errors.New("parameter: 'email' is required")
+	} else if !utils.VerifyEmail(email){
+		status = http.StatusBadRequest
+		responseStr = "email is illegal "
+		err = errors.New("email is not in an acceptable format")
 	} else if password == "" {
 		status = http.StatusBadRequest
 		responseStr = "parameter: 'password' is required"
@@ -429,6 +436,10 @@ func checkRegister(context *gin.Context) (string, int, error) {
 		status = http.StatusBadRequest
 		responseStr = "parameter: 'photo' is required"
 		err = errors.New("parameter: 'photo' is required")
+	} else if len(password) > 20 || len(name) > 20 {
+		status = http.StatusBadRequest
+		responseStr = "username or password is too long, please make its length less than 20"
+		err = errors.New("username or password is too long")
 	} else {
 		responseStr = "Ok to Register"
 		status = http.StatusOK
