@@ -10,6 +10,7 @@ import (
 	"os"
 	"path"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 )
@@ -91,4 +92,14 @@ func Image2Base64(imagePath string) (string, error){
 	}
 	imageStr := "data:image/"+imageType+";base64," + base64.StdEncoding.EncodeToString(imageBytes)
 	return imageStr, nil
+}
+
+func VerifyEmail(email string) bool {
+	if email == "" || len(email) == 0 {
+		return false
+	} else {
+		pattern := `\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*`
+		reg := regexp.MustCompile(pattern)
+		return reg.MatchString(email)
+	}
 }
