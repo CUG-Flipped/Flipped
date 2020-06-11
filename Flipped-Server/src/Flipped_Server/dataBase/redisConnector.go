@@ -8,6 +8,7 @@ package dataBase
 import (
 	"Flipped_Server/initialSetting"
 	"Flipped_Server/logger"
+	"Flipped_Server/utils"
 	"errors"
 	"fmt"
 	red "github.com/garyburd/redigo/redis"
@@ -33,8 +34,8 @@ type Redis struct {
 
 func initialSettingsRedis() {
 	redisSetting := initialSetting.DataBaseConfig["redis"].(map[string]interface{})
-	redisIP = redisSetting["host"].(string)
-	redisPort = redisSetting["port"].(string)
+	redisIP = utils.AesDecrypt(redisSetting["host"].(string), initialSetting.AESKey)
+	redisPort = utils.AesDecrypt(redisSetting["port"].(string), initialSetting.AESKey)
 }
 
 // @title    RedisClient_Init
@@ -96,7 +97,7 @@ func CloseRedisClient() {
 // @return    error				错误信息
 func WriteToRedis(key string, value string) error {
 	conn := redis.pool.Get()
-	if err:= conn.Err(); err != nil {
+	if err := conn.Err(); err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "WriteToRedis", "error to get instance from redis pool", err.Error())
 		return err
 	}
@@ -126,7 +127,7 @@ func WriteToRedis(key string, value string) error {
 // @return    error			值、错误信息
 func ReadFromRedis(key string) (string, error) {
 	conn := redis.pool.Get()
-	if err:= conn.Err(); err != nil {
+	if err := conn.Err(); err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "ReadFromRedis", "error to get instance from redis pool", err.Error())
 		return "", err
 	}
@@ -159,7 +160,7 @@ func ReadFromRedis(key string) (string, error) {
 // @return    error			值、错误信息
 func KeyExists(key string, dbNum int) bool {
 	conn := redis.pool.Get()
-	if err:= conn.Err(); err != nil {
+	if err := conn.Err(); err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "KeyExists", "error to get instance from redis pool", err.Error())
 		return false
 	}
@@ -177,7 +178,7 @@ func KeyExists(key string, dbNum int) bool {
 
 func DeleteKey(key string, dbNum int) error {
 	conn := redis.pool.Get()
-	if err:= conn.Err(); err != nil {
+	if err := conn.Err(); err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "KeyExists", "error to get instance from redis pool", err.Error())
 		return err
 	}
@@ -197,7 +198,7 @@ func DeleteKey(key string, dbNum int) error {
 
 func CountOnlineUsers() (int, error) {
 	conn := redis.pool.Get()
-	if err:= conn.Err(); err != nil {
+	if err := conn.Err(); err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "CountOnlineUsers", "error to get instance from redis pool", err.Error())
 		return 0, err
 	}
@@ -210,7 +211,7 @@ func CountOnlineUsers() (int, error) {
 	}
 	_reply, _ := red.String(reply, err)
 	logger.SetToLogger(logrus.InfoLevel, "CountOnlineUsers", "Switch to redis db 2", _reply)
-	reply, err = conn.Do("KEYS", "*")
+	reply, _ = conn.Do("KEYS", "*")
 	_, _ = conn.Do("Select", 0)
 	return len(reply.([]interface{})), nil
 }
@@ -218,7 +219,7 @@ func CountOnlineUsers() (int, error) {
 // 实时更新用户状态， 如果用户存在于redis db2中，则更新其过期时间60s， 不存在则建立该key
 func UpdateUserStatus(username string, lock *sync.Mutex) {
 	conn := redis.pool.Get()
-	if err:= conn.Err(); err != nil {
+	if err := conn.Err(); err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "UpdateUserStatus", "error to get instance from redis pool", err.Error())
 		return
 	}

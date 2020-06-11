@@ -9,11 +9,11 @@ import (
 	"strconv"
 )
 
-var(
+var (
 	Client *nats.EncodedConn
 )
 
-func InitMQ(){
+func InitMQ() {
 	natsConnection, _ := nats.Connect(nats.DefaultURL)
 	c, _ := nats.NewEncodedConn(natsConnection, nats.JSON_ENCODER)
 	defer c.Close()
@@ -22,33 +22,33 @@ func InitMQ(){
 	if err != nil {
 		panic(err)
 	}
-	<- utils.ExitFlag
+	<-utils.ExitFlag
 }
 
-func PublishMsg(subject string, value interface{}) error{
+func PublishMsg(subject string, value interface{}) error {
 	err := Client.Publish(subject, value)
 	if err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "PublishMsg", "error to publish message to mq", err.Error())
 		return err
 	}
-	logger.SetToLogger(logrus.InfoLevel,"PublishMsg", "Succeed to publish message to mq", "")
+	logger.SetToLogger(logrus.InfoLevel, "PublishMsg", "Succeed to publish message to mq", "")
 	return nil
 }
 
-func SendMessageToClient(recorder *utils.Recorder){
+func SendMessageToClient(recorder *utils.Recorder) {
 	conn := utils.GetUserConnection(recorder.TargetUser)
-	if conn == nil{
-		logger.SetToLogger(logrus.ErrorLevel, "SendMessageToClient", "error to get user connection: " + recorder.TargetUser, "republish message to mq")
+	if conn == nil {
+		logger.SetToLogger(logrus.ErrorLevel, "SendMessageToClient", "error to get user connection: "+recorder.TargetUser, "republish message to mq")
 		_ = PublishMsg("im", recorder)
 		return
 	}
 	msg := utils.ToClientMsg{
-		MsgFrom: (*recorder).SourceUser,
+		MsgFrom:    (*recorder).SourceUser,
 		MsgContent: (*recorder).Content,
 	}
 	buf, err := json.Marshal(msg)
 	if err != nil {
-		logger.SetToLogger(logrus.ErrorLevel, "SendMessageToClient", "error to marshal Recorder to json bytes",err.Error())
+		logger.SetToLogger(logrus.ErrorLevel, "SendMessageToClient", "error to marshal Recorder to json bytes", err.Error())
 		return
 	}
 	count, err := conn.Write(buf)
@@ -56,7 +56,6 @@ func SendMessageToClient(recorder *utils.Recorder){
 		logger.SetToLogger(logrus.ErrorLevel, "SendMessageToClient", "error to write bytes to client", err.Error())
 		return
 	} else {
-		logger.SetToLogger(logrus.ErrorLevel, "SendMessageToClient", "succeed send message to client","bytes number: "+ strconv.Itoa(count))
+		logger.SetToLogger(logrus.ErrorLevel, "SendMessageToClient", "succeed send message to client", "bytes number: "+strconv.Itoa(count))
 	}
 }
-

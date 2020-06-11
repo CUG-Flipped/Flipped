@@ -11,8 +11,6 @@ import (
 	"runtime"
 )
 
-
-
 // @title    main
 // @description   main函数用于启动服务器
 // @auth      郑康             2020.5.17
@@ -23,7 +21,7 @@ func main() {
 	utils.ExitFlag = make(chan bool)
 
 	initialSetting.InitSettings("")
-	socketServer := network.SocketServer{IPAddr: "", Port:8082}
+	socketServer := network.SocketServer{IPAddr: "", Port: 8082}
 	go socketServer.Run()
 
 	httpServer := network.HttpServer{IPAddr: "", Port: 8081}

@@ -17,10 +17,10 @@ import (
 
 //包内全局字符串列表，将tag分类，在stringAttr内的tag表示其字段为字符串，在intAttr内的tag表示器字段为整型
 var (
-	stringAttr = [...]string{"pid", "username", "photo","password", "email", "realName", "profession", "region", "hobby"}
-	intAttr = [...]string{"user_type", "age"}
+	stringAttr    = [...]string{"pid", "username", "photo", "password", "email", "realName", "profession", "region", "hobby"}
+	intAttr       = [...]string{"user_type", "age"}
 	stringDefault = ""
-	intDefault = 1000
+	intDefault    = 1000
 )
 
 // @title    isStringAttr
@@ -56,7 +56,7 @@ func isIntAttr(str string) bool {
 // @auth      郑康           					2020.5.17
 // @param     interface{}						接口变量
 // @return    []string, []string, error			tag列表；值列表；错误信息
-func splitDataAndStruct(metaData interface{}) ([]string, []string, error){
+func splitDataAndStruct(metaData interface{}) ([]string, []string, error) {
 	dataType := reflect.TypeOf(metaData)
 	dataVal := reflect.ValueOf(metaData)
 	dataKind := dataVal.Kind()
@@ -65,9 +65,9 @@ func splitDataAndStruct(metaData interface{}) ([]string, []string, error){
 	}
 	fieldNum := dataVal.NumField()
 
-	logger.Logger.WithFields(logrus.Fields {
+	logger.Logger.WithFields(logrus.Fields{
 		"function": "splitDataAndStruct",
-		"cause": "count member number of the interface",
+		"cause":    "count member number of the interface",
 	}).Infof(fmt.Sprintf("该结构体有%d个字段\n", fieldNum))
 
 	tagArr := make([]string, fieldNum)
@@ -92,18 +92,18 @@ func splitDataAndStruct(metaData interface{}) ([]string, []string, error){
 // @auth      郑康           					2020.5.17
 // @param     interface{}, string				接口变量, 数据表名称
 // @return    error								错误信息
-func Insert(data interface {}, tableName string) error{
+func Insert(data interface{}, tableName string) error {
 	tagArr, dataArr, err := splitDataAndStruct(data)
 	tagLen := len(tagArr)
 	dataLen := len(dataArr)
-	if err != nil ||tagLen  == 0 ||dataLen  == 0{
+	if err != nil || tagLen == 0 || dataLen == 0 {
 		return err
 	}
 
 	var buffer bytes.Buffer
 	buffer.WriteString(fmt.Sprintf("INSERT INTO im.%s VALUES(\n", tableName))
 
-	for i := 0; i < tagLen; i++{
+	for i := 0; i < tagLen; i++ {
 		if isStringAttr(tagArr[i]) {
 			buffer.WriteString("'")
 			buffer.WriteString(dataArr[i])
@@ -116,25 +116,25 @@ func Insert(data interface {}, tableName string) error{
 			return errors.New("unexpected value: " + tagArr[i])
 		}
 
-		if i != tagLen - 1 {
+		if i != tagLen-1 {
 			buffer.WriteString(",\n")
 		}
 
 	}
 	buffer.WriteString(");")
 	sql := buffer.String()
-	logger.Logger.WithFields(logrus.Fields {
+	logger.Logger.WithFields(logrus.Fields{
 		"function": "Insert",
-		"cause": "display sql",
+		"cause":    "display sql",
 	}).Info(sql)
 
 	res, err := dataBase.ExecSQL(sql)
 	if err != nil {
 		return err
 	}
-	logger.Logger.WithFields(logrus.Fields {
+	logger.Logger.WithFields(logrus.Fields{
 		"function": "Insert",
-		"cause": "succeed to insert data into database",
+		"cause":    "succeed to insert data into database",
 	}).Info(res)
 
 	return nil
@@ -145,14 +145,14 @@ func Insert(data interface {}, tableName string) error{
 // @auth      郑康           											2020.5.17
 // @param     *map[string]string, *map[string]string, string			旧数据, 新数据, 表名
 // @return    error														错误信息
-func Update(oldData *map[string]string, newData *map[string]string, tableName string)  error {
+func Update(oldData *map[string]string, newData *map[string]string, tableName string) error {
 	var buffer bytes.Buffer
 	buffer.WriteString("Update im." + tableName + " set ")
 
 	newDataLen := len(*newData)
 	index := 0
 	for key, value := range *newData {
-		if isStringAttr(key){
+		if isStringAttr(key) {
 			buffer.WriteString(key + "='" + value + "'")
 		} else if isIntAttr(key) {
 			integer, _ := strconv.Atoi(value)
@@ -160,7 +160,7 @@ func Update(oldData *map[string]string, newData *map[string]string, tableName st
 		} else {
 			return errors.New("unexpected value: " + key)
 		}
-		if index != newDataLen - 1{
+		if index != newDataLen-1 {
 			buffer.WriteString(", ")
 		}
 		index++
@@ -169,22 +169,22 @@ func Update(oldData *map[string]string, newData *map[string]string, tableName st
 	index = 0
 	buffer.WriteString(" where ")
 	for key, value := range *oldData {
-		if isStringAttr(key){
+		if isStringAttr(key) {
 			buffer.WriteString(key + "='" + value + "'")
 		} else if isIntAttr(key) {
 			buffer.WriteString(key + "=" + value)
 		} else {
 			return errors.New("unexpected value: " + key)
 		}
-		if index != newDataLen - 1{
+		if index != newDataLen-1 {
 			buffer.WriteString(" and ")
 		}
 	}
 	buffer.WriteString(";")
 	sql := buffer.String()
-	logger.Logger.WithFields(logrus.Fields {
+	logger.Logger.WithFields(logrus.Fields{
 		"function": "Update",
-		"cause": "display sql",
+		"cause":    "display sql",
 	}).Info(sql)
 
 	fmt.Println(sql)
@@ -196,28 +196,28 @@ func Update(oldData *map[string]string, newData *map[string]string, tableName st
 // @auth      	郑康           				2020.5.17
 // @param     	interface {}, string		数据, 表名
 // @return    	error						错误信息
-func Delete(data interface {}, tableName string) error {
+func Delete(data interface{}, tableName string) error {
 	tagArr, dataArr, err := splitDataAndStruct(data)
 	tagLen := len(tagArr)
 	dataLen := len(dataArr)
-	if err != nil ||tagLen  == 0 ||dataLen  == 0{
+	if err != nil || tagLen == 0 || dataLen == 0 {
 		return err
 	}
 
 	var buffer bytes.Buffer
 	buffer.WriteString("Delete from im." + tableName + " where ")
 	for i := 0; i < tagLen; i++ {
-		if i != 0  {
+		if i != 0 {
 			buffer.WriteString("and ")
 		}
 
-		if isStringAttr(tagArr[i]){
-			if dataArr[i] != stringDefault{
+		if isStringAttr(tagArr[i]) {
+			if dataArr[i] != stringDefault {
 				buffer.WriteString(tagArr[i] + "='" + dataArr[i] + "' ")
 			}
 		} else if isIntAttr(tagArr[i]) {
 			integer, _ := strconv.Atoi(dataArr[i])
-			if integer != intDefault{
+			if integer != intDefault {
 				buffer.WriteString(tagArr[i] + "=" + strconv.Itoa(integer) + " ")
 			}
 		} else {
@@ -226,9 +226,9 @@ func Delete(data interface {}, tableName string) error {
 	}
 	buffer.WriteString(";")
 	sql := buffer.String()
-	logger.Logger.WithFields(logrus.Fields {
+	logger.Logger.WithFields(logrus.Fields{
 		"function": "Delete",
-		"cause": "display sql",
+		"cause":    "display sql",
 	}).Info(sql)
 	fmt.Println(sql)
 
@@ -236,9 +236,9 @@ func Delete(data interface {}, tableName string) error {
 	if err != nil {
 		return err
 	}
-	logger.Logger.WithFields(logrus.Fields {
+	logger.Logger.WithFields(logrus.Fields{
 		"function": "Delete",
-		"cause": "succeed to Delete data from database",
+		"cause":    "succeed to Delete data from database",
 	}).Info(res)
 
 	return nil

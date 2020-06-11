@@ -7,6 +7,7 @@ package dataBase
 import (
 	"Flipped_Server/initialSetting"
 	"Flipped_Server/logger"
+	"Flipped_Server/utils"
 	"database/sql"
 	"errors"
 	"fmt"
@@ -19,12 +20,12 @@ import (
 var mysqlDB *sql.DB
 
 var (
-	engine string
+	engine   string
 	username string
 	password string
-	ip string
-	port string
-	dbName string
+	ip       string
+	port     string
+	dbName   string
 )
 
 // 数据库结构体用于连接时使用
@@ -37,14 +38,14 @@ type DBInfo struct {
 	DBName   string //数据库名称
 }
 
-func initialSettingsMysql(){
-	mysqlSettings := initialSetting.DataBaseConfig["mysql"].(map[string] interface {})
-	engine = mysqlSettings["engine"].(string)
-	username = mysqlSettings["userName"].(string)
-	password = mysqlSettings["pwd"].(string)
-	ip = mysqlSettings["host"].(string)
-	port = mysqlSettings["port"].(string)
-	dbName = mysqlSettings["dbName"].(string)
+func initialSettingsMysql() {
+	mysqlSettings := initialSetting.DataBaseConfig["mysql"].(map[string]interface{})
+	engine = utils.AesDecrypt(mysqlSettings["engine"].(string), initialSetting.AESKey)
+	username = utils.AesDecrypt(mysqlSettings["userName"].(string), initialSetting.AESKey)
+	password = utils.AesDecrypt(mysqlSettings["pwd"].(string), initialSetting.AESKey)
+	ip = utils.AesDecrypt(mysqlSettings["host"].(string), initialSetting.AESKey)
+	port = utils.AesDecrypt(mysqlSettings["port"].(string), initialSetting.AESKey)
+	dbName = utils.AesDecrypt(mysqlSettings["dbName"].(string), initialSetting.AESKey)
 }
 
 // @title    Init
@@ -63,12 +64,12 @@ func Init() {
 	//	DBName:   "im",
 	//}
 	db := DBInfo{
-		Engine: engine,
+		Engine:   engine,
 		UserName: username,
 		PassWord: password,
-		IP: ip,
-		Port: port,
-		DBName: dbName,
+		IP:       ip,
+		Port:     port,
+		DBName:   dbName,
 	}
 
 	database, err := sql.Open(db.Engine, fmt.Sprintf("%s:%s@tcp(%s:%s)/%s", db.UserName, db.PassWord, db.IP, db.Port, db.DBName))
@@ -167,7 +168,7 @@ func rowsMapper(rows *sql.Rows) []*UserInfoTable {
 			}
 		}
 		var userInfo *UserInfoTable
-		userInfo, err = MakeUserInfoStruct(&rowMap)
+		userInfo, _ = MakeUserInfoStruct(&rowMap)
 		res = append(res, userInfo)
 	}
 	return res
@@ -177,14 +178,19 @@ func SelectSimilarUser(username string) (*UserInfoTable, error) {
 	SQL := "Select * From im.userinfo Order By Rand() Limit 20"
 	currentUser, err := FindUserInfo(username, "")
 	if err != nil {
-		logger.SetToLogger(logrus.ErrorLevel, "SelectSimilarUser", "to find user by username: " + username, err.Error())
+		logger.SetToLogger(logrus.ErrorLevel, "SelectSimilarUser", "to find user by username: "+username, err.Error())
 		return nil, err
 	}
 	userList := ExecSelectSQL(SQL)
 	userSimilarMap := make(map[int]float32)
 	maxSimilarityIndex, maxSimilarValue := 0, float32(0.0)
+	curFriendList, err := GetFriendListByUserName(username)
+	if err != nil {
+		logger.SetToLogger(logrus.ErrorLevel, "SelectSimilarUser", "error to get friend list of "+username, err.Error())
+		return nil, err
+	}
 	for index := range userList {
-		if userList[index].Username == username{
+		if userList[index].Username == username || utils.Contains(curFriendList, userList[index].Username) {
 			continue
 		}
 		res := CalculateSimilarity(currentUser, userList[index])
@@ -222,13 +228,29 @@ func FindUserInfo(username string, pwd string) (*UserInfoTable, error) {
 // @auth      郑康       	2020.5.26
 // @param     void
 // @return    void
-func CloseMySqlClient()  {
+func CloseMySqlClient() {
 	if mysqlDB != nil {
 		defer mysqlDB.Close()
 	}
 	logger.Logger.WithFields(logrus.Fields{
 		"function": "CLoseMySqlClient",
-		"cause": "close mysql connection",
+		"cause":    "close mysql connection",
 	})
 	mysqlDB = nil
+}
+
+// @title    	DoesUserExist
+// @description   						通过用户名判断用户是否存在
+// @auth      	郑康           			2020.6.10
+// @param     	string					用户名
+// @return    	bool					是否存在
+func DoesUserExist(username string) bool {
+	if username == "" {
+		return false
+	}
+	userinfo, err := FindUserInfo(username, "")
+	if err != nil || userinfo == nil {
+		return false
+	}
+	return true
 }

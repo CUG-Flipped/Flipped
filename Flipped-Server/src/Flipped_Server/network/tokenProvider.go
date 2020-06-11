@@ -20,7 +20,7 @@ type MyClaims struct {
 }
 
 //设置Token过期时间为1小时
-const TokenExpireDuration = 3*3600
+const TokenExpireDuration = 3 * 3600
 
 //自定义Secret
 var MySecret = []byte("First Blood")
@@ -34,9 +34,9 @@ func GenerateToken(username string) (string, error) {
 	//创建自定义声明
 	claim := MyClaims{
 		username,
-	 	jwt.StandardClaims{
+		jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(TokenExpireDuration).Unix(),
-			Issuer: "MrSecond",
+			Issuer:    "MrSecond",
 		},
 	}
 	//使用指定的方法创建签名对象
@@ -45,7 +45,7 @@ func GenerateToken(username string) (string, error) {
 	if err != nil {
 		logger.Logger.WithFields(logrus.Fields{
 			"function": "GenerateToken",
-			"cause": "create new Claims",
+			"cause":    "create new Claims",
 		}).Error(err.Error())
 		return "", err
 	}
@@ -54,7 +54,7 @@ func GenerateToken(username string) (string, error) {
 	if err1 != nil {
 		logger.Logger.WithFields(logrus.Fields{
 			"function": "GenerateToken",
-			"cause": "Write To Redis",
+			"cause":    "Write To Redis",
 		}).Error(err1.Error())
 		return "", err1
 	}
@@ -77,9 +77,8 @@ func ParseToken(tokenStr string) (string, error) {
 		return "", err
 	}
 
-	if claims, ok := token.Claims.(*MyClaims); ok && dataBase.KeyExists(claims.UserName, 0){
+	if claims, ok := token.Claims.(*MyClaims); ok && dataBase.KeyExists(claims.UserName, 0) {
 		return claims.UserName, nil
 	}
 	return "", errors.New("invalid token")
 }
-

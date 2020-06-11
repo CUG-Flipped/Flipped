@@ -31,6 +31,8 @@ type IFunction interface {
 	countOnlineUserNumber(context *gin.Context)
 	judgeUserAlive(context *gin.Context)
 	closeServer(context *gin.Context)
+	addFriend(context *gin.Context)
+	deleteFriend(context *gin.Context)
 }
 
 // HttpServer结构体包含了Http服务器绑定的IP地址和端口号
@@ -42,7 +44,7 @@ type HttpServer struct {
 // 全局变量，gin实例
 var (
 	Router *gin.Engine
-	lock = &sync.Mutex{}
+	lock   = &sync.Mutex{}
 )
 
 // @title    Run
@@ -84,6 +86,8 @@ func (server *HttpServer) bindRouteAndHandler() {
 	Router.GET("/onlineUserNumber", server.countOnlineUserNumber)
 	Router.POST("/isAlive", server.judgeUserAlive)
 	Router.GET("/closeServer", server.closeServer)
+	Router.POST("/addFriend", server.addFriend)
+	Router.POST("/deleteFriend", server.deleteFriend)
 }
 
 // @title    registerHandler
@@ -166,7 +170,7 @@ func (server *HttpServer) registerHandler(context *gin.Context) {
 		}
 
 		_ = dataBase.InitUserFriendList(name)
-		logger.SetToLogger(logrus.InfoLevel, "registerHandler", "receive Request from client", "response: " + responseStr + ", Status: " + strconv.Itoa(status))
+		logger.SetToLogger(logrus.InfoLevel, "registerHandler", "receive Request from client", "response: "+responseStr+", Status: "+strconv.Itoa(status))
 	}
 }
 
@@ -179,8 +183,8 @@ func (server *HttpServer) loginHandler(context *gin.Context) {
 	username := context.DefaultQuery("username", "")
 	pwd := context.DefaultQuery("password", "")
 
-	var status int
-	var msg string
+	var status int = 200
+	var msg string = ""
 	var data interface{}
 
 	userInfo, err := dataBase.FindUserInfo(username, pwd)
@@ -244,27 +248,27 @@ func (server *HttpServer) loginHandler(context *gin.Context) {
 // @auth      郑康             2020.5.28
 // @param     *gin.Context	  gin的上下文指针
 // @return    void
-func (server *HttpServer) friendsListHandler(context *gin.Context)  {
+func (server *HttpServer) friendsListHandler(context *gin.Context) {
 	tokenStr := context.Request.Header.Get("token")
 	username, err := ParseToken(tokenStr)
 	if err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "friendsListHandler", "Parse Token which sent by client", "")
-		context.JSON(http.StatusUnauthorized, gin.H {
+		context.JSON(http.StatusUnauthorized, gin.H{
 			"message": "some error occur when parsing tokenStr, Please login again",
-			"data": err.Error(),
+			"data":    err.Error(),
 		})
 	} else {
 		friendList, err := dataBase.GetFriendListByUserName(username)
 		if err != nil {
 			logger.SetToLogger(logrus.ErrorLevel, "friendsListHandler", "execute GetFriendListByName function", err.Error())
-			context.JSON(http.StatusInternalServerError, gin.H {
+			context.JSON(http.StatusInternalServerError, gin.H{
 				"message": "some error occur when parsing tokenStr",
-				"data": err.Error(),
+				"data":    err.Error(),
 			})
 		} else {
 			context.JSON(http.StatusOK, gin.H{
 				"message": "succeed to find friend list",
-				"data": friendList,
+				"data":    friendList,
 			})
 		}
 	}
@@ -280,27 +284,27 @@ func (server *HttpServer) recommendedFriendsListHandler(context *gin.Context) {
 	username, err := ParseToken(tokenStr)
 	if err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "recommendedFriendsListHandler", "Parse Token which sent by client", "")
-		context.JSON(http.StatusUnauthorized, gin.H {
+		context.JSON(http.StatusUnauthorized, gin.H{
 			"message": "some error occur when parsing tokenStr, Please login again",
-			"data": err.Error(),
+			"data":    err.Error(),
 		})
 		return
 	}
 	selectedUser, err := dataBase.SelectSimilarUser(username)
-	if err != nil{
+	if err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "recommendedFriendsListHandler", "select similar user", err.Error())
-		context.JSON(http.StatusInternalServerError, gin.H {
+		context.JSON(http.StatusInternalServerError, gin.H{
 			"message": "some error occur in the server, Please try again",
-			"data": err.Error(),
+			"data":    err.Error(),
 		})
 		return
 	}
 	imageStr, err := utils.Image2Base64(selectedUser.Photo)
 	if err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "recommendedFriendsListHandler", "convert image to Base64 string", err.Error())
-		context.JSON(http.StatusInternalServerError, gin.H {
+		context.JSON(http.StatusInternalServerError, gin.H{
 			"message": "some error occur in the server, Please try again",
-			"data": err.Error(),
+			"data":    err.Error(),
 		})
 		return
 	}
@@ -308,26 +312,26 @@ func (server *HttpServer) recommendedFriendsListHandler(context *gin.Context) {
 	dataJson, err := json.Marshal(selectedUser)
 	if err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "recommendedFriendsListHandler", "convert Struct to Json", err.Error())
-		context.JSON(http.StatusInternalServerError, gin.H {
+		context.JSON(http.StatusInternalServerError, gin.H{
 			"message": "some error occur in the server, Please try again",
-			"data": err.Error(),
+			"data":    err.Error(),
 		})
 		return
 	}
 
-	var dataMap map[string] interface{}
+	var dataMap map[string]interface{}
 	err = json.Unmarshal(dataJson, &dataMap)
 	if err != nil {
 		logger.SetToLogger(logrus.ErrorLevel, "recommendedFriendsListHandler", "convert Json to Map", err.Error())
-		context.JSON(http.StatusInternalServerError, gin.H {
+		context.JSON(http.StatusInternalServerError, gin.H{
 			"message": "some error occur in the server, Please try again",
-			"data": err.Error(),
+			"data":    err.Error(),
 		})
 		return
 	}
-	context.JSON(http.StatusOK, gin.H {
+	context.JSON(http.StatusOK, gin.H{
 		"message": "succeed to handle the request",
-		"data": dataMap,
+		"data":    dataMap,
 	})
 }
 
@@ -349,22 +353,22 @@ func (server *HttpServer) heartBeatHandler(context *gin.Context) {
 
 	context.JSON(status, gin.H{
 		"message": msg,
-		"data":data,
+		"data":    data,
 	})
 }
 
-func (server *HttpServer) countOnlineUserNumber(context *gin.Context){
+func (server *HttpServer) countOnlineUserNumber(context *gin.Context) {
 	num, err := dataBase.CountOnlineUsers()
 	if err != nil {
-		context.JSON(http.StatusInternalServerError, gin.H {
+		context.JSON(http.StatusInternalServerError, gin.H{
 			"message": "some error occur in the server, Please try again",
-			"data": err.Error(),
+			"data":    err.Error(),
 		})
 		return
 	} else {
-		context.JSON(http.StatusOK, gin.H {
+		context.JSON(http.StatusOK, gin.H{
 			"message": "succeed to handle the request",
-			"data": num,
+			"data":    num,
 		})
 	}
 }
@@ -382,7 +386,7 @@ func (server *HttpServer) judgeUserAlive(context *gin.Context) {
 		data = err.Error()
 	} else {
 		targetUser := context.DefaultQuery("username", "")
-		if targetUser == ""{
+		if targetUser == "" {
 			msg = "the user you want to query can't be empty"
 		} else {
 			msg = "succeed top handle the request"
@@ -393,14 +397,78 @@ func (server *HttpServer) judgeUserAlive(context *gin.Context) {
 			}
 		}
 	}
-	context.JSONP(status, gin.H {
+	context.JSONP(status, gin.H{
 		"message": msg,
-		"data": data,
+		"data":    data,
 	})
 }
 
-func (server *HttpServer) closeServer(context *gin.Context){
+func (server *HttpServer) closeServer(context *gin.Context) {
 	os.Exit(1)
+}
+
+func (server *HttpServer) addFriend(context *gin.Context) {
+	status := http.StatusOK
+	msg := "succeed to handle the request"
+	data := ""
+	tokenStr := context.Request.Header.Get("token")
+	targetFriend := context.DefaultQuery("friend", "")
+	if targetFriend == "" {
+		status = http.StatusBadRequest
+		msg = "key 'friend' is required"
+		data = ""
+	} else {
+		sourceUser, err := ParseToken(tokenStr)
+		if err != nil {
+			logger.SetToLogger(logrus.ErrorLevel, "addFriend", "parse token error", err.Error())
+			status = http.StatusUnauthorized
+			msg = "token is invalid, Please login again"
+			data = err.Error()
+		} else {
+			err := dataBase.AddFriend(sourceUser, targetFriend)
+			if err != nil {
+				status = http.StatusInternalServerError
+				msg = "there is something wrong when adding friend, please try it latter"
+				data = err.Error()
+			}
+		}
+	}
+	context.JSONP(status, gin.H{
+		"message": msg,
+		"data":    data,
+	})
+}
+
+func (server *HttpServer) deleteFriend(context *gin.Context) {
+	status := http.StatusOK
+	msg := "succeed to handle the request"
+	data := ""
+	tokenStr := context.Request.Header.Get("token")
+	targetFriend := context.DefaultQuery("friend", "")
+	if targetFriend == "" {
+		status = http.StatusBadRequest
+		msg = "key 'friend' is required"
+		data = ""
+	} else {
+		sourceUser, err := ParseToken(tokenStr)
+		if err != nil {
+			logger.SetToLogger(logrus.ErrorLevel, "deleteFriend", "parse token error", err.Error())
+			status = http.StatusUnauthorized
+			msg = "token is invalid, Please login again"
+			data = err.Error()
+		} else {
+			err := dataBase.DeleteFriend(sourceUser, targetFriend)
+			if err != nil {
+				status = http.StatusInternalServerError
+				msg = "there is something wrong in server when delete your friend, please try it latter"
+				data = err.Error()
+			}
+		}
+	}
+	context.JSONP(status, gin.H{
+		"message": msg,
+		"data":    data,
+	})
 }
 
 func checkRegister(context *gin.Context) (string, int, error) {
@@ -420,11 +488,11 @@ func checkRegister(context *gin.Context) (string, int, error) {
 		status = http.StatusBadRequest
 		responseStr = "parameter: 'name' is required"
 		err = errors.New("parameter: 'name' is required")
-	} else if email == ""{
+	} else if email == "" {
 		status = http.StatusBadRequest
 		responseStr = "parameter: 'email' is required"
 		err = errors.New("parameter: 'email' is required")
-	} else if !utils.VerifyEmail(email){
+	} else if !utils.VerifyEmail(email) {
 		status = http.StatusBadRequest
 		responseStr = "email is illegal "
 		err = errors.New("email is not in an acceptable format")
@@ -448,7 +516,7 @@ func checkRegister(context *gin.Context) (string, int, error) {
 	return responseStr, status, err
 }
 
-func isUserNameRepeated(username string) bool{
+func isUserNameRepeated(username string) bool {
 	userInfo, _ := dataBase.FindUserInfo(username, "")
 	if userInfo == nil {
 		return false
