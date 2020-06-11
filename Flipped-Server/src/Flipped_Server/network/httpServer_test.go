@@ -38,7 +38,7 @@ func TestLogin(t *testing.T) {
 func TestGetFriendList(t *testing.T) {
 	go before()
 	req, _ := http.NewRequest("GET", "http://127.0.0.1:8081/friendList", nil)
-	req.Header.Add("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1yZmlyc3QiLCJleHAiOjE1OTEzNDE4NDEsImlzcyI6Ik1yU2Vjb25kIn0.yZ1gDjcYGj_u7iM30uaf-b8ymqqnZHyUeApcXnKVu7o")
+	req.Header.Add("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yU2Vjb25kIiwiZXhwIjoxNTkxODg4MDU0LCJpc3MiOiJNclNlY29uZCJ9.Zci5K5hwYYcV-W2AAqLQ1UOs2vui0c6miPc9tLtvdp0")
 	var resp *http.Response
 	resp, _ = http.DefaultClient.Do(req)
 	assert.Equal(t, 200, resp.StatusCode)
@@ -47,7 +47,7 @@ func TestGetFriendList(t *testing.T) {
 
 func TestAcquireRecommendUser(t *testing.T) {
 	req, _ := http.NewRequest("GET", "http://39.99.190.67:8081/recommendUser", nil)
-	req.Header.Add("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1yZmlyc3QiLCJleHAiOjE1OTEzNDE4NDEsImlzcyI6Ik1yU2Vjb25kIn0.yZ1gDjcYGj_u7iM30uaf-b8ymqqnZHyUeApcXnKVu7o")
+	req.Header.Add("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yU2Vjb25kIiwiZXhwIjoxNTkxODg4MDU0LCJpc3MiOiJNclNlY29uZCJ9.Zci5K5hwYYcV-W2AAqLQ1UOs2vui0c6miPc9tLtvdp0")
 	var resp *http.Response
 	resp, _ = http.DefaultClient.Do(req)
 	res, _ := ioutil.ReadAll(resp.Body)
@@ -58,7 +58,7 @@ func TestAcquireRecommendUser(t *testing.T) {
 
 func TestHeartBeat(t *testing.T) {
 	req, _ := http.NewRequest("GET", "http://39.99.190.67:8081/heartBeat", nil)
-	req.Header.Add("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Im1yZmlyc3QiLCJleHAiOjE1OTEzNDE4NDEsImlzcyI6Ik1yU2Vjb25kIn0.yZ1gDjcYGj_u7iM30uaf-b8ymqqnZHyUeApcXnKVu7o")
+	req.Header.Add("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6Ik1yU2Vjb25kIiwiZXhwIjoxNTkxODg4MDU0LCJpc3MiOiJNclNlY29uZCJ9.Zci5K5hwYYcV-W2AAqLQ1UOs2vui0c6miPc9tLtvdp0")
 	var resp *http.Response
 	resp, _ = http.DefaultClient.Do(req)
 	res, _ := ioutil.ReadAll(resp.Body)
