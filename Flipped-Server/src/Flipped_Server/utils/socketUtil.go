@@ -5,32 +5,32 @@ import (
 	"sync"
 )
 
-var(
-	UserConnectionMap map[string] net.Conn
-	RWLock = &sync.RWMutex{}
+var (
+	UserConnectionMap map[string]net.Conn
+	RWLock            = &sync.RWMutex{}
 )
 
 type FromClientMsg struct {
-	MsgType int `json:"MsgType"`
-	MsgFrom string `json:"MsgFrom"`
-	MsgTo string `json:"MsgTo"`
+	MsgType    int    `json:"MsgType"`
+	MsgFrom    string `json:"MsgFrom"`
+	MsgTo      string `json:"MsgTo"`
 	MsgContent string `json:"MsgContent"`
 }
 
 type ToClientMsg struct {
-	MsgFrom string `json:"MsgFrom"`
+	MsgFrom    string `json:"MsgFrom"`
 	MsgContent string `json:"MsgContent"`
 }
 
 type ReplyMsg struct {
-	ResultCode int `json:"ResultCode"`
+	ResultCode int    `json:"ResultCode"`
 	MsgContent string `json:"MsgContent"`
 }
 
 type Recorder struct {
 	TargetUser string `bson:"targetUser"`
 	SourceUser string `bson:"sourceUser"`
-	Content string `bson:"content"`
+	Content    string `bson:"content"`
 }
 
 func IsUserConnected(username string) bool {
@@ -51,7 +51,7 @@ func GetUserConnection(username string) net.Conn {
 	}
 }
 
-func DeleteConnection(conn net.Conn)  {
+func DeleteConnection(conn net.Conn) {
 	for username, curConn := range UserConnectionMap {
 		if curConn == conn {
 			delete(UserConnectionMap, username)

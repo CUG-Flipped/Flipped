@@ -6,13 +6,14 @@ import (
 	"io/ioutil"
 )
 
-var(
-	configData map[string] interface {}
-	DataBaseConfig map[string] interface {}
-	LoggerConfig map[string] interface{}
+var (
+	configData     map[string]interface{}
+	DataBaseConfig map[string]interface{}
+	LoggerConfig   map[string]interface{}
+	AESKey         string
 )
 
-func InitSettings(path string){
+func InitSettings(path string) {
 	var buf []byte
 	var err error
 	if path != "" {
@@ -28,6 +29,7 @@ func InitSettings(path string){
 		fmt.Println("Fail to unmarshal json file")
 		panic(err)
 	}
-	DataBaseConfig = configData["dataBase"].(map[string] interface {})
-	LoggerConfig = configData["logger"].(map[string] interface {})
+	AESKey = configData["key"].(string)
+	DataBaseConfig = configData["dataBase"].(map[string]interface{})
+	LoggerConfig = configData["logger"].(map[string]interface{})
 }

@@ -1,27 +1,28 @@
 {
+    "key": "You Are Thieves ",
     "dataBase": {
         "mongodb": {
-            "host": "47.94.134.159",
-            "port": "27017",
-            "userName": "root",
-            "pwd": "mountain",
-            "friendCollectionName": "friendMap",
-            "msgCollectionName": "messageMap"
+            "host": "HB6gd0jZ60JojdkwWKRYgQ==",
+            "port": "JGvWis/gHAx+26Aldbio9w==",
+            "userName": "uQJqAVQBTw3AFW/A8DQdIw==",
+            "pwd": "7XTCtI0NfShIqZyTHg4UKQ==",
+            "friendCollectionName": "QmYw5KlZssSYHu+yAgExOA==",
+            "msgCollectionName": "CELCMnO8rF4U+3zS7qVvpw=="
         },
         "mysql":{
-            "engine": "mysql",
-            "userName": "admin",
-            "pwd": "mountain",
-            "host": "47.94.134.159",
-            "port": "3306",
-            "dbName": "im"
+            "engine": "imLkEPRpDT8QHX+B2i5oFg==",
+            "userName": "ZwoAM3wThNduFfHKqTAkyw==",
+            "pwd": "7XTCtI0NfShIqZyTHg4UKQ==",
+            "host": "HB6gd0jZ60JojdkwWKRYgQ==",
+            "port": "HoL2GL1X5ZstN5tO8GaJWw==",
+            "dbName": "1f2LdG/gbv2ajr+DNynQfQ=="
         },
         "redis": {
-            "host": "39.99.190.67",
-            "port": "6379"
+            "host": "WV1TbPvb6KeI6AyspCoStQ==",
+            "port": "3FGxs1eGHlxTM9Mt1LPLLg=="
         }
     },
     "logger": {
-        "filePath": "./server.log"
+        "filePath": "trz2RhnuITZPDPl57SOt6Q=="
     }
 }

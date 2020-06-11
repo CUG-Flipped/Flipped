@@ -88,7 +88,7 @@ func connectionHandler(conn net.Conn) {
 				{
 					logger.SetToLogger(logrus.InfoLevel, "Anonymous function two in connectionHandler", "go into default branch", "")
 					bytes := <-bytesFlag
-					count := <- countFlag
+					count := <-countFlag
 					msg := utils.FromClientMsg{}
 					err := json.Unmarshal(bytes[:count], &msg)
 					if err != nil {
@@ -121,9 +121,9 @@ func connectionHandler(conn net.Conn) {
 		}
 	}()
 	wg.Wait()
-	logger.SetToLogger(logrus.InfoLevel,"connectionHandler", "one connection to client is disconnected", "")
+	logger.SetToLogger(logrus.InfoLevel, "connectionHandler", "one connection to client is disconnected", "")
 	utils.DeleteConnection(conn)
-	logger.SetToLogger(logrus.InfoLevel,"connectionHandler", "delete the connection with client", "")
+	logger.SetToLogger(logrus.InfoLevel, "connectionHandler", "delete the connection with client", "")
 }
 
 //交流请求

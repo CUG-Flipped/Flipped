@@ -2,17 +2,18 @@ package logger
 
 import (
 	"Flipped_Server/initialSetting"
+	"Flipped_Server/utils"
 	"github.com/sirupsen/logrus"
 	"os"
 )
 
-var(
-	Logger = logrus.New()
+var (
+	Logger      = logrus.New()
 	logFilePath string
 )
 
 func initSettingsLogger() {
-	logFilePath = initialSetting.LoggerConfig["filePath"].(string)
+	logFilePath = utils.AesDecrypt(initialSetting.LoggerConfig["filePath"].(string), initialSetting.AESKey)
 }
 
 func InitLog() {
@@ -30,42 +31,48 @@ func InitLog() {
 	}
 }
 
-func SetToLogger(level logrus.Level, function string, msg string, otherMsg string){
+func SetToLogger(level logrus.Level, function string, msg string, otherMsg string) {
 	switch level {
-		case logrus.DebugLevel:{
+	case logrus.DebugLevel:
+		{
 			Logger.WithFields(logrus.Fields{
 				"function": function,
-				"msg": msg,
+				"msg":      msg,
 			}).Debug(otherMsg)
 		}
-		case logrus.InfoLevel:{
+	case logrus.InfoLevel:
+		{
 			Logger.WithFields(logrus.Fields{
 				"function": function,
-				"msg": msg,
+				"msg":      msg,
 			}).Info(otherMsg)
 		}
-		case logrus.WarnLevel:{
+	case logrus.WarnLevel:
+		{
 			Logger.WithFields(logrus.Fields{
 				"function": function,
-				"msg": msg,
+				"msg":      msg,
 			}).Warning(otherMsg)
 		}
-		case logrus.ErrorLevel:{
+	case logrus.ErrorLevel:
+		{
 			Logger.WithFields(logrus.Fields{
 				"function": function,
-				"msg": msg,
+				"msg":      msg,
 			}).Error(otherMsg)
 		}
-		case logrus.FatalLevel:{
+	case logrus.FatalLevel:
+		{
 			Logger.WithFields(logrus.Fields{
 				"function": function,
-				"msg": msg,
+				"msg":      msg,
 			}).Fatal(otherMsg)
 		}
-		default: {
+	default:
+		{
 			Logger.WithFields(logrus.Fields{
 				"function": function,
-				"msg": msg,
+				"msg":      msg,
 			}).Debug(otherMsg)
 		}
 	}
