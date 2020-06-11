@@ -1,0 +1,4 @@
+{"fields.msg":"Parse tokenStr","file":"F:/Go_WorkSpace/Projects/src/Flipped_Server/logger/logger.go:48","func":"Flipped_Server/logger.SetToLogger","function":"ParseToken","level":"info","msg":"token is expired by 6m52s","time":"2020-06-11T23:14:26+08:00"}
+{"fields.msg":"reply: OK","file":"F:/Go_WorkSpace/Projects/src/Flipped_Server/logger/logger.go:48","func":"Flipped_Server/logger.SetToLogger","function":"KeyExists","level":"info","msg":"","time":"2020-06-11T23:14:26+08:00"}
+{"fields.msg":"Parse tokenStr","file":"F:/Go_WorkSpace/Projects/src/Flipped_Server/logger/logger.go:48","func":"Flipped_Server/logger.SetToLogger","function":"ParseToken","level":"info","msg":"token is expired by 7m19s","time":"2020-06-11T23:14:53+08:00"}
+{"fields.msg":"reply: OK","file":"F:/Go_WorkSpace/Projects/src/Flipped_Server/logger/logger.go:48","func":"Flipped_Server/logger.SetToLogger","function":"KeyExists","level":"info","msg":"","time":"2020-06-11T23:14:53+08:00"}
