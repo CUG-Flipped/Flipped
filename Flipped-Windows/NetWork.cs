@@ -1,22 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI.WebControls;
 
 namespace Flipped_Win10
 {
     static class URL 
     {
        public static string loginUrl = "http://39.99.190.67:8080/login?";
-       public static string registerUrl = "http://127.0.0.1:8080/register?";
-
+       public static string registerUrl = "http://39.99.190.67:8080/register?";
     }
 
     public class NetWork
     {
+        private static string httpToken = "";
+
+        public static string HttpToken{
+            get { return httpToken;}
+            set { httpToken = value;}
+        }
+
         public static async Task<Tuple<String, String>> RegisterAysnc(Dictionary<String, String> keyValues) {
             var multForm = new MultipartFormDataContent();
             StringBuilder urlParameters = new StringBuilder();
@@ -41,6 +49,16 @@ namespace Flipped_Win10
                 statusCode = response.StatusCode.ToString();
             }
             return Tuple.Create<String, String>(responseData, statusCode);
+        }
+
+        public static string Login(string username, string pwd) {
+            HttpClient client = new HttpClient();
+            string urlSuffix = String.Format("username={0}&password={1}", username, pwd);
+            var task = client.PostAsync(URL.loginUrl + urlSuffix, null);
+            var response = task.Result;
+            var content = response.Content.ReadAsStringAsync();
+            var result = content.Result;
+            return result;
         }
     }
 }

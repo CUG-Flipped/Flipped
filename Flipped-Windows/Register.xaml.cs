@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -119,13 +120,15 @@ namespace Flipped_Win10
                 { "avatarSource", avatarSource }
             };
 
-            PrintReslut(parameters);
+            AnalysizeReslut(parameters);
         }
 
-        private async void PrintReslut(Dictionary<String, String> keyValues) 
+        private async void AnalysizeReslut(Dictionary<String, String> keyValues) 
         {
             var res = await NetWork.RegisterAysnc(keyValues);
-            if (res.Item2 == "OK")
+            string statusCode = res.Item2;
+            string answer = res.Item1;
+            if (statusCode == "OK")
             {
                 MessageBox.Show("Register Successful!");
                 this.Close();

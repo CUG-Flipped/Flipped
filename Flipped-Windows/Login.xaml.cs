@@ -1,4 +1,7 @@
-﻿using System.Windows;
+﻿using Newtonsoft.Json.Linq;
+using System;
+using System.Diagnostics;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
@@ -35,6 +38,41 @@ namespace Flipped_Win10
             this.Hide();
             registerWin.ShowDialog();
             this.Show();
+        }
+
+        private void LoginBtn_Click(object sender, RoutedEventArgs e)
+        {
+            var friendRecommentWin = new FriendRecommend();
+            this.Hide();
+            friendRecommentWin.ShowDialog();
+            Environment.Exit(0);
+
+            string username = accountBox.Text;
+            string pwd = pwdBox.Password;
+
+            if ( username != "" && pwd != "")
+            {
+                string result = NetWork.Login(username, pwd);
+                JObject jsData = JObject.Parse(result);
+                string statusCode = jsData["code"].ToString();
+                string tokenStr = jsData["data"]["token"].ToString();
+                string msg = jsData["message"].ToString();
+
+                Debug.WriteLine(result);
+                NetWork.HttpToken = tokenStr;
+
+                if (statusCode == "200") 
+                {
+                    //var friendRecommentWin = new FriendRecommend();
+                    //this.Hide();
+                    //friendRecommentWin.ShowDialog();
+                    //Environment.Exit(0);
+                }
+            }
+            else 
+            {
+                MessageBox.Show("请填写完账号和密码后在登录！", "Warning");
+            }
         }
     }
 }

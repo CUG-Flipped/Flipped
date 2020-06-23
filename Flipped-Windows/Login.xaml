@@ -82,15 +82,19 @@
         </Grid.Triggers>
 
         <Image HorizontalAlignment="Left" Width="400" Source="/Images/startupImage.png"/>
+        
         <Image HorizontalAlignment="Left" Height="100" Margin="480,95,0,0" VerticalAlignment="Top" Width="100" Source="/Images/default_avatar.png"/>
+        
         <TextBox x:Name="accountBox" VerticalContentAlignment="Center" HorizontalAlignment="Left" Height="50" FontSize="15" FontFamily="Gaoel" 
                  materialDesign:TextFieldAssist.HasClearButton="True" materialDesign:HintAssist.Hint="Accout"
                  Margin="418,240,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="224" BorderThickness="0,0,0,1" Padding="8,0,0,0"/>
+        
         <StackPanel Margin="418,290,0,161" HorizontalAlignment="Left" FlowDirection="LeftToRight" Orientation="Horizontal">
             <PasswordBox x:Name="pwdBox" VerticalContentAlignment="Center"  Height="50" FontSize="15" FontFamily="Gaoel" 
                 materialDesign:TextFieldAssist.HasClearButton="True" materialDesign:HintAssist.Hint="Password"
                 VerticalAlignment="Top" Width="177" BorderThickness="0,0,0,1" Padding="8,0,0,0"/>
-            <Button x:Name="loginBtn" Width="50" Background="Transparent" Style="{StaticResource CircleButton}" Padding="8" Margin="0,4,2,0"/>
+            
+            <Button x:Name="loginBtn" Click="LoginBtn_Click" Width="50" Background="Transparent" Style="{StaticResource CircleButton}" Padding="8" Margin="0,4,2,0"/>
         </StackPanel>
 
         <Grid Margin="418,365,19,0">
