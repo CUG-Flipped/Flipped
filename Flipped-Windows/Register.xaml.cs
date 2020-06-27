@@ -45,7 +45,7 @@ namespace Flipped_Win10
             OpenFileDialog ofd = new OpenFileDialog
             {
                 InitialDirectory = @"C:\",
-                Filter = "(*.jpg,*.png,*.jpeg,*.bmp,*.gif,*.ico)|*.jgp;*.png;*.jpeg;*.bmp;*.gif;*.ico|All files(*.*)|*.*"
+                Filter = "(*.jpg,*.png,*.jpeg,*.bmp,*.gif,*.ico)|*.jpg;*.png;*.jpeg;*.bmp;*.gif;*.ico|All files(*.*)|*.*"
             };
             if (ofd.ShowDialog() == true)
             {
@@ -128,6 +128,7 @@ namespace Flipped_Win10
             var res = await NetWork.RegisterAysnc(keyValues);
             string statusCode = res.Item2;
             string answer = res.Item1;
+            Debug.WriteLine(answer);
             if (statusCode == "OK")
             {
                 MessageBox.Show("Register Successful!");

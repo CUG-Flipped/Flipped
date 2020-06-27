@@ -27,3 +27,6 @@ F:\CSharp_WorkSpace\Flipped-Win10\bin\Debug\Newtonsoft.Json.dll
 F:\CSharp_WorkSpace\Flipped-Win10\bin\Debug\Newtonsoft.Json.xml
 F:\CSharp_WorkSpace\Flipped-Win10\obj\Debug\FriendRecommend.g.cs
 F:\CSharp_WorkSpace\Flipped-Win10\obj\Debug\FriendRecommend.baml
+F:\CSharp_WorkSpace\Flipped-Win10\bin\Debug\System.Data.SQLite.dll
+F:\CSharp_WorkSpace\Flipped-Win10\bin\Debug\System.Data.SQLite.pdb
+F:\CSharp_WorkSpace\Flipped-Win10\bin\Debug\System.Data.SQLite.dll.config

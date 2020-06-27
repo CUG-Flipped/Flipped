@@ -42,11 +42,6 @@ namespace Flipped_Win10
 
         private void LoginBtn_Click(object sender, RoutedEventArgs e)
         {
-            var friendRecommentWin = new FriendRecommend();
-            this.Hide();
-            friendRecommentWin.ShowDialog();
-            Environment.Exit(0);
-
             string username = accountBox.Text;
             string pwd = pwdBox.Password;
 
@@ -54,19 +49,18 @@ namespace Flipped_Win10
             {
                 string result = NetWork.Login(username, pwd);
                 JObject jsData = JObject.Parse(result);
-                string statusCode = jsData["code"].ToString();
-                string tokenStr = jsData["data"]["token"].ToString();
-                string msg = jsData["message"].ToString();
-
+                string msg = (string)jsData["message"];
+                string tokenStr = (string)jsData["data"]["token"];
                 Debug.WriteLine(result);
                 NetWork.HttpToken = tokenStr;
 
-                if (statusCode == "200") 
+                if (msg == "succeed to login") 
                 {
-                    //var friendRecommentWin = new FriendRecommend();
-                    //this.Hide();
-                    //friendRecommentWin.ShowDialog();
-                    //Environment.Exit(0);
+                    NetWork.UserPWD = new Tuple<string, string>(username, pwd);
+                    var friendRecommentWin = new FriendRecommend();
+                    this.Hide();
+                    friendRecommentWin.ShowDialog();
+                    Environment.Exit(0);
                 }
             }
             else 
