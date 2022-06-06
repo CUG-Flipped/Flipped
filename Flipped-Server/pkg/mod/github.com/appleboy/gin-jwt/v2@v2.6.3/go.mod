@@ -8,6 +8,6 @@ require (
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.4.0
 	github.com/stretchr/testify v1.4.0
-	github.com/tidwall/gjson v1.3.5
+	github.com/tidwall/gjson v1.9.3
 	gopkg.in/yaml.v2 v2.2.7 // indirect
 )
